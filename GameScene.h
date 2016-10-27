@@ -5,6 +5,11 @@
 
 USING_NS_CC;
 
+class MapLayer;
+class FamilyHouse;
+class HeroGraphicComponent;
+class ManagerComponent;
+
 class GameScene : public cocos2d::Layer
 {
 public:
@@ -21,9 +26,12 @@ public:
 		m_sceneWorld = world;
 	}
 	
+	static Size	m_visibleSize;
+
 private:
-	Size	m_visibleSize;
 	Vec2	m_origin;
+
+	ManagerComponent* m_manager;
 };
 
 #endif 

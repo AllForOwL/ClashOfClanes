@@ -3,6 +3,8 @@
 
 #include "cocos2d.h"
 
+USING_NS_CC;
+
 class HUDLayer : public cocos2d::Layer
 {
 public:
@@ -14,7 +16,6 @@ public:
 private:
 	Size	m_visibleSize;
 	Vec2	m_origin;
-
 };
 
 #endif // __HUD_LAYER_H__

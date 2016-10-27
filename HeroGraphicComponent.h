@@ -6,10 +6,13 @@
 
 USING_NS_CC;
 
+class GameScene;
+
 class HeroGraphicComponent : public GraphicComponent
 {
 public:
 	HeroGraphicComponent();
+	HeroGraphicComponent(GameScene& i_parentGameScene);
 	HeroGraphicComponent(HeroGraphicComponent& heroGraphiComponent);
 
 	~HeroGraphicComponent();

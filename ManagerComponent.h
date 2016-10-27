@@ -3,19 +3,25 @@
 
 #include "cocos2d.h"
 
-using namespace std;
-using namespace cocos2d;
+USING_NS_CC;
+
+class GameScene;
+class MapLayer;
+class HeroGraphicComponent;
+class FamilyHouse;
 
 class ManagerComponent
 {
 public:
-	ManagerComponent();
+	ManagerComponent(GameScene& i_gameScene);
 	~ManagerComponent();
 
-	virtual void Update(GameScene& scene);
+	void Update(GameScene& i_gameScene);
 
 private:
-
+	MapLayer*				m_mapLayer;
+	HeroGraphicComponent*	m_hero;
+	FamilyHouse*			m_houseFamily;
 };
 
 #endif

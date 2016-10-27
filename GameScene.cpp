@@ -1,4 +1,10 @@
 #include "GameScene.h"
+#include "MapLayer.h"
+#include "FamilyHouse.h"
+#include "HeroGraphicComponent.h"
+#include "ManagerComponent.h"
+
+Size GameScene::m_visibleSize = Size(0, 0);
 
 Scene *GameScene::createScene() 
 {
@@ -23,7 +29,8 @@ bool GameScene::init()
 	m_visibleSize   = Director::getInstance()->getVisibleSize();
 	m_origin		= Director::getInstance()->getVisibleOrigin();
 
-	 
+	m_manager = new ManagerComponent(*this);
+
 
 	return true;
 }
