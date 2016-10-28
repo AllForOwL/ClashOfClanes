@@ -12,7 +12,7 @@ public:
 
 	enum StateFactory
 	{
-		START,
+		START_ARCHER,
 		WORKING,
 		NOTHING
 	};
@@ -30,6 +30,7 @@ public:
 private:
 	StateFactory m_stateFactory;
 	std::chrono::time_point<std::chrono::system_clock> m_startSecond;
+	int m_timeForCompleteWarrior;
 
 };
 

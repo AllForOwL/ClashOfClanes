@@ -28,7 +28,7 @@ FamilyHouse::FamilyHouse(const FamilyHouse& i_familyHouse)
 
 }
 
-/*virtual*/ void FamilyHouse::Update(GameScene& i_gameScene)
+/*virtual*/ void FamilyHouse::Update(ManagerComponent& i_manager)
 {
 
 }

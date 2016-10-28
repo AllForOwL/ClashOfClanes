@@ -2,6 +2,8 @@
 #include "GameScene.h"
 #include "constants.h"
 
+const int CNT_COIN_FOR_START_ARCHER = 50;
+
 HeroGraphicComponent::HeroGraphicComponent()
 {
 	this->initWithFile(CNT_PATH_TO_RESOURCES + "Hero/Walk_1.png");
@@ -22,14 +24,22 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 	
 }
 
-/*virtual*/ void HeroGraphicComponent::Update(GameScene& i_gameScene)
+/*virtual*/ void HeroGraphicComponent::Update(ManagerComponent& i_manager)
 {
 
 }
 
-int HeroGraphicComponent::GetCoin() const
+bool HeroGraphicComponent::CheckProductionArcher()
 {
-	return m_coin;
+	if (m_coin >= CNT_COIN_FOR_START_ARCHER)
+	{
+		m_coin -= CNT_COIN_FOR_START_ARCHER;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 HeroGraphicComponent::~HeroGraphicComponent()

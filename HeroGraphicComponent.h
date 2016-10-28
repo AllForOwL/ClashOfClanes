@@ -17,10 +17,10 @@ public:
 
 	~HeroGraphicComponent();
 
-	virtual void Update(GameScene& i_gameScene);
+	virtual void Update(ManagerComponent& i_manager);
 
-	int GetCoin() const;
-
+	bool CheckProductionArcher();
+	
 private:
 
 	int m_coin;

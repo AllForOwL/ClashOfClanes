@@ -25,7 +25,7 @@ WarriorFactory::WarriorFactory(WarriorFactory& i_warriorFactory)
 
 bool WarriorFactory::isComplete() 
 {
-	if ((int)std::chrono::duration<double>(GraphicComponent::GetTime() - m_startSecond).count() == CNT_TIME_FOR_COMPLETE_ARCHER)
+	if ((int)std::chrono::duration<double>(GraphicComponent::GetTime() - m_startSecond).count() == m_timeForCompleteWarrior)
 	{
 		return true;
 	}
@@ -39,10 +39,11 @@ bool WarriorFactory::isComplete()
 {
 	switch (m_stateFactory)
 	{
-		case StateFactory::START:
+		case StateFactory::START_ARCHER:
 		{
-			if (i_manager.m_hero->GetCoin() >= CNT_COIN_FOR_START_ARCHER)
+			if (i_manager.m_hero->CheckProductionArcher())
 			{
+				m_timeForCompleteWarrior = CNT_TIME_FOR_COMPLETE_ARCHER;
 				m_startSecond = GraphicComponent::GetTime();
 				m_stateFactory = StateFactory::WORKING;
 			}

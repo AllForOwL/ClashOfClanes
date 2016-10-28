@@ -29,7 +29,7 @@ Archer::Archer(Archer& Archer)
 
 Archer::~Archer()
 {
-	CCLOG("destructor herographic");
+	CCLOG("destructor archer");
 }
 
 /*  GraphicComponent	- тільки малює спрайти 

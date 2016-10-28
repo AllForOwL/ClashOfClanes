@@ -15,7 +15,7 @@ public:
 
 	~FamilyHouse();
 
-	virtual void Update(GameScene& i_gameScene);
+	virtual void Update(ManagerComponent& i_manager);
 
 private:
 

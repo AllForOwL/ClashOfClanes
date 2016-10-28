@@ -3,6 +3,7 @@
 #include "HeroGraphicComponent.h"
 #include "FamilyHouse.h"
 #include "GameScene.h"
+#include "ManagerArmy.h"
 
 ManagerComponent::ManagerComponent(GameScene& i_gameScene)
 {
@@ -21,3 +22,9 @@ ManagerComponent::~ManagerComponent()
 {
 
 }
+
+
+/*
+	Create manager for factory
+	Add to factory production other warrior
+*/
