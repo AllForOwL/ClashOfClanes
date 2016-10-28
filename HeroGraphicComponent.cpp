@@ -3,6 +3,8 @@
 #include "constants.h"
 
 const int CNT_COIN_FOR_START_ARCHER = 50;
+const int CNT_COIN_FOR_START_TANK	= 90;
+const int CNT_COIN_FOR_START_CAR	= 70;
 
 HeroGraphicComponent::HeroGraphicComponent()
 {
@@ -39,6 +41,32 @@ bool HeroGraphicComponent::CheckProductionArcher()
 	else
 	{
 		return false;
+	}
+}
+
+bool HeroGraphicComponent::CheckProductionTank()
+{
+	if (m_coin >= CNT_COIN_FOR_START_TANK)
+	{
+		m_coin -= CNT_COIN_FOR_START_TANK;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool HeroGraphicComponent::CheckProductionCar()
+{
+	if (m_coin >= CNT_COIN_FOR_START_CAR)
+	{
+		m_coin -= CNT_COIN_FOR_START_CAR;
+		return true;
+	}
+	else
+	{
+		return true;
 	}
 }
 

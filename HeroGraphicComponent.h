@@ -20,7 +20,9 @@ public:
 	virtual void Update(ManagerComponent& i_manager);
 
 	bool CheckProductionArcher();
-	
+	bool CheckProductionTank();
+	bool CheckProductionCar();
+
 private:
 
 	int m_coin;

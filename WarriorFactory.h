@@ -10,7 +10,7 @@ class WarriorFactory : public Factory
 {
 public:
 
-	enum StateFactory
+	enum StateFactoryWarrior
 	{
 		START_ARCHER,
 		WORKING,
@@ -28,9 +28,10 @@ public:
 	bool isComplete();
 
 private:
-	StateFactory m_stateFactory;
+	StateFactoryWarrior m_stateFactory;
 	std::chrono::time_point<std::chrono::system_clock> m_startSecond;
 	int m_timeForCompleteWarrior;
+	ManagerArmy::StateManagerArmy m_stateTypeAddWarrior;
 
 };
 

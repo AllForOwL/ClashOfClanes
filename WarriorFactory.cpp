@@ -39,28 +39,28 @@ bool WarriorFactory::isComplete()
 {
 	switch (m_stateFactory)
 	{
-		case StateFactory::START_ARCHER:
+		case StateFactoryWarrior::START_ARCHER:
 		{
 			if (i_manager.m_hero->CheckProductionArcher())
 			{
 				m_timeForCompleteWarrior = CNT_TIME_FOR_COMPLETE_ARCHER;
 				m_startSecond = GraphicComponent::GetTime();
-				m_stateFactory = StateFactory::WORKING;
+				m_stateFactory = StateFactoryWarrior::WORKING;
+				m_stateTypeAddWarrior = ManagerArmy::StateManagerArmy::ADD_ARCHER;
 			}
 
 			break;
 		}
-		case StateFactory::WORKING:
+		case StateFactoryWarrior::WORKING:
 		{
 			if (isComplete())
 			{
-				m_stateFactory = StateFactory::NOTHING;
-				ManagerArmy::StateManagerArmy _stateArmy = ManagerArmy::StateManagerArmy::ADD_ARCHER;
-				i_manager.m_managerArmy->SetState(_stateArmy);
+				m_stateFactory = StateFactoryWarrior::NOTHING;
+				i_manager.m_managerArmy->SetState(m_stateTypeAddWarrior);
 			}
 			break;
 		}
-		case StateFactory::NOTHING:
+		case StateFactoryWarrior::NOTHING:
 		{
 			
 			break;

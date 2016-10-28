@@ -10,6 +10,8 @@ class MapLayer;
 class HeroGraphicComponent;
 class FamilyHouse;
 class ManagerArmy;
+class ManagerFactory;
+class ManagerMachine;
 
 class ManagerComponent
 {
@@ -23,7 +25,9 @@ public:
 	MapLayer*				m_mapLayer;
 	HeroGraphicComponent*	m_hero;
 	FamilyHouse*			m_houseFamily;
-	ManagerArmy*			m_managerArmy
+	ManagerArmy*			m_managerArmy;
+	ManagerFactory*			m_managerFactory;
+	ManagerMachine*			m_managerMachine;
 };
 
 #endif
