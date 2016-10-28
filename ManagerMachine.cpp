@@ -39,7 +39,15 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerMachine::NOTHING:
 		{
-			
+			for (int i = 0; i < m_vecMachineCar.size(); i++)
+			{
+				m_vecMachineCar[i]->Update(i_manager);
+			}
+
+			for (int i = 0; i < m_vecMachineTank.size(); i++)
+			{
+				m_vecMachineTank[i]->Update(i_manager);
+			}
 
 			break;
 		}

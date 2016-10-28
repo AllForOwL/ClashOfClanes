@@ -1,5 +1,5 @@
-#ifndef __MANAGER_FACTORY_H__
-#define __MANAGER_FACTORY_H__
+#ifndef __MANAGER_MACHINE_H__
+#define __MANAGER_MACHINE_H__
 
 #include "cocos2d.h"
 
@@ -36,7 +36,7 @@ public:
 private:
 	std::vector<Tank*>		m_vecMachineTank;
 	std::vector<Car*>		m_vecMachineCar;
-	StateManagerMachine m_stateManagerMachine;
+	StateManagerMachine		m_stateManagerMachine;
 };
 
 #endif

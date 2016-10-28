@@ -31,7 +31,6 @@ bool GameScene::init()
 
 	m_manager = new ManagerComponent(*this);
 
-
 	return true;
 }
 

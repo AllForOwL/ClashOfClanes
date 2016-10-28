@@ -14,7 +14,7 @@ public:
 	Factory(){};
 	~Factory(){};
 
-	virtual void Update(GameScene& scene) = 0;
+	virtual void Update(ManagerComponent& i_manager) = 0;
 };
 
 #endif

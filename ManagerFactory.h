@@ -32,8 +32,8 @@ public:
 	void SetState(StateManagerFactory& i_state);
 
 private:
-	std::vector<ManagerArmy*>		m_vecFactoryWarrior;
 	std::vector<MachineFactory*>	m_vecFactoryMachine;
+	std::vector<WarriorFactory*>	m_vecFactoryWarrior;
 	StateManagerFactory				m_stateManagerFactory;
 };
 
