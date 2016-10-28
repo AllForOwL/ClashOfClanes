@@ -19,8 +19,11 @@ public:
 
 	virtual void Update(GameScene& i_gameScene);
 
+	int GetCoin() const;
+
 private:
 
+	int m_coin;
 };
 
 #endif

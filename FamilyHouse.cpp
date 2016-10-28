@@ -4,25 +4,21 @@
 
 FamilyHouse::FamilyHouse()
 {
-	m_visibleSize = Director::getInstance()->getVisibleSize();
-
 	this->initWithFile(CNT_PATH_TO_RESOURCES + "Castle/castle_beige.png");
-	this->setScale(m_visibleSize.width / this->getContentSize().width / 6,
-		m_visibleSize.height / this->getContentSize().height / 6);
-	this->setPosition(m_visibleSize.width / 2, m_visibleSize.height / 2);
+	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 6,
+		GameScene::m_visibleSize.height / this->getContentSize().height / 6);
+	this->setPosition(GameScene::m_visibleSize.width / 2, GameScene::m_visibleSize.height / 2);
 	this->setZOrder(1);
 }
 
 FamilyHouse::FamilyHouse(GameScene& i_parentGameScene)
 {
-	this->setParent(&i_parentGameScene);
+	i_parentGameScene.addChild(this);
 
-	m_visibleSize = Director::getInstance()->getVisibleSize();
-	
 	this->initWithFile(CNT_PATH_TO_RESOURCES + "Castle/castle_beige.png");
-	this->setScale(m_visibleSize.width / this->getContentSize().width / 6,
-		m_visibleSize.height / this->getContentSize().height / 6);
-	this->setPosition(m_visibleSize.width / 2, m_visibleSize.height / 2);
+	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 6,
+		GameScene::m_visibleSize.height / this->getContentSize().height / 6);
+	this->setPosition(GameScene::m_visibleSize.width / 2, GameScene::m_visibleSize.height / 2);
 	this->setZOrder(1);
 }
 

@@ -9,6 +9,7 @@ class GameScene;
 class MapLayer;
 class HeroGraphicComponent;
 class FamilyHouse;
+class ManagerArmy;
 
 class ManagerComponent
 {
@@ -18,10 +19,11 @@ public:
 
 	void Update(GameScene& i_gameScene);
 
-private:
+public:
 	MapLayer*				m_mapLayer;
 	HeroGraphicComponent*	m_hero;
 	FamilyHouse*			m_houseFamily;
+	ManagerArmy*			m_managerArmy
 };
 
 #endif

@@ -9,13 +9,28 @@ USING_NS_CC;
 class WarriorFactory : public Factory
 {
 public:
+
+	enum StateFactory
+	{
+		START,
+		WORKING,
+		NOTHING
+	};
+
 	WarriorFactory();
 	WarriorFactory(GameScene& i_parentGameScene);
-	WarriorFactory(const WarriorFactory& i_warriorFactory);
+	WarriorFactory(WarriorFactory& i_warriorFactory);
 
 	~WarriorFactory();
 
-	virtual void Update(GameScene& i_gameScene);
+	virtual void Update(ManagerComponent& i_manager);
+
+	bool isComplete();
+
+private:
+	StateFactory m_stateFactory;
+	std::chrono::time_point<std::chrono::system_clock> m_startSecond;
+
 };
 
 #endif

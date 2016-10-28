@@ -18,7 +18,6 @@ public:
 	virtual void Update(GameScene& i_gameScene);
 
 private:
-	Size m_visibleSize;
 
 };
 

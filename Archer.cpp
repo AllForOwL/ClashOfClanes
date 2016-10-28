@@ -1,15 +1,15 @@
-﻿#include "HeroGraphicComponent.h"
+﻿#include "Archer.h"
 #include "GameScene.h"
 #include "constants.h"
 
-HeroGraphicComponent::HeroGraphicComponent()
+Archer::Archer()
 {
 	this->initWithFile(CNT_PATH_TO_RESOURCES + "Hero/Walk_1.png");
 	this->setPosition(GameScene::m_visibleSize.width / 2 - 50, GameScene::m_visibleSize.height / 2);
 	this->setZOrder(1);
 }
 
-HeroGraphicComponent::HeroGraphicComponent(GameScene& i_parentGameScene)
+Archer::Archer(GameScene& i_parentGameScene)
 {
 	i_parentGameScene.addChild(this);
 	this->initWithFile(CNT_PATH_TO_RESOURCES + "Hero/Walk_1.png");
@@ -17,22 +17,17 @@ HeroGraphicComponent::HeroGraphicComponent(GameScene& i_parentGameScene)
 	this->setZOrder(1);
 }
 
-HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComponent)
+Archer::Archer(Archer& Archer)
 {
 	
 }
 
-/*virtual*/ void HeroGraphicComponent::Update(GameScene& i_gameScene)
+/*virtual*/ void Archer::Update(ManagerComponent& i_manager)
 {
 
 }
 
-int HeroGraphicComponent::GetCoin() const
-{
-	return m_coin;
-}
-
-HeroGraphicComponent::~HeroGraphicComponent()
+Archer::~Archer()
 {
 	CCLOG("destructor herographic");
 }

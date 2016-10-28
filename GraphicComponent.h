@@ -5,7 +5,7 @@
 
 using namespace cocos2d;
 
-class GameScene;
+class ManagerComponent;
 
 class GraphicComponent : public Sprite
 {
@@ -13,8 +13,15 @@ public:
 	GraphicComponent(){};
 	virtual ~GraphicComponent(){};
 
-	virtual void Update(GameScene& i_gameScene) = 0;
+	virtual void Update(ManagerComponent& i_manager) = 0;
 	
+	virtual std::chrono::time_point<std::chrono::system_clock> GetTime()
+	{
+		std::chrono::time_point<std::chrono::system_clock> _time = std::chrono::system_clock::now();
+
+		return _time;
+	}
+
 };
 
 #endif
