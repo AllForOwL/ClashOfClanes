@@ -31,9 +31,12 @@ public:
 
 private:
 	ManagerMachine::StateManagerMachine m_stateManagerMachine;
-	StateFactoryMachine					m_stateFactoryMachine;
+	StateFactoryMachine					m_stateMachine;
 	int									m_timeForCompleteMachine;
 	std::chrono::time_point<std::chrono::system_clock> m_startSecond;
+
+	Vec2	m_locationTouch;
+	Rect	m_rectFactory;
 
 };
 
