@@ -25,7 +25,7 @@ public:
 	CREATE_FUNC(HUDLayer);
 
 	void Update(ManagerComponent& i_manager);
-	void DetermineCommand();
+	bool DetermineCommand();
 	void ExecuteCommand(ManagerComponent& i_manager);
 	
 private:

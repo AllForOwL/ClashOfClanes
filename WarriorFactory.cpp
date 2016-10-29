@@ -5,9 +5,10 @@
 #include "GraphicComponent.h"
 #include "ManagerArmy.h"
 #include "constants.h"
+#include "HeroInputComponent.h"
 
-const int CNT_COIN_FOR_START_ARCHER = 50;
-const int CNT_TIME_FOR_COMPLETE_ARCHER = 20;
+const int CNT_COIN_FOR_START_ARCHER		= 50;
+const int CNT_TIME_FOR_COMPLETE_ARCHER	= 20;
 
 WarriorFactory::WarriorFactory()
 {
@@ -20,8 +21,12 @@ WarriorFactory::WarriorFactory(GameScene& i_parentGameScene)
 	this->initWithFile(CNT_PATH_TO_RESOURCES + "Castle/FactoryWarrior.png");
 	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 6,
 		GameScene::m_visibleSize.height / this->getContentSize().height / 6);
-	this->setPosition(GameScene::m_visibleSize.width / 2, GameScene::m_visibleSize.height / 2);
+	this->setPosition(GameScene::m_visibleSize.width / 2 + 50, GameScene::m_visibleSize.height / 2);
 	this->setZOrder(1);
+
+	m_stateWarrior	= StateFactoryWarrior::NOTHING;
+	m_locationTouch = Point::ZERO;
+	m_rectFactory	= this->getBoundingBox();
 }
 
 WarriorFactory::WarriorFactory(WarriorFactory& i_warriorFactory)
@@ -43,7 +48,7 @@ bool WarriorFactory::isComplete()
 
 /*virtual*/ void WarriorFactory::Update(ManagerComponent& i_manager)
 {
-	switch (m_stateFactory)
+	switch (m_stateWarrior)
 	{
 		case StateFactoryWarrior::START_ARCHER:
 		{
@@ -51,7 +56,7 @@ bool WarriorFactory::isComplete()
 			{
 				m_timeForCompleteWarrior = CNT_TIME_FOR_COMPLETE_ARCHER;
 				m_startSecond = GraphicComponent::GetTime();
-				m_stateFactory = StateFactoryWarrior::WORKING;
+				m_stateWarrior = StateFactoryWarrior::WORKING;
 				m_stateTypeAddWarrior = ManagerArmy::StateManagerArmy::ADD_ARCHER;
 			}
 
@@ -68,7 +73,15 @@ bool WarriorFactory::isComplete()
 		}
 		case StateFactoryWarrior::NOTHING:
 		{
-			
+			if ((m_locationTouch = i_manager.m_inputComponent->GetLocationTouch()) != Point::ZERO)
+			{
+				if (m_rectFactory.containsPoint(m_locationTouch))
+				{
+					i_manager.m_inputComponent->SetZeroLocation();
+					m_stateWarrior = StateFactoryWarrior::START_ARCHER;
+				}
+			}
+
 			break;
 		}
 	default:

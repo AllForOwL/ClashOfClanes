@@ -35,22 +35,28 @@ void HUDLayer::Update(ManagerComponent& i_manager)
 {
 	if ((m_locationTouch = i_manager.m_inputComponent->GetLocationTouch()) != Point::ZERO)
 	{
-		i_manager.m_inputComponent->SetZeroLocation();
-		DetermineCommand();
-		ExecuteCommand(i_manager);
+	//	i_manager.m_inputComponent->SetZeroLocation();
+		if (DetermineCommand())
+		{
+			i_manager.m_inputComponent->SetZeroLocation();
+			ExecuteCommand(i_manager);
+		}
 	}
 }
 
-void HUDLayer::DetermineCommand()
+bool HUDLayer::DetermineCommand()
 {
 	if (m_rectFactoryMachine.containsPoint(m_locationTouch))
 	{
 		m_command = Command::CREATE_FACTORY_MACHINE;
+		return true;
 	}
 	else if (m_rectFactoryWarrior.containsPoint(m_locationTouch))
 	{
 		m_command = Command::CREATE_FACTORY_WARRIOR;
+		return true;
 	}
+	return false;
 }
 
 void HUDLayer::ExecuteCommand(ManagerComponent& i_manager)

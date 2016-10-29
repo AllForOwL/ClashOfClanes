@@ -23,8 +23,8 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		{
 			if (i_manager.m_hero->CheckProductionFactoryWarrior())
 			{
-				MachineFactory* _machineFactory = new MachineFactory(i_gameScene);
-				m_vecFactoryMachine.push_back(_machineFactory);
+				WarriorFactory* _warriorFactory = new WarriorFactory(i_gameScene);
+				m_vecFactoryWarrior.push_back(_warriorFactory);
 			}
 			m_stateManagerFactory = ManagerFactory::NOTHING;
 
@@ -34,8 +34,8 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		{
 			if (i_manager.m_hero->CheckProductionFactoryMachine())
 			{
-				WarriorFactory* _warriorFactory = new WarriorFactory(i_gameScene);
-				m_vecFactoryWarrior.push_back(_warriorFactory);
+				MachineFactory* _machineFactory = new MachineFactory(i_gameScene);
+				m_vecFactoryMachine.push_back(_machineFactory);
 			}
 			m_stateManagerFactory = ManagerFactory::NOTHING;
 

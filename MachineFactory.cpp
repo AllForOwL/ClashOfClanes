@@ -21,7 +21,7 @@ MachineFactory::MachineFactory(GameScene& i_parentGameScene)
 	this->initWithFile(CNT_PATH_TO_RESOURCES + "Castle/FactoryMachine.png");
 	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 6,
 		GameScene::m_visibleSize.height / this->getContentSize().height / 6);
-	this->setPosition(GameScene::m_visibleSize.width / 2, GameScene::m_visibleSize.height / 2);
+	this->setPosition(GameScene::m_visibleSize.width / 2 - 50, GameScene::m_visibleSize.height / 2);
 	this->setZOrder(1);
 }
 
