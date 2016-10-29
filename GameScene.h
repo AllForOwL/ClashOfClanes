@@ -34,6 +34,8 @@ public:
 		m_sceneWorld = world;
 	}
 	
+	void update(float dt);
+
 	static Size	m_visibleSize;
 
 private:

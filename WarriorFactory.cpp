@@ -4,6 +4,7 @@
 #include "GameScene.h"
 #include "GraphicComponent.h"
 #include "ManagerArmy.h"
+#include "constants.h"
 
 const int CNT_COIN_FOR_START_ARCHER = 50;
 const int CNT_TIME_FOR_COMPLETE_ARCHER = 20;
@@ -16,6 +17,11 @@ WarriorFactory::WarriorFactory()
 WarriorFactory::WarriorFactory(GameScene& i_parentGameScene)
 {
 	i_parentGameScene.addChild(this);
+	this->initWithFile(CNT_PATH_TO_RESOURCES + "Castle/FactoryWarrior.png");
+	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 6,
+		GameScene::m_visibleSize.height / this->getContentSize().height / 6);
+	this->setPosition(GameScene::m_visibleSize.width / 2, GameScene::m_visibleSize.height / 2);
+	this->setZOrder(1);
 }
 
 WarriorFactory::WarriorFactory(WarriorFactory& i_warriorFactory)

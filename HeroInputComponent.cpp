@@ -28,6 +28,11 @@ void HeroInputComponent::SetZeroLocation()
 	m_locationTouch = Point::ZERO;
 }
 
+Vec2 HeroInputComponent::GetLocationTouch() const
+{
+	return m_locationTouch;
+}
+
 /*virtual*/ void HeroInputComponent::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event)
 {
 

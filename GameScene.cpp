@@ -4,6 +4,9 @@
 #include "HeroGraphicComponent.h"
 #include "ManagerComponent.h"
 #include "HUDLayer.h"
+#include "HeroInputComponent.h"
+
+const float CNT_TIME_UPDATE_SCENE = 0.1;
 
 Size GameScene::m_visibleSize = Size(0, 0);
 
@@ -35,7 +38,19 @@ bool GameScene::init()
 	m_HUDLayer = HUDLayer::create();
 	this->addChild(m_HUDLayer, 100);
 
+	auto _touchListener = EventListenerTouchOneByOne::create();
+	_touchListener->onTouchBegan = CC_CALLBACK_2(HeroInputComponent::onTouchBegan, m_manager->m_inputComponent);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(_touchListener, this);
+
+	this->schedule(schedule_selector(GameScene::update), CNT_TIME_UPDATE_SCENE);
+
 	return true;
+}
+
+void GameScene::update(float dt)
+{
+	m_HUDLayer->Update	(*m_manager);
+	m_manager->Update	(*this);
 }
 
 GameScene::~GameScene()

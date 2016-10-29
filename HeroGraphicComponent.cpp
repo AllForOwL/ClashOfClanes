@@ -8,11 +8,15 @@ const int CNT_COIN_FOR_START_CAR	= 70;
 const int CNT_COIN_FOR_START_FACTORY_MACHINE	= 300;
 const int CNT_COIN_FOR_START_FACTORY_WARRIOR	= 250;
 
+const int CNT_COINT_IN_BEGIN = 1000;
+
 HeroGraphicComponent::HeroGraphicComponent()
 {
 	this->initWithFile(CNT_PATH_TO_RESOURCES + "Hero/Walk_1.png");
 	this->setPosition(GameScene::m_visibleSize.width / 2 - 50, GameScene::m_visibleSize.height / 2);
 	this->setZOrder(1);
+	
+	m_coin = CNT_COINT_IN_BEGIN;
 }
 
 HeroGraphicComponent::HeroGraphicComponent(GameScene& i_parentGameScene)
@@ -21,6 +25,8 @@ HeroGraphicComponent::HeroGraphicComponent(GameScene& i_parentGameScene)
 	this->initWithFile(CNT_PATH_TO_RESOURCES + "Hero/Walk_1.png");
 	this->setPosition(GameScene::m_visibleSize.width / 2 - 50, GameScene::m_visibleSize.height / 2);
 	this->setZOrder(1);
+
+	m_coin = CNT_COINT_IN_BEGIN;
 }
 
 HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComponent)
@@ -79,6 +85,10 @@ bool HeroGraphicComponent::CheckProductionFactoryMachine()
 		m_coin -= CNT_COIN_FOR_START_FACTORY_MACHINE;
 		return true;
 	}
+	else
+	{
+		return false;
+	}
 }
 
 bool HeroGraphicComponent::CheckProductionFactoryWarrior()
@@ -87,6 +97,10 @@ bool HeroGraphicComponent::CheckProductionFactoryWarrior()
 	{
 		m_coin -= CNT_COIN_FOR_START_FACTORY_WARRIOR;
 		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 

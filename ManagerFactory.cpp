@@ -26,6 +26,7 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 				MachineFactory* _machineFactory = new MachineFactory(i_gameScene);
 				m_vecFactoryMachine.push_back(_machineFactory);
 			}
+			m_stateManagerFactory = ManagerFactory::NOTHING;
 
 			break;
 		}
@@ -36,6 +37,7 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 				WarriorFactory* _warriorFactory = new WarriorFactory(i_gameScene);
 				m_vecFactoryWarrior.push_back(_warriorFactory);
 			}
+			m_stateManagerFactory = ManagerFactory::NOTHING;
 
 			break;
 		}
