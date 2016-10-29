@@ -5,17 +5,37 @@
 
 USING_NS_CC;
 
+class ManagerComponent;
+
 class HUDLayer : public cocos2d::Layer
 {
 public:
-	~HUDLayer();
+
+	enum Command
+	{
+		CREATE_FACTORY_MACHINE,
+		CREATE_FACTORY_WARRIOR,
+		NOTHING
+	};
+
 	virtual bool init();
+
+	~HUDLayer();
 
 	CREATE_FUNC(HUDLayer);
 
+	void Update(ManagerComponent& i_manager);
+	void DetermineCommand();
+	void ExecuteCommand(ManagerComponent& i_manager);
+	
 private:
-	Size	m_visibleSize;
-	Vec2	m_origin;
+	Sprite*	m_factoryMachine;
+	Sprite*	m_factoryWarrior;
+	Rect	m_rectFactoryMachine;
+	Rect	m_rectFactoryWarrior;
+	Command	m_command;
+
+	Vec2	m_locationTouch;
 };
 
 #endif // __HUD_LAYER_H__

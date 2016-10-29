@@ -31,9 +31,12 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerArmy::NOTHING:
 		{				
-			for (int i = 0; i < m_vecArcher.size(); i++)
+			if (m_vecArcher.size())
 			{
-				m_vecArcher[i]->Update(i_manager);
+				for (int i = 0; i < m_vecArcher.size(); i++)
+				{
+					m_vecArcher[i]->Update(i_manager);
+				}
 			}
 
 			break;

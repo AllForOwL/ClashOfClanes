@@ -6,6 +6,8 @@
 
 USING_NS_CC;
 
+class GameScene;
+
 class FamilyHouse :	public House
 {
 public:

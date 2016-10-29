@@ -3,7 +3,7 @@
 
 HeroInputComponent::HeroInputComponent()
 {
-	
+	m_locationTouch = Point::ZERO;
 }
 
 HeroInputComponent::HeroInputComponent(HeroInputComponent& i_inputComponent)
@@ -23,12 +23,14 @@ HeroInputComponent::HeroInputComponent(HeroInputComponent& i_inputComponent)
 	return true;
 }
 
+void HeroInputComponent::SetZeroLocation()
+{
+	m_locationTouch = Point::ZERO;
+}
+
 /*virtual*/ void HeroInputComponent::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event)
 {
-	Size _visibleSize = Director::getInstance()->getVisibleSize();
-	
-	auto _locationTouchNow		= touch->getLocation();
-	auto _locationTouchStart	= touch->getStartLocation();
+
 }
 
 /*virtual*/ void HeroInputComponent::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event)

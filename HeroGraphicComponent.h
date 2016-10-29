@@ -22,6 +22,8 @@ public:
 	bool CheckProductionArcher();
 	bool CheckProductionTank();
 	bool CheckProductionCar();
+	bool CheckProductionFactoryMachine();
+	bool CheckProductionFactoryWarrior();
 
 private:
 

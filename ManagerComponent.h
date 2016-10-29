@@ -12,7 +12,7 @@ class FamilyHouse;
 class ManagerArmy;
 class ManagerFactory;
 class ManagerMachine;
-
+class HeroInputComponent;
 class ManagerComponent
 {
 public:
@@ -28,6 +28,7 @@ public:
 	ManagerArmy*			m_managerArmy;
 	ManagerFactory*			m_managerFactory;
 	ManagerMachine*			m_managerMachine;
+	HeroInputComponent*		m_inputComponent;
 };
 
 #endif

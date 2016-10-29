@@ -28,6 +28,9 @@ public:
 	virtual void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
 	virtual void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
 
+	Vec2 GetLocationTouch() const;
+	void SetZeroLocation();
+
 	~HeroInputComponent();
 
 public:

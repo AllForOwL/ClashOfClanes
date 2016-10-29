@@ -3,6 +3,7 @@
 #include "FamilyHouse.h"
 #include "HeroGraphicComponent.h"
 #include "ManagerComponent.h"
+#include "HUDLayer.h"
 
 Size GameScene::m_visibleSize = Size(0, 0);
 
@@ -30,6 +31,9 @@ bool GameScene::init()
 	m_origin		= Director::getInstance()->getVisibleOrigin();
 
 	m_manager = new ManagerComponent(*this);
+
+	m_HUDLayer = HUDLayer::create();
+	this->addChild(m_HUDLayer, 100);
 
 	return true;
 }

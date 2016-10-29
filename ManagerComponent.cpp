@@ -6,11 +6,14 @@
 #include "ManagerArmy.h"
 #include "ManagerFactory.h"
 #include "ManagerMachine.h"
+#include "HeroInputComponent.h"
 
 ManagerComponent::ManagerComponent(GameScene& i_gameScene)
 {
 	m_mapLayer		= new MapLayer(i_gameScene);
 	m_hero			= new HeroGraphicComponent(i_gameScene);
+	
+	m_inputComponent = new HeroInputComponent();
 
 	m_managerArmy		= new ManagerArmy();
 	m_managerMachine	= new ManagerMachine();

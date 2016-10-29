@@ -5,6 +5,8 @@
 const int CNT_COIN_FOR_START_ARCHER = 50;
 const int CNT_COIN_FOR_START_TANK	= 90;
 const int CNT_COIN_FOR_START_CAR	= 70;
+const int CNT_COIN_FOR_START_FACTORY_MACHINE	= 300;
+const int CNT_COIN_FOR_START_FACTORY_WARRIOR	= 250;
 
 HeroGraphicComponent::HeroGraphicComponent()
 {
@@ -66,6 +68,24 @@ bool HeroGraphicComponent::CheckProductionCar()
 	}
 	else
 	{
+		return true;
+	}
+}
+
+bool HeroGraphicComponent::CheckProductionFactoryMachine()
+{
+	if (m_coin >= CNT_COIN_FOR_START_FACTORY_MACHINE)
+	{
+		m_coin -= CNT_COIN_FOR_START_FACTORY_MACHINE;
+		return true;
+	}
+}
+
+bool HeroGraphicComponent::CheckProductionFactoryWarrior()
+{
+	if (m_coin >= CNT_COIN_FOR_START_FACTORY_WARRIOR)
+	{
+		m_coin -= CNT_COIN_FOR_START_FACTORY_WARRIOR;
 		return true;
 	}
 }

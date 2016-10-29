@@ -3,6 +3,7 @@
 #include "ManagerComponent.h"
 #include "WarriorFactory.h"
 #include "MachineFactory.h"
+#include "HeroGraphicComponent.h"
 
 ManagerFactory::ManagerFactory()
 {
@@ -20,15 +21,21 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 	{
 		case ManagerFactory::ADD_FACTORY_WARRIOR:
 		{
-			MachineFactory* _machineFactory = new MachineFactory(i_gameScene);
-			m_vecFactoryMachine.push_back(_machineFactory);
+			if (i_manager.m_hero->CheckProductionFactoryWarrior())
+			{
+				MachineFactory* _machineFactory = new MachineFactory(i_gameScene);
+				m_vecFactoryMachine.push_back(_machineFactory);
+			}
 
 			break;
 		}
 		case ManagerFactory::ADD_FACTORY_MACHINE:
 		{
-			WarriorFactory* _warriorFactory = new WarriorFactory(i_gameScene);
-			m_vecFactoryWarrior.push_back(_warriorFactory);
+			if (i_manager.m_hero->CheckProductionFactoryMachine())
+			{
+				WarriorFactory* _warriorFactory = new WarriorFactory(i_gameScene);
+				m_vecFactoryWarrior.push_back(_warriorFactory);
+			}
 
 			break;
 		}

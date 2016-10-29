@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "Factory.h"
+#include "ManagerArmy.h"
 
 USING_NS_CC;
 
@@ -32,7 +33,6 @@ private:
 	std::chrono::time_point<std::chrono::system_clock> m_startSecond;
 	int m_timeForCompleteWarrior;
 	ManagerArmy::StateManagerArmy m_stateTypeAddWarrior;
-
 };
 
 #endif

@@ -7,6 +7,7 @@
 USING_NS_CC;
 
 class ManagerComponent;
+class GameScene;
 
 class Archer : public Warrior
 {

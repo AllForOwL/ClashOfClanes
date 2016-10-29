@@ -1,7 +1,6 @@
 /*
 	Architecture game
-
-	ManagerComponent
+	Boom
 */
 
 
@@ -17,6 +16,7 @@ class MapLayer;
 class FamilyHouse;
 class HeroGraphicComponent;
 class ManagerComponent;
+class HUDLayer;
 
 class GameScene : public cocos2d::Layer
 {
@@ -39,7 +39,8 @@ public:
 private:
 	Vec2	m_origin;
 
-	ManagerComponent* m_manager;
+	ManagerComponent*	m_manager;
+	HUDLayer*			m_HUDLayer;
 };
 
 #endif 
