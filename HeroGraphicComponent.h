@@ -14,6 +14,7 @@ public:
 
 	enum StateHero
 	{
+		SEARCH_WAY,
 		WALK,
 		NOTHING
 	};
@@ -41,7 +42,8 @@ private:
 	Rect		m_rectHero;
 	Vec2		m_positionTarget;
 
-	std::vector<Point> m_vecWayWalkHero;
+	std::vector<Point>	m_vecWayWalkHero;
+	int					m_iterInWayWalk;
 };
 
 #endif

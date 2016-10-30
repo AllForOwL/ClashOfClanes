@@ -25,6 +25,11 @@ MapLayer::MapLayer(GameScene& i_parentGameScene)
 	}
 }
 
+std::vector<std::vector<int>>& MapLayer::GetMapCoordinate()
+{
+	return m_mapCoordinate;
+}
+
 void MapLayer::FillRegionFromOvbject(Point i_point, Size i_size)
 {
 	for (int i = _position.x; i < _position.x + i_size.width; i++)

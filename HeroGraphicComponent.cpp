@@ -3,6 +3,8 @@
 #include "constants.h"
 #include "ManagerComponent.h"
 #include "HeroInputComponent.h"
+#include "AlgorithmLi.h"
+#include "MapLayer.h"
 
 const int CNT_COIN_FOR_START_ARCHER = 50;
 const int CNT_COIN_FOR_START_TANK	= 90;
@@ -46,9 +48,28 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 {
 	switch (m_stateHero)
 	{
-		case HeroGraphicComponent::WALK:
+		case HeroGraphicComponent::SEARCH_WAY:
 		{
-			// here has been algorithm search
+			AlgorithmLi* _searchWay = new AlgorithmLi(this->getPosition(), m_positionTarget, i_manager.m_mapLayer->GetMapCoordinate());
+			if (_searchWay->WayFound())
+			{
+				std::copy(_searchWay->GetFoundWay().begin(), _searchWay->GetFoundWay().end(), std::back_inserter(m_vecWayWalkHero));
+				m_iterInWayWalk = m_vecWayWalkHero.size() - 1;
+
+				m_stateHero = HeroGraphicComponent::WALK;
+			}
+			
+			delete _searchWay;
+
+			break;
+		}
+		case HeroGraphicComponent::StateHero::WALK:
+		{
+			this->setPosition(m_vecWayWalkHero[m_iterInWayWalk]);
+			if (--m_iterInWayWalk < 0)
+			{
+				m_stateHero = StateHero::NOTHING;
+			}
 
 			break;
 		}
@@ -56,7 +77,7 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 		{
 			if (CheckToGoTarget(i_manager))
 			{
-				m_stateHero  = StateHero::WALK;
+				m_stateHero  = StateHero::SEARCH_WAY;
 			}
 
 			break; 

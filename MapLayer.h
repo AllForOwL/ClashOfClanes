@@ -16,6 +16,8 @@ public:
 
 	void FillRegionFromOvbject(Point i_point, Size i_size);
 
+	std::vector<std::vector<int>>& GetMapCoordinate();
+
 private:
 	std::vector<std::vector<int>> m_mapCoordinate;
 };

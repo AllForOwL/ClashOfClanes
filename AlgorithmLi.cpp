@@ -2,6 +2,7 @@
 #include "constants.h"
 
 const int POSITION_FREE = 0;
+const int POSITION_BUSY = 2001;
 
 AlgorithmLi::AlgorithmLi()
 {
@@ -31,6 +32,10 @@ AlgorithmLi::~AlgorithmLi()
 
 }
 
+std::vector<Point>& AlgorithmLi::GetFoundWay()
+{
+	return m_vecFoundWay;
+}
 
 void AlgorithmLi::SearchWay(Point i_pointBegin, Point i_pointEnd, std::vector<std::vector<int>>& i_field)
 {
@@ -58,7 +63,12 @@ void AlgorithmLi::SearchWay(Point i_pointBegin, Point i_pointEnd, std::vector<st
 		_current.y		= m_vecPassableElement[_iterInVector].y;
 		_current.index	= m_vecPassableElement[_iterInVector].index;
 
-		if (_current.x == i_pointEnd.x && _current.y == i_pointEnd.y)
+		if (_current.index == _indexCurrent)
+		{
+			++_indexCurrent;
+		}
+
+		if (_current.x == (int)i_pointEnd.x && _current.y == (int)i_pointEnd.y)
 		{
 			RestoreWay();
 			m_wayFound = true;
@@ -72,6 +82,7 @@ void AlgorithmLi::SearchWay(Point i_pointBegin, Point i_pointEnd, std::vector<st
 			_tempPoint.y		= _current.y - 1;
 			_tempPoint.index	= _indexCurrent;
 			m_vecPassableElement.push_back(_tempPoint);
+			i_field[_current.x][_current.y - 1] = POSITION_BUSY;
 		}
 		if (i_field[_current.x - 1][_current.y] == POSITION_FREE)
 		{
@@ -80,6 +91,7 @@ void AlgorithmLi::SearchWay(Point i_pointBegin, Point i_pointEnd, std::vector<st
 			_tempPoint.y = _current.y;
 			_tempPoint.index = _indexCurrent;
 			m_vecPassableElement.push_back(_tempPoint);
+			i_field[_current.x - 1][_current.y] = POSITION_BUSY;
 		}
 		if (i_field[_current.x][_current.y + 1] == POSITION_FREE)
 		{
@@ -88,6 +100,7 @@ void AlgorithmLi::SearchWay(Point i_pointBegin, Point i_pointEnd, std::vector<st
 			_tempPoint.y = _current.y + 1;
 			_tempPoint.index = _indexCurrent;
 			m_vecPassableElement.push_back(_tempPoint);
+			i_field[_current.x][_current.y + 1] = POSITION_BUSY;
 		}
 		if (i_field[_current.x + 1][_current.y] == POSITION_FREE)
 		{
@@ -96,9 +109,9 @@ void AlgorithmLi::SearchWay(Point i_pointBegin, Point i_pointEnd, std::vector<st
 			_tempPoint.y = _current.y;
 			_tempPoint.index = _indexCurrent;
 			m_vecPassableElement.push_back(_tempPoint);
+			i_field[_current.x + 1][_current.y] = POSITION_BUSY;
 		}
 
-		++_indexCurrent;
 		++_iterInVector;
 	}
 }
@@ -109,20 +122,27 @@ void AlgorithmLi::RestoreWay()
 	int _indexElement	= m_vecPassableElement[_iterInVector].index;
 	m_vecFoundWay.push_back(Point(m_vecPassableElement[_iterInVector].x, m_vecPassableElement[_iterInVector].y));
 
-	--_indexElement;
-	while (_indexElement > 8)
+	int _indexInVecFoundWay = 0;
+
+	while (_indexElement)
 	{
-		for (int i = 0; i < _iterInVector; i++)
+		for (int i = 0; i < m_vecPassableElement.size(); i++)
 		{
-			if (m_vecPassableElement[i].index == _indexElement)
+			if ((m_vecPassableElement[i].x		== m_vecFoundWay[_indexInVecFoundWay].x &&
+				(m_vecPassableElement[i].y - 1	== m_vecFoundWay[_indexInVecFoundWay].y ||
+				m_vecPassableElement[i].y + 1	== m_vecFoundWay[_indexInVecFoundWay].y)
+				)
+				||
+				(m_vecPassableElement[i].y		== m_vecFoundWay[_indexInVecFoundWay].y &&
+				(m_vecPassableElement[i].x - 1	== m_vecFoundWay[_indexInVecFoundWay].x ||
+				m_vecPassableElement[i].x + 1	== m_vecFoundWay[_indexInVecFoundWay].x))
+				)
 			{
 				m_vecFoundWay.push_back(Point(m_vecPassableElement[i].x, m_vecPassableElement[i].y));
-				--_indexElement;
-
-				break;
+				++_indexInVecFoundWay;
+				_indexElement = i;
 				break;
 			}
 		}
 	}
-
 }

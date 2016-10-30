@@ -19,7 +19,8 @@ HeroInputComponent::HeroInputComponent(HeroInputComponent& i_inputComponent)
 
 /*virtual*/ bool HeroInputComponent::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
 {
-	m_locationTouch = touch->getLocation();
+	m_previousLocationTouch = m_locationTouch;
+	m_locationTouch			= touch->getLocation();
 
 	return true;
 }

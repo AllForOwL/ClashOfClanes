@@ -31,6 +31,8 @@ public:
 	void RestoreWay();
 	bool WayFound();
 
+	std::vector<Point>& GetFoundWay();
+
 private:
 	bool m_wayFound;
 	std::vector<point> m_vecPassableElement;
