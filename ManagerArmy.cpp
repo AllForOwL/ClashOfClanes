@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include "ManagerComponent.h"
 #include "Archer.h"
+#include "MapLayer.h"
 
 ManagerArmy::ManagerArmy()
 {
@@ -21,6 +22,10 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		{
 			Archer* _newArcher = new Archer(i_gameScene);
 			m_vecArcher.push_back(_newArcher);
+			
+			Point _position	= _newArcher->getPosition();
+			Size _size		= _newArcher->getBoundingBox().size;
+			i_manager.m_mapLayer->FillRegionFromOvbject(_position, _size);
 
 			break;
 		}

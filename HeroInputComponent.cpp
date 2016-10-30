@@ -3,7 +3,8 @@
 
 HeroInputComponent::HeroInputComponent()
 {
-	m_locationTouch = Point::ZERO;
+	m_locationTouch			= Point::ZERO;
+	m_previousLocationTouch = Point::ZERO;
 }
 
 HeroInputComponent::HeroInputComponent(HeroInputComponent& i_inputComponent)
@@ -25,12 +26,18 @@ HeroInputComponent::HeroInputComponent(HeroInputComponent& i_inputComponent)
 
 void HeroInputComponent::SetZeroLocation()
 {
-	m_locationTouch = Point::ZERO;
+	m_previousLocationTouch = m_locationTouch;
+	m_locationTouch			= Point::ZERO;
 }
 
 Vec2 HeroInputComponent::GetLocationTouch() const
 {
 	return m_locationTouch;
+}
+
+Vec2 HeroInputComponent::GetPreviousLocationTouch() const
+{
+	return m_previousLocationTouch;
 }
 
 /*virtual*/ void HeroInputComponent::onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event)

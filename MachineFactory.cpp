@@ -104,3 +104,8 @@ MachineFactory::~MachineFactory()
 {
 
 }
+
+
+/*
+ Hero has goes on map
+*/

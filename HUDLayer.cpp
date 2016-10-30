@@ -35,7 +35,6 @@ void HUDLayer::Update(ManagerComponent& i_manager)
 {
 	if ((m_locationTouch = i_manager.m_inputComponent->GetLocationTouch()) != Point::ZERO)
 	{
-	//	i_manager.m_inputComponent->SetZeroLocation();
 		if (DetermineCommand())
 		{
 			i_manager.m_inputComponent->SetZeroLocation();

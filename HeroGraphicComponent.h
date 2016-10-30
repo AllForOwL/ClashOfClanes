@@ -11,6 +11,13 @@ class GameScene;
 class HeroGraphicComponent : public GraphicComponent
 {
 public:
+
+	enum StateHero
+	{
+		WALK,
+		NOTHING
+	};
+
 	HeroGraphicComponent();
 	HeroGraphicComponent(GameScene& i_parentGameScene);
 	HeroGraphicComponent(HeroGraphicComponent& heroGraphiComponent);
@@ -25,9 +32,16 @@ public:
 	bool CheckProductionFactoryMachine();
 	bool CheckProductionFactoryWarrior();
 
+	bool CheckToGoTarget(ManagerComponent& i_manager);
+
 private:
 
-	int m_coin;
+	int			m_coin;
+	StateHero	m_stateHero;
+	Rect		m_rectHero;
+	Vec2		m_positionTarget;
+
+	std::vector<Point> m_vecWayWalkHero;
 };
 
 #endif

@@ -31,11 +31,14 @@ public:
 	Vec2 GetLocationTouch() const;
 	void SetZeroLocation();
 
+	Vec2 GetPreviousLocationTouch() const;
+
 	~HeroInputComponent();
 
-public:
+private:
 	StateInput		m_stateInput;
 	cocos2d::Vec2	m_locationTouch;
+	cocos2d::Vec2	m_previousLocationTouch;
 };
 
 #endif
