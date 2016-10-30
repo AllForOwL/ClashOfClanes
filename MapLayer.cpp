@@ -13,7 +13,6 @@ MapLayer::MapLayer(GameScene& i_parentGameScene)
 {
 	i_parentGameScene.addChild(this);
 	this->initWithTMXFile(CNT_PATH_TO_RESOURCES + "Map/Map.tmx");
-	auto layer = this->layerNamed("Layer");
 
 	Size _size = Size(this->getMapSize().width * this->getTileSize().width,
 				this->getMapSize().height * this->getTileSize().height);

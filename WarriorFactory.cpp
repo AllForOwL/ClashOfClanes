@@ -18,7 +18,7 @@ WarriorFactory::WarriorFactory()
 WarriorFactory::WarriorFactory(GameScene& i_parentGameScene)
 {
 	i_parentGameScene.addChild(this);
-	this->initWithFile(CNT_PATH_TO_RESOURCES + "Castle/FactoryWarrior.png");
+	this->initWithFile(CNT_PATH_TO_RESOURCES + "Home/render4.png");
 	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 6,
 		GameScene::m_visibleSize.height / this->getContentSize().height / 6);
 	this->setPosition(GameScene::m_visibleSize.width / 2 + 50, GameScene::m_visibleSize.height / 2);
@@ -54,10 +54,10 @@ bool WarriorFactory::isComplete()
 		{
 			if (i_manager.m_hero->CheckProductionArcher())
 			{
-				m_timeForCompleteWarrior = CNT_TIME_FOR_COMPLETE_ARCHER;
-				m_startSecond = GraphicComponent::GetTime();
-				m_stateWarrior = StateFactoryWarrior::WORKING;
-				m_stateTypeAddWarrior = ManagerArmy::StateManagerArmy::ADD_ARCHER;
+				m_timeForCompleteWarrior	= CNT_TIME_FOR_COMPLETE_ARCHER;
+				m_startSecond				= GraphicComponent::GetTime();
+				m_stateWarrior				= StateFactoryWarrior::WORKING;
+				m_stateTypeAddWarrior		= ManagerArmy::StateManagerArmy::ADD_ARCHER;
 			}
 
 			break;
@@ -73,15 +73,12 @@ bool WarriorFactory::isComplete()
 		}
 		case StateFactoryWarrior::NOTHING:
 		{
-			if ((m_locationTouch = i_manager.m_inputComponent->GetLocationTouch()) != Point::ZERO)
+			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
+			
+			if (m_rectFactory.containsPoint(m_locationTouch))
 			{
-				if (m_rectFactory.containsPoint(m_locationTouch))
-				{
-					i_manager.m_inputComponent->SetZeroLocation();
-					m_stateWarrior = StateFactoryWarrior::START_ARCHER;
-				}
+				m_stateWarrior = StateFactoryWarrior::START_ARCHER;
 			}
-
 			break;
 		}
 	default:

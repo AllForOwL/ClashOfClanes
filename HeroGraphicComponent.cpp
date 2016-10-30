@@ -53,6 +53,7 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 			AlgorithmLi* _searchWay = new AlgorithmLi(this->getPosition(), m_positionTarget, i_manager.m_mapLayer->GetMapCoordinate());
 			if (_searchWay->WayFound())
 			{
+				i_manager.m_inputComponent->SetZeroLocation();
 				i_manager.m_mapLayer->ReleasePositionAfterSearchWay();
 				std::copy(_searchWay->GetFoundWay().begin(), _searchWay->GetFoundWay().end(), std::back_inserter(m_vecWayWalkHero));
 				m_iterInWayWalk = m_vecWayWalkHero.size() - 1;
@@ -70,6 +71,8 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 			if (--m_iterInWayWalk < 0)
 			{
 				m_stateHero = StateHero::NOTHING;
+				m_rectHero = this->getBoundingBox();
+				m_vecWayWalkHero.clear();
 			}
 
 			break;
@@ -96,7 +99,6 @@ bool HeroGraphicComponent::CheckToGoTarget(ManagerComponent& i_manager)
 	if (m_rectHero.containsPoint(_previousLocationTouch))
 	{
 		m_positionTarget = _currentLocationTouch;
-		i_manager.m_inputComponent->SetZeroLocation();
 
 		return true;
 	}

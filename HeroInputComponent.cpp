@@ -27,7 +27,7 @@ HeroInputComponent::HeroInputComponent(HeroInputComponent& i_inputComponent)
 
 void HeroInputComponent::SetZeroLocation()
 {
-	m_previousLocationTouch = m_locationTouch;
+	m_previousLocationTouch = Point::ZERO;
 	m_locationTouch			= Point::ZERO;
 }
 

@@ -11,22 +11,15 @@ AlgorithmLi::AlgorithmLi(AlgorithmLi& i_AlgorithmLi)
 
 }
 
-
 AlgorithmLi::AlgorithmLi(Point i_begin, Point i_end, std::vector<std::vector<int>>& i_field)
 {
 	m_wayFound = false;
-
 	SearchWay(i_begin, i_end, i_field);
 }
 
 bool AlgorithmLi::WayFound()
 {
 	return m_wayFound;
-}
-
-AlgorithmLi::~AlgorithmLi()
-{
-
 }
 
 std::vector<Point>& AlgorithmLi::GetFoundWay()
@@ -67,6 +60,13 @@ void AlgorithmLi::SearchWay(Point i_pointBegin, Point i_pointEnd, std::vector<st
 
 		if (_current.x == (int)i_pointEnd.x && _current.y == (int)i_pointEnd.y)
 		{
+			point _tempPoint;
+			_tempPoint.x = _current.x;
+			_tempPoint.y = _current.y;
+			_tempPoint.index = _indexCurrent;
+			m_vecPassableElement.push_back(_tempPoint);
+			i_field[_current.x][_current.y] = CNT_POSITION_BUSY_SEARCH_WAY;
+			
 			RestoreWay();
 			m_wayFound = true;
 
@@ -128,19 +128,26 @@ void AlgorithmLi::RestoreWay()
 		{
 			if ((m_vecPassableElement[i].x		== m_vecFoundWay[_indexInVecFoundWay].x &&
 				(m_vecPassableElement[i].y - 1	== m_vecFoundWay[_indexInVecFoundWay].y ||
-				m_vecPassableElement[i].y + 1	== m_vecFoundWay[_indexInVecFoundWay].y)
+				 m_vecPassableElement[i].y + 1	== m_vecFoundWay[_indexInVecFoundWay].y)
 				)
 				||
 				(m_vecPassableElement[i].y		== m_vecFoundWay[_indexInVecFoundWay].y &&
 				(m_vecPassableElement[i].x - 1	== m_vecFoundWay[_indexInVecFoundWay].x ||
-				m_vecPassableElement[i].x + 1	== m_vecFoundWay[_indexInVecFoundWay].x))
+				 m_vecPassableElement[i].x + 1	== m_vecFoundWay[_indexInVecFoundWay].x))
 				)
 			{
 				m_vecFoundWay.push_back(Point(m_vecPassableElement[i].x, m_vecPassableElement[i].y));
 				++_indexInVecFoundWay;
 				_indexElement = i;
+				
+				break;
 				break;
 			}
 		}
 	}
+}
+
+AlgorithmLi::~AlgorithmLi()
+{
+	CCLOG("Destructor ALGORITHM LI");
 }

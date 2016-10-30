@@ -89,7 +89,6 @@ bool MachineFactory::isComplete()
 			{
 				if (m_rectFactory.containsPoint(m_locationTouch))
 				{
-					i_manager.m_inputComponent->SetZeroLocation();
 					m_stateMachine = StateFactoryMachine::START_TANK;
 				}
 			}

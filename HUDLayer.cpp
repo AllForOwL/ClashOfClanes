@@ -37,8 +37,8 @@ void HUDLayer::Update(ManagerComponent& i_manager)
 	{
 		if (DetermineCommand())
 		{
-			i_manager.m_inputComponent->SetZeroLocation();
 			ExecuteCommand(i_manager);
+			i_manager.m_inputComponent->SetZeroLocation();
 		}
 	}
 }

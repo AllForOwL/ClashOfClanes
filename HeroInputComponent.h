@@ -17,11 +17,6 @@ public:
 	HeroInputComponent();
 	HeroInputComponent(HeroInputComponent& i_inputComponent);
 
-	enum StateInput
-	{
-
-	};
-
 	virtual void Update(ManagerComponent& i_manager);
 	
 	virtual bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
@@ -36,7 +31,6 @@ public:
 	~HeroInputComponent();
 
 private:
-	StateInput		m_stateInput;
 	cocos2d::Vec2	m_locationTouch;
 	cocos2d::Vec2	m_previousLocationTouch;
 };
