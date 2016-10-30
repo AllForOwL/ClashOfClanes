@@ -25,7 +25,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 			
 			Point _position	= _newArcher->getPosition();
 			Size _size		= _newArcher->getBoundingBox().size;
-			i_manager.m_mapLayer->FillRegionFromOvbject(_position, _size);
+			i_manager.m_mapLayer->FillRegionFromObject(_position, _size);
 
 			break;
 		}

@@ -53,6 +53,7 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 			AlgorithmLi* _searchWay = new AlgorithmLi(this->getPosition(), m_positionTarget, i_manager.m_mapLayer->GetMapCoordinate());
 			if (_searchWay->WayFound())
 			{
+				i_manager.m_mapLayer->ReleasePositionAfterSearchWay();
 				std::copy(_searchWay->GetFoundWay().begin(), _searchWay->GetFoundWay().end(), std::back_inserter(m_vecWayWalkHero));
 				m_iterInWayWalk = m_vecWayWalkHero.size() - 1;
 

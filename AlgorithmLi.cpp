@@ -1,9 +1,6 @@
 #include "AlgorithmLi.h"
 #include "constants.h"
 
-const int POSITION_FREE = 0;
-const int POSITION_BUSY = 2001;
-
 AlgorithmLi::AlgorithmLi()
 {
 
@@ -72,44 +69,45 @@ void AlgorithmLi::SearchWay(Point i_pointBegin, Point i_pointEnd, std::vector<st
 		{
 			RestoreWay();
 			m_wayFound = true;
+
 			return;
 		}
 
-		if (i_field[_current.x][_current.y - 1] == POSITION_FREE)
+		if (i_field[_current.x][_current.y - 1] == CNT_POSITION_FREE)
 		{
 			point _tempPoint;
 			_tempPoint.x		= _current.x;
 			_tempPoint.y		= _current.y - 1;
 			_tempPoint.index	= _indexCurrent;
 			m_vecPassableElement.push_back(_tempPoint);
-			i_field[_current.x][_current.y - 1] = POSITION_BUSY;
+			i_field[_current.x][_current.y - 1] = CNT_POSITION_BUSY_SEARCH_WAY;
 		}
-		if (i_field[_current.x - 1][_current.y] == POSITION_FREE)
+		if (i_field[_current.x - 1][_current.y] == CNT_POSITION_FREE)
 		{
 			point _tempPoint;
 			_tempPoint.x = _current.x - 1;
 			_tempPoint.y = _current.y;
 			_tempPoint.index = _indexCurrent;
 			m_vecPassableElement.push_back(_tempPoint);
-			i_field[_current.x - 1][_current.y] = POSITION_BUSY;
+			i_field[_current.x - 1][_current.y] = CNT_POSITION_BUSY_SEARCH_WAY;
 		}
-		if (i_field[_current.x][_current.y + 1] == POSITION_FREE)
+		if (i_field[_current.x][_current.y + 1] == CNT_POSITION_FREE)
 		{
 			point _tempPoint;
 			_tempPoint.x = _current.x;
 			_tempPoint.y = _current.y + 1;
 			_tempPoint.index = _indexCurrent;
 			m_vecPassableElement.push_back(_tempPoint);
-			i_field[_current.x][_current.y + 1] = POSITION_BUSY;
+			i_field[_current.x][_current.y + 1] = CNT_POSITION_BUSY_SEARCH_WAY;
 		}
-		if (i_field[_current.x + 1][_current.y] == POSITION_FREE)
+		if (i_field[_current.x + 1][_current.y] == CNT_POSITION_FREE)
 		{
 			point _tempPoint;
 			_tempPoint.x = _current.x + 1;
 			_tempPoint.y = _current.y;
 			_tempPoint.index = _indexCurrent;
 			m_vecPassableElement.push_back(_tempPoint);
-			i_field[_current.x + 1][_current.y] = POSITION_BUSY;
+			i_field[_current.x + 1][_current.y] = CNT_POSITION_BUSY_SEARCH_WAY;
 		}
 
 		++_iterInVector;

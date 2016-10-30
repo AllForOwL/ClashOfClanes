@@ -14,9 +14,11 @@ public:
 	MapLayer(GameScene& i_parentGameScene);
 	~MapLayer();
 
-	void FillRegionFromOvbject(Point i_point, Size i_size);
+	void FillRegionFromObject(Point i_point, Size i_size);
 
 	std::vector<std::vector<int>>& GetMapCoordinate();
+
+	void ReleasePositionAfterSearchWay();
 
 private:
 	std::vector<std::vector<int>> m_mapCoordinate;
