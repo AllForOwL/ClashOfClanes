@@ -6,7 +6,7 @@
 USING_NS_CC;
 
 class GameScene;
-class Archer;
+class Knight;
 class ManagerComponent;
 
 class ManagerArmy
@@ -15,8 +15,9 @@ public:
 
 	enum StateManagerArmy
 	{
-		ADD_ARCHER,
-		ADD_TANK,
+		ADD_KNIGHT_BLACK,
+		ADD_KNIGHT_BRONZE,
+		ADD_KNIGHT_SILVER,
 		NOTHING
 	};
 
@@ -30,7 +31,7 @@ public:
 	void SetState(StateManagerArmy& i_state);
 
 private:
-	std::vector<Archer*>	m_vecArcher;
+	std::vector<Knight*>	m_vecKnight;
 	StateManagerArmy		m_stateManagerArmy;
 };
 

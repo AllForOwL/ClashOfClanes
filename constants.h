@@ -5,3 +5,7 @@ const std::string CNT_PATH_TO_RESOURCES = "E:/programming/cocos/project/ClashOfC
 const int CNT_POSITION_FREE = 0;
 const int CNT_POSITION_BUSY_SEARCH_WAY	= 2001;
 const int CNT_POSITION_BUSY_ORDER		= 2002;
+
+const std::string CNT_TYPE_KNIGHT_BLACK		= "KNIGHT_BLACK";
+const std::string CNT_TYPE_KNIGHT_BRONZE	= "KNIGHT_BRONZE";
+const std::string CNT_TYPE_KNIGHT_SILVER	= "KNIGHT_SILVER";

@@ -13,7 +13,6 @@ public:
 
 	enum StateFactoryWarrior
 	{
-		START_ARCHER,
 		START_KNIGHT_BLACK,
 		START_KNIGHT_BRONZE,
 		START_KNIGHT_SILVER,

@@ -8,8 +8,9 @@
 #include "HeroInputComponent.h"
 #include "HUDLayer.h"
 
-const int CNT_COIN_FOR_START_ARCHER		= 50;
-const int CNT_TIME_FOR_COMPLETE_ARCHER	= 20;
+const int CNT_TIME_FOR_COMPLETE_KNIGHT_BLACK	= 10;
+const int CNT_TIME_FOR_COMPLETE_KNIGHT_BRONZE	= 15;
+const int CNT_TIME_FOR_COMPLETE_KNIGHT_SILVER	= 20;
 
 WarriorFactory::WarriorFactory()
 {
@@ -51,14 +52,38 @@ bool WarriorFactory::isComplete()
 {
 	switch (m_stateWarrior)
 	{
-		case StateFactoryWarrior::START_ARCHER:
+		case StateFactoryWarrior::START_KNIGHT_BLACK:
 		{
-			if (i_manager.m_hero->CheckProductionArcher())
+			if (i_manager.m_hero->CheckProductionKnightBlack())
 			{
-				m_timeForCompleteWarrior	= CNT_TIME_FOR_COMPLETE_ARCHER;
+				m_timeForCompleteWarrior	= CNT_TIME_FOR_COMPLETE_KNIGHT_BLACK;
 				m_startSecond				= GraphicComponent::GetTime();
 				m_stateWarrior				= StateFactoryWarrior::WORKING;
-				m_stateTypeAddWarrior		= ManagerArmy::StateManagerArmy::ADD_ARCHER;
+				m_stateTypeAddWarrior		= ManagerArmy::StateManagerArmy::ADD_KNIGHT_BLACK;
+			}
+
+			break;
+		}
+		case StateFactoryWarrior::START_KNIGHT_BRONZE:
+		{
+			if (i_manager.m_hero->CheckProductionKnightBronze())
+			{
+				m_timeForCompleteWarrior	= CNT_TIME_FOR_COMPLETE_KNIGHT_BRONZE;
+				m_startSecond				= GraphicComponent::GetTime();
+				m_stateWarrior				= StateFactoryWarrior::WORKING;
+				m_stateTypeAddWarrior		= ManagerArmy::StateManagerArmy::ADD_KNIGHT_BRONZE;
+			}
+
+			break;
+		}
+		case StateFactoryWarrior::START_KNIGHT_SILVER:
+		{
+			if (i_manager.m_hero->CheckProductionKnightSilver())
+			{
+				m_timeForCompleteWarrior	= CNT_TIME_FOR_COMPLETE_KNIGHT_SILVER;
+				m_startSecond				= GraphicComponent::GetTime();
+				m_stateWarrior				= StateFactoryWarrior::WORKING;
+				m_stateTypeAddWarrior		= ManagerArmy::StateManagerArmy::ADD_KNIGHT_SILVER;
 			}
 
 			break;

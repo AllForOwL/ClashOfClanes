@@ -1,39 +1,51 @@
-﻿#include "Archer.h"
+﻿#include "Knight.h"
 #include "GameScene.h"
 #include "constants.h"
 #include "MapLayer.h"
 
-Archer::Archer()
+Knight::Knight()
 {
 	this->initWithFile(CNT_PATH_TO_RESOURCES + "Hero/Walk_1.png");
 	this->setPosition(GameScene::m_visibleSize.width / 2 - 50, GameScene::m_visibleSize.height / 2);
 	this->setZOrder(1);
 }
 
-Archer::Archer(GameScene& i_parentGameScene)
+Knight::Knight(std::string i_knight, GameScene& i_parentGameScene)
 {			
 	i_parentGameScene.addChild(this);
 
-	this->initWithFile(CNT_PATH_TO_RESOURCES + "Warrior/black_knight/attack_1.png");
+	if (i_knight == CNT_TYPE_KNIGHT_BLACK)
+	{
+		this->initWithFile(CNT_PATH_TO_RESOURCES + "Warrior/black_knight/attack_1.png");
+	}
+	else if (i_knight == CNT_TYPE_KNIGHT_BRONZE)
+	{
+		this->initWithFile(CNT_PATH_TO_RESOURCES + "Warrior/bronze_knight/attack_1.png");
+	}
+	else if (i_knight == CNT_TYPE_KNIGHT_SILVER)
+	{
+		this->initWithFile(CNT_PATH_TO_RESOURCES + "Warrior/silver_knight/attack_1.png");
+	}
+	
 	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 8,
 		GameScene::m_visibleSize.height / this->getContentSize().height / 8);
 	this->setPosition(GameScene::m_visibleSize.width / 2 - 50, GameScene::m_visibleSize.height / 2 + 50);
 	this->setZOrder(1);
 }
 
-Archer::Archer(Archer& Archer)
+Knight::Knight(Knight& Knight)
 {
 	
 }
 
-/*virtual*/ void Archer::Update(ManagerComponent& i_manager)
+/*virtual*/ void Knight::Update(ManagerComponent& i_manager)
 {
 
 }
 
-Archer::~Archer()
+Knight::~Knight()
 {
-	CCLOG("destructor archer");
+	CCLOG("destructor Knight");
 }
 
 /*  GraphicComponent	- тільки малює спрайти 

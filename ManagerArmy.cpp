@@ -1,8 +1,9 @@
 #include "ManagerArmy.h"
 #include "GameScene.h"
 #include "ManagerComponent.h"
-#include "Archer.h"
+#include "Knight.h"
 #include "MapLayer.h"
+#include "constants.h"
 
 ManagerArmy::ManagerArmy()
 {
@@ -18,29 +19,52 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 {
 	switch (m_stateManagerArmy)
 	{
-		case ManagerArmy::ADD_ARCHER:
+		case ManagerArmy::ADD_KNIGHT_BLACK:
 		{
-			Archer* _newArcher = new Archer(i_gameScene);
-			m_vecArcher.push_back(_newArcher);
+			Knight* _newKnightBlack = new Knight(CNT_TYPE_KNIGHT_BLACK, i_gameScene);
+			m_vecKnight.push_back(_newKnightBlack);
 			
-			Point _position	= _newArcher->getPosition();
-			Size _size		= _newArcher->getBoundingBox().size;
+			Point _position	= _newKnightBlack->getPosition();
+			Size _size		= _newKnightBlack->getBoundingBox().size;
 			i_manager.m_mapLayer->FillRegionFromObject(_position, _size);
+
+			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
 			break;
 		}
-		case ManagerArmy::ADD_TANK:
+		case ManagerArmy::ADD_KNIGHT_BRONZE:
 		{
+	   		Knight* _newKnightBronze = new Knight(CNT_TYPE_KNIGHT_BRONZE, i_gameScene);
+			m_vecKnight.push_back(_newKnightBronze);
+			
+			Point _position	= _newKnightBronze->getPosition();
+			Size _size		= _newKnightBronze->getBoundingBox().size;
+			i_manager.m_mapLayer->FillRegionFromObject(_position, _size);
+
+			m_stateManagerArmy = StateManagerArmy::NOTHING;
+
+			break;
+		}
+		case ManagerArmy::ADD_KNIGHT_SILVER:
+		{
+			Knight* _newKnightSilver = new Knight(CNT_TYPE_KNIGHT_SILVER, i_gameScene);
+			m_vecKnight.push_back(_newKnightSilver);
+			
+			Point _position	= _newKnightSilver->getPosition();
+			Size _size		= _newKnightSilver->getBoundingBox().size;
+			i_manager.m_mapLayer->FillRegionFromObject(_position, _size);
+
+			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
 			break;
 		}
 		case ManagerArmy::NOTHING:
 		{				
-			if (m_vecArcher.size())
+			if (m_vecKnight.size())
 			{
-				for (int i = 0; i < m_vecArcher.size(); i++)
+				for (int i = 0; i < m_vecKnight.size(); i++)
 				{
-					m_vecArcher[i]->Update(i_manager);
+					m_vecKnight[i]->Update(i_manager);
 				}
 			}
 

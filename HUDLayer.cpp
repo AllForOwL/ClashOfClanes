@@ -13,10 +13,9 @@ STATE_TYPE_MENU HUDLayer::m_typeMenu = STATE_TYPE_MENU::NOTHING_MENU;
 
 const int INDEX_TANK = 0;
 
-const int INDEX_ARCHER			= 0;
-const int INDEX_KNIGHT_BLACK	= 1;
-const int INDEX_KNIGHT_BRONZE	= 2;
-const int INDEX_KNIGHT_SILVER	= 3;
+const int INDEX_KNIGHT_BLACK	= 0;
+const int INDEX_KNIGHT_BRONZE	= 1;
+const int INDEX_KNIGHT_SILVER	= 2;
 
 bool HUDLayer::init()
 {
@@ -47,13 +46,11 @@ void HUDLayer::LoadSpritesForFactory()
 {
 	int _positionY = GameScene::m_visibleSize.height / 2;
 
-	Rect	_rect;
-
 	for (int i = 0; i < m_vecNameFactoryMachine.size(); i++)
 	{
 		m_vecSpritesForFactoryMachine.push_back(Sprite::create(m_vecNameFactoryMachine[i]));
 		m_vecSpritesForFactoryMachine[i]->setScale(GameScene::m_visibleSize.width / m_vecSpritesForFactoryMachine[i]->getContentSize().width / 8,
-			GameScene::m_visibleSize.height / m_vecSpritesForFactoryMachine[i]->getContentSize().height);
+			GameScene::m_visibleSize.height / m_vecSpritesForFactoryMachine[i]->getContentSize().height / 8);
 		m_vecSpritesForFactoryMachine[i]->setPosition(GameScene::m_visibleSize.width - m_vecSpritesForFactoryMachine[i]->getBoundingBox().size.width,
 			_positionY);
 		m_vecSpritesForFactoryMachine[i]->setVisible(false);
@@ -68,7 +65,7 @@ void HUDLayer::LoadSpritesForFactory()
 	{
 		m_vecSpritesForFactoryWarrior.push_back(Sprite::create(m_vecNameFactoryWarrior[i]));
 		m_vecSpritesForFactoryWarrior[i]->setScale(GameScene::m_visibleSize.width / m_vecSpritesForFactoryWarrior[i]->getContentSize().width / 8,
-			GameScene::m_visibleSize.height / m_vecSpritesForFactoryWarrior[i]->getContentSize().height);
+			GameScene::m_visibleSize.height / m_vecSpritesForFactoryWarrior[i]->getContentSize().height / 8);
 		m_vecSpritesForFactoryWarrior[i]->setPosition(GameScene::m_visibleSize.width - m_vecSpritesForFactoryWarrior[i]->getBoundingBox().size.width,
 			_positionY);
 		m_vecSpritesForFactoryWarrior[i]->setVisible(false);
@@ -87,8 +84,15 @@ void HUDLayer::LoadSpritesForMenu()
 	_spriteFactoryMachine->setPosition(GameScene::m_visibleSize.width - _spriteFactoryMachine->getBoundingBox().size.width,
 		GameScene::m_visibleSize.height / 2 - 50);
 	m_rectFactoryMachine = _spriteFactoryMachine->getBoundingBox();
-
 	this->addChild(_spriteFactoryMachine);
+
+	Sprite* _spriteFactoryWarrior = Sprite::create(CNT_PATH_TO_RESOURCES + "HUDLayer/Ruby.png");
+	_spriteFactoryWarrior->setScale(GameScene::m_visibleSize.width / _spriteFactoryWarrior->getContentSize().width / 20,
+		GameScene::m_visibleSize.height / _spriteFactoryWarrior->getContentSize().height / 20);
+	_spriteFactoryWarrior->setPosition(GameScene::m_visibleSize.width - _spriteFactoryWarrior->getBoundingBox().size.width,
+		GameScene::m_visibleSize.height / 2 - 100);
+	m_rectFactoryWarrior = _spriteFactoryWarrior->getBoundingBox();
+	this->addChild(_spriteFactoryWarrior);
 }
 
 void HUDLayer::ShowMenuForFactoryMachine()
@@ -193,12 +197,7 @@ bool HUDLayer::DetermineCommandForFactoryMachine()
 
 bool HUDLayer::DetermineCommandForFactoryWarrior()
 {
-	if (m_vecRectSpritesFactoryWarrior[INDEX_ARCHER].containsPoint(m_locationTouch))
-	{
-		m_commandWarrior = CommandWarrior::CREATE_KNIGHT_BLACK;
-		return true;
-	}
-	else if (m_vecRectSpritesFactoryWarrior[INDEX_KNIGHT_BLACK].containsPoint(m_locationTouch))
+	if (m_vecRectSpritesFactoryWarrior[INDEX_KNIGHT_BLACK].containsPoint(m_locationTouch))
 	{
 		m_commandWarrior = CommandWarrior::CREATE_KNIGHT_BRONZE;
 		return true;

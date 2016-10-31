@@ -27,12 +27,13 @@ public:
 
 	virtual void Update(ManagerComponent& i_manager);
 
-	bool CheckProductionArcher();
+	bool CheckProductionKnightBlack();
+	bool CheckProductionKnightBronze();
+	bool CheckProductionKnightSilver();
 	bool CheckProductionTank();
 	bool CheckProductionCar();
 	bool CheckProductionFactoryMachine();
 	bool CheckProductionFactoryWarrior();
-
 	bool CheckToGoTarget(ManagerComponent& i_manager);
 
 private:

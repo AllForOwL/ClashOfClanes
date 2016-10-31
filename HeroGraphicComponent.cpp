@@ -6,7 +6,9 @@
 #include "AlgorithmLi.h"
 #include "MapLayer.h"
 
-const int CNT_COIN_FOR_START_ARCHER = 50;
+const int CNT_COIN_FOR_START_KNIGHT_BLACK	= 50;
+const int CNT_COIN_FOR_START_KNIGHT_BRONZE	= 50;
+const int CNT_COIN_FOR_START_KNIGHT_SILVER	= 50;
 const int CNT_COIN_FOR_START_TANK	= 90;
 const int CNT_COIN_FOR_START_CAR	= 70;
 const int CNT_COIN_FOR_START_FACTORY_MACHINE	= 300;
@@ -135,17 +137,34 @@ bool HeroGraphicComponent::CheckToGoTarget(ManagerComponent& i_manager)
 	return false;
 }
 
-bool HeroGraphicComponent::CheckProductionArcher()
+bool HeroGraphicComponent::CheckProductionKnightBlack()
 {
-	if (m_coin >= CNT_COIN_FOR_START_ARCHER)
+	if (m_coin >= CNT_COIN_FOR_START_KNIGHT_BLACK)
 	{
-		m_coin -= CNT_COIN_FOR_START_ARCHER;
+		m_coin -= CNT_COIN_FOR_START_KNIGHT_BLACK;
 		return true;
 	}
-	else
+	return false;
+}
+
+bool HeroGraphicComponent::CheckProductionKnightBronze()
+{
+	if (m_coin >= CNT_COIN_FOR_START_KNIGHT_BRONZE)
 	{
-		return false;
+		m_coin -= CNT_COIN_FOR_START_KNIGHT_BRONZE;
+		return true;
 	}
+	return false;
+}
+
+bool HeroGraphicComponent::CheckProductionKnightSilver()
+{
+	if (m_coin >= CNT_COIN_FOR_START_KNIGHT_SILVER)
+	{
+		m_coin -= CNT_COIN_FOR_START_KNIGHT_SILVER;
+		return true;
+	}
+	return false;
 }
 
 bool HeroGraphicComponent::CheckProductionTank()
@@ -199,6 +218,8 @@ bool HeroGraphicComponent::CheckProductionFactoryWarrior()
 		return false;
 	}
 }
+
+
 
 HeroGraphicComponent::~HeroGraphicComponent()
 {
