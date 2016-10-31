@@ -54,13 +54,14 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 	{
 		case HeroGraphicComponent::SEARCH_WAY:
 		{
+
 			AlgorithmLi* _searchWay = new AlgorithmLi(this->getPosition(), m_positionTarget, i_manager.m_mapLayer->GetMapCoordinate());
 			if (_searchWay->WayFound())
 			{
 				i_manager.m_inputComponent->SetZeroLocation();
 				i_manager.m_mapLayer->ReleasePositionAfterSearchWay();
 				std::copy(_searchWay->GetFoundWay().begin(), _searchWay->GetFoundWay().end(), std::back_inserter(m_vecWayWalkHero));
-				m_iterInWayWalk = m_vecWayWalkHero.size() - 1;
+				m_iterInWayWalk = 0;
 
 				m_stateHero = HeroGraphicComponent::WALK;
 			}
@@ -101,7 +102,7 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 			//}
 			
 			this->setPosition(m_vecWayWalkHero[m_iterInWayWalk]);
-			if (--m_iterInWayWalk < 0)
+			if (++m_iterInWayWalk == m_vecWayWalkHero.size())
 			{
 				m_stateHero = StateHero::NOTHING;
 				m_vecWayWalkHero.clear();

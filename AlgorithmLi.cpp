@@ -121,10 +121,13 @@ void AlgorithmLi::RestoreWay()
 	m_vecFoundWay.push_back(Point(m_vecPassableElement[_iterInVector].x, m_vecPassableElement[_iterInVector].y));
 
 	int _indexInVecFoundWay = 0;
+	int _indexRestore = m_vecPassableElement.size() - 1;
+	bool _addElement = true;
 
-	while (_indexElement)
+	while (_addElement)
 	{
-		for (int i = 0; i < m_vecPassableElement.size(); i++)
+		_addElement = false;
+		for (int i = _indexRestore; i > 0; i--)
 		{
 			if ((m_vecPassableElement[i].x		== m_vecFoundWay[_indexInVecFoundWay].x &&
 				(m_vecPassableElement[i].y - 1	== m_vecFoundWay[_indexInVecFoundWay].y ||
@@ -136,9 +139,9 @@ void AlgorithmLi::RestoreWay()
 				 m_vecPassableElement[i].x + 1	== m_vecFoundWay[_indexInVecFoundWay].x))
 				)
 			{
-				m_vecFoundWay.push_back(Point(m_vecPassableElement[i].x, m_vecPassableElement[i].y));
-				++_indexInVecFoundWay;
-				_indexElement = i;
+				m_vecFoundWay.insert(m_vecFoundWay.begin(), Point(m_vecPassableElement[i].x, m_vecPassableElement[i].y));
+				_indexRestore = i;
+				_addElement = true;
 				
 				break;
 				break;

@@ -38,6 +38,8 @@ public:
 
 private:
 
+	std::vector<std::vector<int>> m_mapCoordinate;
+
 	int			m_coin;
 	StateHero	m_stateHero;
 	Rect		m_rectHero;
