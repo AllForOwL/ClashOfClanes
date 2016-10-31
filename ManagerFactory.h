@@ -31,6 +31,9 @@ public:
 
 	void SetState(StateManagerFactory& i_state);
 
+	MachineFactory& GetListenFactoryMachine();
+	WarriorFactory& GetListenFactoryWarrior();
+
 private:
 	std::vector<MachineFactory*>	m_vecFactoryMachine;
 	std::vector<WarriorFactory*>	m_vecFactoryWarrior;

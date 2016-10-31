@@ -4,8 +4,7 @@
 #include "cocos2d.h"
 #include "InputComponent.h"
 
-using namespace std;
-using namespace cocos2d;
+USING_NS_CC;
 
 class ManagerComponent;
 class GameScene;

@@ -11,7 +11,7 @@ public:
 	struct point
 	{
 		int x;
-		int y;
+		int y;	
 		int index;
 
 		point() : x(0), y(0), index(0)

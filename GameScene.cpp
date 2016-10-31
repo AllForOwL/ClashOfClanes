@@ -6,7 +6,7 @@
 #include "HUDLayer.h"
 #include "HeroInputComponent.h"
 
-const float CNT_TIME_UPDATE_SCENE = 0.1;
+const float CNT_TIME_UPDATE_SCENE = 0.01;
 
 Size GameScene::m_visibleSize = Size(0, 0);
 

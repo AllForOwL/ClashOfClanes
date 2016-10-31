@@ -6,6 +6,7 @@
 #include "ManagerArmy.h"
 #include "constants.h"
 #include "HeroInputComponent.h"
+#include "HUDLayer.h"
 
 const int CNT_COIN_FOR_START_ARCHER		= 50;
 const int CNT_TIME_FOR_COMPLETE_ARCHER	= 20;
@@ -77,13 +78,25 @@ bool WarriorFactory::isComplete()
 			
 			if (m_rectFactory.containsPoint(m_locationTouch))
 			{
-				m_stateWarrior = StateFactoryWarrior::START_ARCHER;
+				HUDLayer::m_typeMenu = HUDLayer::StateTypeMenu::FACTORY_WARRIOR;
+				m_stateFactory = StateFactoryWarrior::LISTEN;
 			}
 			break;
 		}
 	default:
 		break;
 	}
+}
+
+using STATE_FACTORY = WarriorFactory::StateFactoryWarrior;
+void WarriorFactory::SetState(STATE_FACTORY& i_stateWarrior)
+{
+	m_stateWarrior = i_stateWarrior;
+}
+
+WarriorFactory::StateFactoryWarrior& WarriorFactory::GetStateWarrior()
+{
+	return m_stateWarrior;
 }
 
 WarriorFactory::~WarriorFactory()

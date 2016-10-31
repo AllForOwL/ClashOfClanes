@@ -33,6 +33,8 @@ public:
 
 	void SetState(StateManagerMachine& i_state);
 
+	
+
 private:
 	std::vector<Tank*>		m_vecMachineTank;
 	std::vector<Car*>		m_vecMachineCar;

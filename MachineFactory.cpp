@@ -7,6 +7,7 @@
 #include "ManagerMachine.h"
 #include "constants.h"
 #include "HeroInputComponent.h"
+#include "HUDLayer.h"
 
 const int CNT_TIME_FOR_COMPLETE_TANK = 40;
 const int CNT_TIME_FOR_COMPLETE_CAR = 30;
@@ -32,6 +33,11 @@ MachineFactory::MachineFactory(GameScene& i_parentGameScene)
 MachineFactory::MachineFactory(MachineFactory& i_MachineFactory)
 {
 
+}
+
+void MachineFactory::SetState(MachineFactory::StateFactoryMachine& i_state)
+{
+	m_stateMachine = i_state;
 }
 
 bool MachineFactory::isComplete() 
@@ -89,7 +95,8 @@ bool MachineFactory::isComplete()
 			{
 				if (m_rectFactory.containsPoint(m_locationTouch))
 				{
-					m_stateMachine = StateFactoryMachine::START_TANK;
+					HUDLayer::m_typeMenu = HUDLayer::StateTypeMenu::FACTORY_MACHINE;
+					m_stateMachine = StateFactoryMachine::LISTEN;
 				}
 			}
 			break;
@@ -97,6 +104,11 @@ bool MachineFactory::isComplete()
 	default:
 		break;
 	}
+}
+
+MachineFactory::StateFactoryMachine& MachineFactory::GetState()
+{
+	return m_stateMachine;
 }
 
 MachineFactory::~MachineFactory()

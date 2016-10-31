@@ -14,7 +14,11 @@ public:
 	enum StateFactoryWarrior
 	{
 		START_ARCHER,
+		START_KNIGHT_BLACK,
+		START_KNIGHT_BRONZE,
+		START_KNIGHT_SILVER,
 		WORKING,
+		LISTEN,
 		NOTHING
 	};
 
@@ -27,6 +31,10 @@ public:
 	virtual void Update(ManagerComponent& i_manager);
 
 	bool isComplete();
+
+	StateFactoryWarrior& GetStateWarrior();
+
+	void SetState(StateFactoryWarrior& i_stateWarrior);
 
 private:
 	StateFactoryWarrior m_stateFactory;

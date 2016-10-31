@@ -16,6 +16,7 @@ public:
 		START_TANK,
 		START_CAR,
 		WORKING,
+		LISTEN,
 		NOTHING
 	};
 
@@ -28,6 +29,10 @@ public:
 	virtual void Update(ManagerComponent& i_manager);
 
 	bool isComplete();
+
+	StateFactoryMachine& GetState();
+	void SetState(StateFactoryMachine& i_state);
+
 
 private:
 	ManagerMachine::StateManagerMachine m_stateManagerMachine;
