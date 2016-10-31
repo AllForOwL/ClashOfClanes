@@ -33,6 +33,13 @@ public:
 	StateFactoryMachine& GetState();
 	void SetState(StateFactoryMachine& i_state);
 
+	void LoadNameForSprites();
+	void LoadSprites();
+	
+	bool DetermineCommand();
+
+	void ShowMenu();
+	void HideMenu();
 
 private:
 	ManagerMachine::StateManagerMachine m_stateManagerMachine;
@@ -43,6 +50,9 @@ private:
 	Vec2	m_locationTouch;
 	Rect	m_rectFactory;
 
+	std::vector<std::string>	m_vecNameForSprites;
+	std::vector<Sprite*>		m_vecSpritesForFactoryMachine;
+	std::vector<Rect>			m_rectForSpritesMachine;
 };
 
 #endif

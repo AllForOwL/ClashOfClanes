@@ -12,6 +12,8 @@
 const int CNT_TIME_FOR_COMPLETE_TANK = 40;
 const int CNT_TIME_FOR_COMPLETE_CAR = 30;
 
+const int CNT_INDEX_TANK = 0;
+
 MachineFactory::MachineFactory()
 {
 
@@ -28,6 +30,9 @@ MachineFactory::MachineFactory(GameScene& i_parentGameScene)
 
 	m_stateMachine	= StateFactoryMachine::NOTHING;
 	m_rectFactory	= this->getBoundingBox();
+
+	LoadNameForSprites();
+	LoadSprites();
 }
 
 MachineFactory::MachineFactory(MachineFactory& i_MachineFactory)
@@ -49,6 +54,45 @@ bool MachineFactory::isComplete()
 	else
 	{
 		return false;
+	}
+}
+
+void MachineFactory::LoadNameForSprites()
+{
+	m_vecNameForSprites.push_back(CNT_PATH_TO_RESOURCES + "Machine/Tank_1.png");
+}
+
+void MachineFactory::LoadSprites()
+{
+	float _positionY = GameScene::m_visibleSize.height / 2;
+	for (int i = 0; i < m_vecNameForSprites.size(); i++)
+	{
+		m_vecSpritesForFactoryMachine.push_back(Sprite::create(m_vecNameForSprites[i]));
+		m_vecSpritesForFactoryMachine[i]->setScale(GameScene::m_visibleSize.width / m_vecSpritesForFactoryMachine[i]->getContentSize().width / 8,
+			GameScene::m_visibleSize.height / m_vecSpritesForFactoryMachine[i]->getContentSize().height / 8);
+		m_vecSpritesForFactoryMachine[i]->setPosition(GameScene::m_visibleSize.width - m_vecSpritesForFactoryMachine[i]->getBoundingBox().size.width,
+			_positionY);
+		m_vecSpritesForFactoryMachine[i]->setVisible(false);
+		this->getParent()->addChild(m_vecSpritesForFactoryMachine[i]);
+
+		_positionY -= m_vecSpritesForFactoryMachine[i]->getBoundingBox().size.height;
+		m_rectForSpritesMachine.push_back(m_vecSpritesForFactoryMachine[i]->getBoundingBox());
+	}
+}
+
+void MachineFactory::ShowMenu()
+{
+	for (int i = 0; i < m_vecSpritesForFactoryMachine.size(); i++)
+	{
+		m_vecSpritesForFactoryMachine[i]->setVisible(true);
+	}
+}
+
+void MachineFactory::HideMenu()
+{
+	for (int i = 0; i < m_vecSpritesForFactoryMachine.size(); i++)
+	{
+		m_vecSpritesForFactoryMachine[i]->setVisible(false);
 	}
 }
 
@@ -94,7 +138,7 @@ bool MachineFactory::isComplete()
 			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
 			if (m_rectFactory.containsPoint(m_locationTouch))
 			{
-				HUDLayer::m_typeMenu	= HUDLayer::StateTypeMenu::FACTORY_MACHINE;
+				ShowMenu();
 				m_stateMachine			= StateFactoryMachine::LISTEN;
 				i_manager.m_inputComponent->SetZeroLocation();
 			}
@@ -102,9 +146,8 @@ bool MachineFactory::isComplete()
 		case StateFactoryMachine::LISTEN:
 		{
 			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
-			if (m_rectFactory.containsPoint(m_locationTouch))
+			if (DetermineCommand())
 			{
-				HUDLayer::m_typeMenu	= HUDLayer::StateTypeMenu::FACTORY_MACHINE;
 				i_manager.m_inputComponent->SetZeroLocation();
 			}
 
@@ -113,6 +156,16 @@ bool MachineFactory::isComplete()
 	default:
 		break;
 	}
+}
+
+bool MachineFactory::DetermineCommand()
+{
+	if (m_rectForSpritesMachine[CNT_INDEX_TANK].containsPoint(m_locationTouch))
+	{
+		m_stateMachine = StateFactoryMachine::START_TANK;
+		return true;
+	}
+	return false;
 }
 
 MachineFactory::StateFactoryMachine& MachineFactory::GetState()

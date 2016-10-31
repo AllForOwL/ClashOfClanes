@@ -54,7 +54,6 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 	{
 		case HeroGraphicComponent::SEARCH_WAY:
 		{
-
 			AlgorithmLi* _searchWay = new AlgorithmLi(this->getPosition(), m_positionTarget, i_manager.m_mapLayer->GetMapCoordinate());
 			if (_searchWay->WayFound())
 			{
@@ -72,35 +71,6 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 		}
 		case HeroGraphicComponent::StateHero::WALK:
 		{
-			//if (this->getPositionX() == m_vecWayWalkHero[m_iterInWayWalk].x)
-			//{
-			//	int _positionY = i_manager.m_mapLayer->getPositionY();
-			//	if (this->getPositionY() > m_vecWayWalkHero[m_iterInWayWalk].y)
-			//	{
-			//		i_manager.m_mapLayer->setPositionY(_positionY - 1);
-			//		//this->getParent()->setPositionY(this->getParent()->getPositionY() + 1);
-			//	}
-			//	else
-			//	{
-			//		i_manager.m_mapLayer->setPositionY(_positionY + 1);
-			//		//this->getParent()->setPositionY(this->getParent()->getPositionY() - 1);
-			//	}
-			//}
-			//else
-			//{
-			//	int _positionX = i_manager.m_mapLayer->getPositionX();
-			//	if (this->getPositionX() > m_vecWayWalkHero[m_iterInWayWalk].x)
-			//	{
-			//		i_manager.m_mapLayer->setPositionX(_positionX - 1);
-			//		//this->getParent()->setPositionX(this->getParent()->getPositionX() + 1);
-			//	}
-			//	else
-			//	{
-			//		i_manager.m_mapLayer->setPositionX(_positionX + 1);
-			//		//this->getParent()->setPositionX(this->getParent()->getPositionX() - 1);
-			//	}
-			//}
-			
 			this->setPosition(m_vecWayWalkHero[m_iterInWayWalk]);
 			if (++m_iterInWayWalk == m_vecWayWalkHero.size())
 			{

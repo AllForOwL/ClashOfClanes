@@ -33,6 +33,7 @@ MapLayer::MapLayer(GameScene& i_parentGameScene)
 			}
 		}
 	}
+
 }
 
 void MapLayer::ReleasePositionAfterSearchWay()

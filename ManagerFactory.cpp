@@ -15,28 +15,6 @@ ManagerFactory::ManagerFactory(ManagerFactory& i_ManagerFactory)
 
 }
 
-MachineFactory& ManagerFactory::GetListenFactoryMachine()
-{
-	for (int i = 0; i < m_vecFactoryMachine.size(); i++)
-	{
-		if (m_vecFactoryMachine[i]->GetState() == MachineFactory::StateFactoryMachine::LISTEN)
-		{
-			return *m_vecFactoryMachine[i];
-		}
-	}
-}
-
-WarriorFactory& ManagerFactory::GetListenFactoryWarrior()
-{
-	for (int i = 0; i < m_vecFactoryWarrior.size(); i++)
-	{
-		if (m_vecFactoryWarrior[i]->GetStateWarrior() = WarriorFactory::StateFactoryWarrior::LISTEN)
-		{
-			return *m_vecFactoryWarrior[i];
-		}
-	}
-}
-
 void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 {
 	switch (m_stateManagerFactory)

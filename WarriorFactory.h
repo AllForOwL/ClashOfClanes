@@ -35,15 +35,23 @@ public:
 
 	void SetState(StateFactoryWarrior& i_stateWarrior);
 
+	void LoadSprites();
+	void LoadNameForSprites();
+	void ShowMenu();
+	void HideMenu();
+	
+	bool DetermineCommand();
 private:
-	StateFactoryWarrior m_stateFactory;
 	std::chrono::time_point<std::chrono::system_clock> m_startSecond;
-	int m_timeForCompleteWarrior;
-	ManagerArmy::StateManagerArmy m_stateTypeAddWarrior;
-
+	int					m_timeForCompleteWarrior;
 	StateFactoryWarrior m_stateWarrior;
+	ManagerArmy::StateManagerArmy m_stateTypeAddWarrior;
 	Vec2				m_locationTouch;
 	Rect				m_rectFactory;
+
+	std::vector<std::string>	m_vecNameForSprites;
+	std::vector<Sprite*>		m_vecSpritesForFactoryWarrior;
+	std::vector<Rect>			m_rectForSpritesWarrior;
 };
 
 #endif

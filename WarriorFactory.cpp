@@ -12,6 +12,10 @@ const int CNT_TIME_FOR_COMPLETE_KNIGHT_BLACK	= 10;
 const int CNT_TIME_FOR_COMPLETE_KNIGHT_BRONZE	= 15;
 const int CNT_TIME_FOR_COMPLETE_KNIGHT_SILVER	= 20;
 
+const int INDEX_KNIGHT_BLACK	= 0;
+const int INDEX_KNIGHT_BRONZE	= 1;
+const int INDEX_KNIGHT_SILVER	= 2;
+
 WarriorFactory::WarriorFactory()
 {
 
@@ -29,11 +33,55 @@ WarriorFactory::WarriorFactory(GameScene& i_parentGameScene)
 	m_stateWarrior	= StateFactoryWarrior::NOTHING;
 	m_locationTouch = Point::ZERO;
 	m_rectFactory	= this->getBoundingBox();
+
+	LoadNameForSprites();
+	LoadSprites();
 }
 
 WarriorFactory::WarriorFactory(WarriorFactory& i_warriorFactory)
 {
 
+}
+
+void WarriorFactory::LoadNameForSprites()
+{
+	m_vecNameForSprites.push_back(CNT_PATH_TO_RESOURCES + "Warrior/black_knight/attack_1.png");
+	m_vecNameForSprites.push_back(CNT_PATH_TO_RESOURCES + "Warrior/bronze_knight/attack_1.png");
+	m_vecNameForSprites.push_back(CNT_PATH_TO_RESOURCES + "Warrior/silver_knight/attack_1.png");
+}
+
+void WarriorFactory::LoadSprites()
+{
+	float _positionY = GameScene::m_visibleSize.height / 2;
+	for (int i = 0; i < m_vecNameForSprites.size(); i++)
+	{
+		m_vecSpritesForFactoryWarrior.push_back(Sprite::create(m_vecNameForSprites[i]));
+		m_vecSpritesForFactoryWarrior[i]->setScale(GameScene::m_visibleSize.width / m_vecSpritesForFactoryWarrior[i]->getContentSize().width / 8,
+			GameScene::m_visibleSize.height / m_vecSpritesForFactoryWarrior[i]->getContentSize().height / 8);
+		m_vecSpritesForFactoryWarrior[i]->setPosition(GameScene::m_visibleSize.width - m_vecSpritesForFactoryWarrior[i]->getBoundingBox().size.width,
+			_positionY);
+		m_vecSpritesForFactoryWarrior[i]->setVisible(false);
+		this->getParent()->addChild(m_vecSpritesForFactoryWarrior[i]);
+
+		_positionY -= m_vecSpritesForFactoryWarrior[i]->getBoundingBox().size.height;
+		m_rectForSpritesWarrior.push_back(m_vecSpritesForFactoryWarrior[i]->getBoundingBox());
+	}
+}
+
+void WarriorFactory::ShowMenu()
+{
+	for (int i = 0; i < m_vecSpritesForFactoryWarrior.size(); i++)
+	{
+		m_vecSpritesForFactoryWarrior[i]->setVisible(true);
+	}
+}
+
+void WarriorFactory::HideMenu()
+{
+	for (int i = 0; i < m_vecSpritesForFactoryWarrior.size(); i++)
+	{
+		m_vecSpritesForFactoryWarrior[i]->setVisible(false);
+	}
 }
 
 bool WarriorFactory::isComplete() 
@@ -92,7 +140,7 @@ bool WarriorFactory::isComplete()
 		{
 			if (isComplete())
 			{
-				m_stateFactory = StateFactoryWarrior::NOTHING;
+				m_stateWarrior = StateFactoryWarrior::NOTHING;
 				i_manager.m_managerArmy->SetState(m_stateTypeAddWarrior);
 			}
 			break;
@@ -102,8 +150,8 @@ bool WarriorFactory::isComplete()
 			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
 			if (m_rectFactory.containsPoint(m_locationTouch))
 			{
-				HUDLayer::m_typeMenu	= HUDLayer::StateTypeMenu::FACTORY_WARRIOR;
-				m_stateWarrior			= StateFactoryWarrior::LISTEN;
+				ShowMenu();
+				m_stateWarrior	= StateFactoryWarrior::LISTEN;
 				i_manager.m_inputComponent->SetZeroLocation();
 			}
 			break;
@@ -111,9 +159,8 @@ bool WarriorFactory::isComplete()
 		case StateFactoryWarrior::LISTEN:
 		{
 			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
-			if (m_rectFactory.containsPoint(m_locationTouch))
+			if (DetermineCommand())
 			{
-				HUDLayer::m_typeMenu	= HUDLayer::StateTypeMenu::FACTORY_WARRIOR;
 				i_manager.m_inputComponent->SetZeroLocation();
 			}
 			break;
@@ -121,6 +168,26 @@ bool WarriorFactory::isComplete()
 	default:
 		break;
 	}
+}
+
+bool WarriorFactory::DetermineCommand()
+{
+	if (m_rectForSpritesWarrior[INDEX_KNIGHT_BLACK].containsPoint(m_locationTouch))
+	{
+		m_stateWarrior = StateFactoryWarrior::START_KNIGHT_BLACK;
+		return true;
+	}
+	else if (m_rectForSpritesWarrior[INDEX_KNIGHT_BRONZE].containsPoint(m_locationTouch))
+	{
+		m_stateWarrior = StateFactoryWarrior::START_KNIGHT_BRONZE;
+		return true;
+	}
+	else if (m_rectForSpritesWarrior[INDEX_KNIGHT_SILVER].containsPoint(m_locationTouch))
+	{
+		m_stateWarrior = StateFactoryWarrior::START_KNIGHT_SILVER;
+		return true;
+	}
+	return false;
 }
 
 using STATE_FACTORY = WarriorFactory::StateFactoryWarrior;
