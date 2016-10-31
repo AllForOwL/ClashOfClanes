@@ -24,7 +24,7 @@ public:
 	{
 		CREATE_TANK,
 		CREATE_CAR,
-		NOTHING
+		NOTHING_MACHINE
 	};
 
 	enum CommandWarrior
@@ -33,14 +33,14 @@ public:
 		CREATE_KNIGHT_BLACK,
 		CREATE_KNIGHT_BRONZE,
 		CREATE_KNIGHT_SILVER,
-		NOTHING
+		NOTHING_WARRIOR
 	};
 
 	enum StateTypeMenu
 	{
 		FACTORY_MACHINE,
 		FACTORY_WARRIOR,
-		NOTHING
+		NOTHING_MENU
 	};
 
 	virtual bool init();

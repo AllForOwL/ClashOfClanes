@@ -9,7 +9,7 @@
 
 using STATE_TYPE_MENU = HUDLayer::StateTypeMenu;
 
-STATE_TYPE_MENU HUDLayer::m_typeMenu = STATE_TYPE_MENU::NOTHING;
+STATE_TYPE_MENU HUDLayer::m_typeMenu = STATE_TYPE_MENU::NOTHING_MENU;
 
 const int INDEX_TANK = 0;
 
@@ -46,48 +46,56 @@ void HUDLayer::LoadNameForAllSprites()
 void HUDLayer::LoadSpritesForFactory()
 {
 	int _positionY = GameScene::m_visibleSize.height / 2;
-	Sprite* _sprite;
+
 	Rect	_rect;
+
 	for (int i = 0; i < m_vecNameFactoryMachine.size(); i++)
 	{
-		_sprite = Sprite::create(m_vecNameFactoryMachine[i]);
-		_sprite->setScale(GameScene::m_visibleSize.width / _sprite->getContentSize().width / 8,
-			GameScene::m_visibleSize.height / _sprite->getContentSize().height);
-		_sprite->setPosition(GameScene::m_visibleSize.width - _sprite->getBoundingBox().size.width,
+		m_vecSpritesForFactoryMachine.push_back(Sprite::create(m_vecNameFactoryMachine[i]));
+		m_vecSpritesForFactoryMachine[i]->setScale(GameScene::m_visibleSize.width / m_vecSpritesForFactoryMachine[i]->getContentSize().width / 8,
+			GameScene::m_visibleSize.height / m_vecSpritesForFactoryMachine[i]->getContentSize().height);
+		m_vecSpritesForFactoryMachine[i]->setPosition(GameScene::m_visibleSize.width - m_vecSpritesForFactoryMachine[i]->getBoundingBox().size.width,
 			_positionY);
+		m_vecSpritesForFactoryMachine[i]->setVisible(false);
+		this->addChild(m_vecSpritesForFactoryMachine[i]);
 
-		m_vecSpritesForFactoryMachine.push_back(_sprite);
-		_positionY -= _sprite->getBoundingBox().size.height;
-		_rect = _sprite->getBoundingBox();
-		m_vecRectSpritesFactoryMachine.push_back(_rect);
+		_positionY -= m_vecSpritesForFactoryMachine[i]->getBoundingBox().size.height;
+		m_vecRectSpritesFactoryMachine.push_back(m_vecSpritesForFactoryMachine[i]->getBoundingBox());
 	}
 
 	_positionY = GameScene::m_visibleSize.height / 2;
 	for (int i = 0; i < m_vecNameFactoryWarrior.size(); i++)
 	{
-		_sprite = Sprite::create(m_vecNameFactoryWarrior[i]);
-		_sprite->setScale(GameScene::m_visibleSize.width / _sprite->getContentSize().width / 8,
-			GameScene::m_visibleSize.height / _sprite->getContentSize().height);
-		_sprite->setPosition(GameScene::m_visibleSize.width - _sprite->getBoundingBox().size.width,
+		m_vecSpritesForFactoryWarrior.push_back(Sprite::create(m_vecNameFactoryWarrior[i]));
+		m_vecSpritesForFactoryWarrior[i]->setScale(GameScene::m_visibleSize.width / m_vecSpritesForFactoryWarrior[i]->getContentSize().width / 8,
+			GameScene::m_visibleSize.height / m_vecSpritesForFactoryWarrior[i]->getContentSize().height);
+		m_vecSpritesForFactoryWarrior[i]->setPosition(GameScene::m_visibleSize.width - m_vecSpritesForFactoryWarrior[i]->getBoundingBox().size.width,
 			_positionY);
+		m_vecSpritesForFactoryWarrior[i]->setVisible(false);
+		this->addChild(m_vecSpritesForFactoryWarrior[i]);
 
-		m_vecSpritesForFactoryWarrior.push_back(_sprite);
-		_positionY -= _sprite->getBoundingBox().size.height;
-		_rect = _sprite->getBoundingBox();
-		m_vecRectSpritesFactoryWarrior.push_back(_rect);
+		_positionY -= m_vecSpritesForFactoryWarrior[i]->getBoundingBox().size.height;
+		m_vecRectSpritesFactoryWarrior.push_back(m_vecSpritesForFactoryWarrior[i]->getBoundingBox());
 	}
 }
 
 void HUDLayer::LoadSpritesForMenu()
 {
+	Sprite* _spriteFactoryMachine = Sprite::create(CNT_PATH_TO_RESOURCES + "HUDLayer/Coal.png");
+	_spriteFactoryMachine->setScale(GameScene::m_visibleSize.width / _spriteFactoryMachine->getContentSize().width / 8,
+		GameScene::m_visibleSize.height / _spriteFactoryMachine->getContentSize().height / 8);
+	_spriteFactoryMachine->setPosition(GameScene::m_visibleSize.width - _spriteFactoryMachine->getBoundingBox().size.width,
+		GameScene::m_visibleSize.height / 2 - 50);
+	m_rectFactoryMachine = _spriteFactoryMachine->getBoundingBox();
 
+	this->addChild(_spriteFactoryMachine);
 }
 
 void HUDLayer::ShowMenuForFactoryMachine()
 {
 	for (int i = 0; i < m_vecSpritesForFactoryMachine.size(); i++)
 	{
-		this->addChild(m_vecSpritesForFactoryMachine[i]);
+		m_vecSpritesForFactoryMachine[i]->setVisible(true);
 	}
 }
 
@@ -95,7 +103,7 @@ void HUDLayer::ShowMenuForFactoryWarrior()
 {
 	for (int i = 0; i < m_vecSpritesForFactoryWarrior.size(); i++)
 	{
-		this->addChild(m_vecSpritesForFactoryWarrior[i]);
+		m_vecSpritesForFactoryWarrior[i]->setVisible(true);
 	}
 }
 
@@ -106,7 +114,7 @@ void HUDLayer::Update(ManagerComponent& i_manager)
 		case StateTypeMenu::FACTORY_MACHINE:
 		{	
 			ShowMenuForFactoryMachine();
-			m_typeMenu	= StateTypeMenu::NOTHING;
+			m_typeMenu	= StateTypeMenu::NOTHING_MENU;
 			m_command	= Command::CREATE_MACHINE;
 
 			break;
@@ -114,7 +122,7 @@ void HUDLayer::Update(ManagerComponent& i_manager)
 		case StateTypeMenu::FACTORY_WARRIOR:
 		{
 			ShowMenuForFactoryWarrior();
-			m_typeMenu	= StateTypeMenu::NOTHING;
+			m_typeMenu	= StateTypeMenu::NOTHING_MENU;
 			m_command	= Command::CREATE_WARRIOR;
 
 			break;
@@ -239,7 +247,7 @@ void HUDLayer::ExecuteCommandForFactoryMachine(ManagerComponent& i_manager)
 			STATE_MACHINE _state = STATE_MACHINE::START_TANK;
 			i_manager.m_managerFactory->GetListenFactoryMachine().SetState(_state);
 
-			m_commandMachine = CommandMachine::NOTHING;
+			m_commandMachine = CommandMachine::NOTHING_MACHINE;
 
 			break;
 		}
@@ -259,7 +267,7 @@ void HUDLayer::ExecuteCommandForFactoryWarrior(ManagerComponent& i_manager)
 			STATE_WARRIOR _state = STATE_WARRIOR::START_KNIGHT_BLACK;
 			i_manager.m_managerFactory->GetListenFactoryWarrior().SetState(_state);
 			
-			m_commandWarrior = HUDLayer::CommandWarrior::NOTHING;
+			m_commandWarrior = HUDLayer::CommandWarrior::NOTHING_WARRIOR;
 
 			break;
 		}
@@ -268,7 +276,7 @@ void HUDLayer::ExecuteCommandForFactoryWarrior(ManagerComponent& i_manager)
 			STATE_WARRIOR _state = STATE_WARRIOR::START_KNIGHT_BRONZE;
 			i_manager.m_managerFactory->GetListenFactoryWarrior().SetState(_state);
 
-			m_commandWarrior = HUDLayer::CommandWarrior::NOTHING;
+			m_commandWarrior = HUDLayer::CommandWarrior::NOTHING_WARRIOR;
 
 			break;
 		}
@@ -277,7 +285,7 @@ void HUDLayer::ExecuteCommandForFactoryWarrior(ManagerComponent& i_manager)
 			STATE_WARRIOR _state = STATE_WARRIOR::START_KNIGHT_SILVER;
 			i_manager.m_managerFactory->GetListenFactoryWarrior().SetState(_state);
 
-			m_commandWarrior = HUDLayer::CommandWarrior::NOTHING;
+			m_commandWarrior = HUDLayer::CommandWarrior::NOTHING_WARRIOR;
 
 			break;
 		}

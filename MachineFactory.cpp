@@ -95,8 +95,8 @@ bool MachineFactory::isComplete()
 			{
 				if (m_rectFactory.containsPoint(m_locationTouch))
 				{
-					HUDLayer::m_typeMenu = HUDLayer::StateTypeMenu::FACTORY_MACHINE;
-					m_stateMachine = StateFactoryMachine::LISTEN;
+					HUDLayer::m_typeMenu	= HUDLayer::StateTypeMenu::FACTORY_MACHINE;
+					m_stateMachine			= StateFactoryMachine::LISTEN;
 				}
 			}
 			break;
