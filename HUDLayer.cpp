@@ -97,6 +97,11 @@ void HUDLayer::LoadSpritesForMenu()
 
 void HUDLayer::ShowMenuForFactoryMachine()
 {
+	for (int i = 0; i < m_vecSpritesForFactoryWarrior.size(); i++)
+	{
+		m_vecSpritesForFactoryWarrior[i]->setVisible(false);
+	}
+
 	for (int i = 0; i < m_vecSpritesForFactoryMachine.size(); i++)
 	{
 		m_vecSpritesForFactoryMachine[i]->setVisible(true);
@@ -105,6 +110,11 @@ void HUDLayer::ShowMenuForFactoryMachine()
 
 void HUDLayer::ShowMenuForFactoryWarrior()
 {
+	for (int i = 0; i < m_vecSpritesForFactoryMachine.size(); i++)
+	{
+		m_vecSpritesForFactoryMachine[i]->setVisible(false);
+	}
+
 	for (int i = 0; i < m_vecSpritesForFactoryWarrior.size(); i++)
 	{
 		m_vecSpritesForFactoryWarrior[i]->setVisible(true);
@@ -120,16 +130,16 @@ void HUDLayer::Update(ManagerComponent& i_manager)
 			ShowMenuForFactoryMachine();
 			m_typeMenu	= StateTypeMenu::NOTHING_MENU;
 			m_command	= Command::CREATE_MACHINE;
-
-			break;
+			
+			return;
 		}
 		case StateTypeMenu::FACTORY_WARRIOR:
 		{
 			ShowMenuForFactoryWarrior();
 			m_typeMenu	= StateTypeMenu::NOTHING_MENU;
 			m_command	= Command::CREATE_WARRIOR;
-
-			break;
+			
+			return;
 		}
 	default:
 		break;

@@ -233,8 +233,8 @@ HeroGraphicComponent::~HeroGraphicComponent()
 */
 
 /* Tasks on 31:10:2016
-	- add on HUDLayer all factory;
-	- add in factory ___all objects;
+	+ add on HUDLayer all factory;
+	+ add in factory ___all objects;
 	- add thread for search way;
 	------ ATTENTION!|^|
 	- relasize	   it|||

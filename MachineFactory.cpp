@@ -91,14 +91,23 @@ bool MachineFactory::isComplete()
 		}
 		case StateFactoryMachine::NOTHING:
 		{
-			if ((m_locationTouch = i_manager.m_inputComponent->GetLocationTouch()) != Point::ZERO)
+			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
+			if (m_rectFactory.containsPoint(m_locationTouch))
 			{
-				if (m_rectFactory.containsPoint(m_locationTouch))
-				{
-					HUDLayer::m_typeMenu	= HUDLayer::StateTypeMenu::FACTORY_MACHINE;
-					m_stateMachine			= StateFactoryMachine::LISTEN;
-				}
+				HUDLayer::m_typeMenu	= HUDLayer::StateTypeMenu::FACTORY_MACHINE;
+				m_stateMachine			= StateFactoryMachine::LISTEN;
+				i_manager.m_inputComponent->SetZeroLocation();
 			}
+		}
+		case StateFactoryMachine::LISTEN:
+		{
+			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
+			if (m_rectFactory.containsPoint(m_locationTouch))
+			{
+				HUDLayer::m_typeMenu	= HUDLayer::StateTypeMenu::FACTORY_MACHINE;
+				i_manager.m_inputComponent->SetZeroLocation();
+			}
+
 			break;
 		}
 	default:

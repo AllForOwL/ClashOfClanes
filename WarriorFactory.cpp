@@ -100,11 +100,21 @@ bool WarriorFactory::isComplete()
 		case StateFactoryWarrior::NOTHING:
 		{
 			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
-			
 			if (m_rectFactory.containsPoint(m_locationTouch))
 			{
-				HUDLayer::m_typeMenu = HUDLayer::StateTypeMenu::FACTORY_WARRIOR;
-				m_stateFactory = StateFactoryWarrior::LISTEN;
+				HUDLayer::m_typeMenu	= HUDLayer::StateTypeMenu::FACTORY_WARRIOR;
+				m_stateWarrior			= StateFactoryWarrior::LISTEN;
+				i_manager.m_inputComponent->SetZeroLocation();
+			}
+			break;
+		}
+		case StateFactoryWarrior::LISTEN:
+		{
+			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
+			if (m_rectFactory.containsPoint(m_locationTouch))
+			{
+				HUDLayer::m_typeMenu	= HUDLayer::StateTypeMenu::FACTORY_WARRIOR;
+				i_manager.m_inputComponent->SetZeroLocation();
 			}
 			break;
 		}
