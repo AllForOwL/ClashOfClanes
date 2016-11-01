@@ -98,3 +98,9 @@ HUDLayer::~HUDLayer()
 {
 
 }
+
+/*
+	Tasks on today(01:11:2016)
+	+ Hide menu;
+	- automap;
+*/

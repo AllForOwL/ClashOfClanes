@@ -109,7 +109,6 @@ void MachineFactory::HideMenu()
 				m_stateMachine				= StateFactoryMachine::WORKING;
 				m_stateManagerMachine		= ManagerMachine::StateManagerMachine::ADD_TANK;
 			}
-
 			break;
 		}
 		case StateFactoryMachine::START_CAR:
@@ -120,8 +119,7 @@ void MachineFactory::HideMenu()
 				m_startSecond				= GraphicComponent::GetTime();
 				m_stateMachine				= StateFactoryMachine::WORKING;
 				m_stateManagerMachine		= ManagerMachine::StateManagerMachine::ADD_CAR;
-			}
-												
+			}												
 			break;
 		}
 		case StateFactoryMachine::WORKING:
@@ -139,9 +137,10 @@ void MachineFactory::HideMenu()
 			if (m_rectFactory.containsPoint(m_locationTouch))
 			{
 				ShowMenu();
-				m_stateMachine			= StateFactoryMachine::LISTEN;
+				m_stateMachine	= StateFactoryMachine::LISTEN;
 				i_manager.m_inputComponent->SetZeroLocation();
 			}
+			break;
 		}
 		case StateFactoryMachine::LISTEN:
 		{
@@ -150,7 +149,11 @@ void MachineFactory::HideMenu()
 			{
 				i_manager.m_inputComponent->SetZeroLocation();
 			}
-
+			else if (m_locationTouch != Point::ZERO)
+			{
+				HideMenu();
+				m_stateMachine = StateFactoryMachine::NOTHING;
+			}
 			break;
 		}
 	default:
