@@ -1,8 +1,11 @@
 #include "MapLayer.h"
 #include "constants.h"
 #include "GameScene.h"
+#include "ManagerComponent.h"
 
 const int CNT_TAG_ARCHER = 1000;
+
+const int CNT_SPEED_MAP = 1;
 
 MapLayer::MapLayer()
 {
@@ -36,6 +39,44 @@ MapLayer::MapLayer(GameScene& i_parentGameScene)
 
 }
 
+void MapLayer::Update(ManagerComponent& i_manager)
+{
+	switch (m_stateMap)
+	{
+		case StateMap::MOVE_UP:
+		{
+			setPositionY(getPositionY() + CNT_SPEED_MAP);
+
+			break;
+		}
+		case StateMap::MOVE_DOWN:
+		{
+			setPositionY(getPositionY() - CNT_SPEED_MAP);
+
+			break;
+		}
+		case StateMap::MOVE_LEFT:
+		{
+			setPositionX(getPositionX() - CNT_SPEED_MAP);
+
+			break;
+		}
+		case StateMap::MOVE_RIGHT:
+		{
+			setPositionX(getPositionX() + CNT_SPEED_MAP);			
+
+			break;
+		}
+		case StateMap::STOP:
+		{
+			
+			break;
+		}
+	default:
+		break;
+	}
+}
+
 void MapLayer::ReleasePositionAfterSearchWay()
 {
 	Size _size = Size(this->getMapSize().width * this->getTileSize().width,
@@ -67,6 +108,11 @@ void MapLayer::FillRegionFromObject(Point i_point, Size i_size)
 			this->m_mapCoordinate[i][j] = CNT_TAG_ARCHER;
 		}
 	}
+}
+
+void MapLayer::SetState(StateMap& i_statemap)
+{
+	m_stateMap = i_statemap;
 }
 
 MapLayer::~MapLayer()

@@ -22,7 +22,9 @@ ManagerComponent::ManagerComponent(GameScene& i_gameScene)
 
 void ManagerComponent::Update(GameScene& i_gameScene)
 {
-	m_hero->Update(*this);
+	m_hero->Update			(*this);
+	m_inputComponent->Update(*this);
+	m_mapLayer->Update		(*this);
 
 	m_managerArmy->Update	(i_gameScene, *this);
 	m_managerMachine->Update(i_gameScene, *this);

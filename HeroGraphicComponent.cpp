@@ -75,8 +75,8 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 			if (++m_iterInWayWalk == m_vecWayWalkHero.size())
 			{
 				m_stateHero = StateHero::NOTHING;
+				m_rectHero  = this->getBoundingBox();
 				m_vecWayWalkHero.clear();
-				m_rectHero = this->getBoundingBox();
 			}
 			break;
 		}
@@ -86,7 +86,6 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 			{
 				m_stateHero  = StateHero::SEARCH_WAY;
 			}
-
 			break; 
 		}
 	default:
@@ -102,7 +101,6 @@ bool HeroGraphicComponent::CheckToGoTarget(ManagerComponent& i_manager)
 	if (m_rectHero.containsPoint(_previousLocationTouch))
 	{
 		m_positionTarget = _currentLocationTouch;
-
 		return true;
 	}
 	return false;
