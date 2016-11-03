@@ -13,7 +13,7 @@ ManagerFactory::ManagerFactory()
 
 ManagerFactory::ManagerFactory(ManagerFactory& i_ManagerFactory)
 {
-
+	m_positionBuildFactory = Point::ZERO;
 }
 
 void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
@@ -28,7 +28,9 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 				Point _positionMap = i_manager.m_mapLayer->getPosition();
 				_positionMap.x *= -1;
 				_positionMap.y *= -1;
-				Point _positionWarrior = Point(GameScene::m_visibleSize.width / 2 + _positionMap.x - 50, GameScene::m_visibleSize.height / 2 + _positionMap.y);
+				_positionMap.x += m_positionBuildFactory.x;
+				_positionMap.y += m_positionBuildFactory.y;
+				Point _positionWarrior = Point(_positionMap);
 				_warriorFactory->setPosition(_positionWarrior);
 				m_vecFactoryWarrior.push_back(_warriorFactory);
 			}
@@ -44,7 +46,9 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 				Point _positionMap = i_manager.m_mapLayer->getPosition();
 				_positionMap.x *= -1;
 				_positionMap.y *= -1;
-				Point _positionMachine = Point(GameScene::m_visibleSize.width / 2 + _positionMap.x - 100, GameScene::m_visibleSize.height / 2 + _positionMap.y);
+				_positionMap.x += m_positionBuildFactory.x;
+				_positionMap.y += m_positionBuildFactory.y;
+				Point _positionMachine = Point(_positionMap);
 				_machineFactory->setPosition(_positionMachine);
 				m_vecFactoryMachine.push_back(_machineFactory);
 			}
@@ -69,6 +73,11 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 	default:
 		break;
 	}
+}
+
+void ManagerFactory::SetPositionBuildFactory(Point i_point)
+{
+	m_positionBuildFactory = i_point;
 }
 
 void ManagerFactory::SetState(StateManagerFactory& i_state)

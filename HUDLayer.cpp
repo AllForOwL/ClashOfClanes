@@ -75,6 +75,7 @@ void HUDLayer::ExecuteCommandForManagerFactory(ManagerComponent& i_manager)
 		{
 			ManagerFactory::StateManagerFactory _state = ManagerFactory::StateManagerFactory::ADD_FACTORY_MACHINE;
 			i_manager.m_managerFactory->SetState(_state);
+			i_manager.m_managerFactory->SetPositionBuildFactory(i_manager.m_inputComponent->GetPreviousLocationTouch());
 
 			m_command = Command::NOTHING;
 
@@ -84,6 +85,7 @@ void HUDLayer::ExecuteCommandForManagerFactory(ManagerComponent& i_manager)
 		{
 			ManagerFactory::StateManagerFactory _state = ManagerFactory::StateManagerFactory::ADD_FACTORY_WARRIOR;
 			i_manager.m_managerFactory->SetState(_state);
+			i_manager.m_managerFactory->SetPositionBuildFactory(i_manager.m_inputComponent->GetPreviousLocationTouch());
 
 			m_command = Command::NOTHING;
 

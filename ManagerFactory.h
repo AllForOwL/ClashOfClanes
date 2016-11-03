@@ -30,11 +30,13 @@ public:
 	void Update(GameScene& i_gameScene, ManagerComponent& i_manager);
 
 	void SetState(StateManagerFactory& i_state);
+	void SetPositionBuildFactory(Point i_point);
 
 private:
 	std::vector<MachineFactory*>	m_vecFactoryMachine;
 	std::vector<WarriorFactory*>	m_vecFactoryWarrior;
 	StateManagerFactory				m_stateManagerFactory;
+	Point							m_positionBuildFactory;
 };
 
 #endif
