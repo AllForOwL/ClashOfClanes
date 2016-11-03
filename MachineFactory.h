@@ -7,6 +7,8 @@
 
 USING_NS_CC;
 
+class MapLayer;
+
 class MachineFactory : public Factory
 {
 public:
@@ -21,7 +23,7 @@ public:
 	};
 
 	MachineFactory();
-	MachineFactory(GameScene& i_parentGameScene);
+	MachineFactory(MapLayer& i_mapLayer);
 	MachineFactory(MachineFactory& i_machineFactory);
 
 	~MachineFactory();

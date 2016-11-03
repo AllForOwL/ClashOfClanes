@@ -14,7 +14,7 @@ const int CNT_COIN_FOR_START_CAR	= 70;
 const int CNT_COIN_FOR_START_FACTORY_MACHINE	= 300;
 const int CNT_COIN_FOR_START_FACTORY_WARRIOR	= 250;
 
-const int CNT_COINT_IN_BEGIN = 1000;
+const int CNT_COINT_IN_BEGIN = 10000;
 
 const int CNT_LENGTH_HERO_FROM_ORDER = 100;
 
@@ -54,17 +54,19 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 	{
 		case HeroGraphicComponent::SEARCH_WAY:
 		{
-			AlgorithmLi* _searchWay = new AlgorithmLi(this->getPosition(), m_positionTarget, i_manager.m_mapLayer->GetMapCoordinate());
+			AlgorithmLi* _searchWay = new AlgorithmLi(this->getPosition(), 
+														m_positionTarget, 
+														i_manager.m_mapLayer->GetMapCoordinate());
 			if (_searchWay->WayFound())
 			{
 				i_manager.m_inputComponent->SetZeroLocation();
 				i_manager.m_mapLayer->ReleasePositionAfterSearchWay();
-				std::copy(_searchWay->GetFoundWay().begin(), _searchWay->GetFoundWay().end(), std::back_inserter(m_vecWayWalkHero));
+				std::copy(_searchWay->GetFoundWay().begin(), _searchWay->GetFoundWay().end(), 
+							std::back_inserter(m_vecWayWalkHero));
 				m_iterInWayWalk = 0;
 
 				m_stateHero = HeroGraphicComponent::WALK;
 			}
-			
 			delete _searchWay;
 
 			break;
@@ -188,8 +190,6 @@ bool HeroGraphicComponent::CheckProductionFactoryWarrior()
 	}
 }
 
-
-
 HeroGraphicComponent::~HeroGraphicComponent()
 {
 	CCLOG("destructor herographic");
@@ -201,11 +201,17 @@ HeroGraphicComponent::~HeroGraphicComponent()
 	ManagerComponent	- контейнер для цих компонентів
 */
 
+/* Tasks on 03:11:2016
+	- create army from knights and tanks;
+	- create city for hero;
+*/
+
 /* Tasks on 31:10:2016
 	+ add on HUDLayer all factory;
 	+ add in factory ___all objects;
-	- add thread for search way;
+	+ add thread for search way:
+		+ optimization search way;
 	------ ATTENTION!|^|
-	- relasize	   it|||
+	+ relasize	   it|||
 				all	 |_|
 */

@@ -4,6 +4,7 @@
 #include "WarriorFactory.h"
 #include "Car.h"
 #include "Tank.h"
+#include "MapLayer.h"
 
 ManagerMachine::ManagerMachine()
 {

@@ -10,7 +10,7 @@ HeroInputComponent::HeroInputComponent()
 
 HeroInputComponent::HeroInputComponent(HeroInputComponent& i_inputComponent)
 {
-
+	
 }
 
 /*virtual*/ void HeroInputComponent::Update(ManagerComponent& i_manager)

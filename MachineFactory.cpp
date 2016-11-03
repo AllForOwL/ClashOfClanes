@@ -8,6 +8,7 @@
 #include "constants.h"
 #include "HeroInputComponent.h"
 #include "HUDLayer.h"
+#include "MapLayer.h"
 
 const int CNT_TIME_FOR_COMPLETE_TANK = 40;
 const int CNT_TIME_FOR_COMPLETE_CAR = 30;
@@ -19,14 +20,12 @@ MachineFactory::MachineFactory()
 
 }
 
-MachineFactory::MachineFactory(GameScene& i_parentGameScene)
+MachineFactory::MachineFactory(MapLayer& i_mapLayer)
 {
-	i_parentGameScene.addChild(this);
+	i_mapLayer.addChild(this);
 	this->initWithFile(CNT_PATH_TO_RESOURCES + "Castle/FactoryMachine.png");
 	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 6,
 		GameScene::m_visibleSize.height / this->getContentSize().height / 6);
-	this->setPosition(GameScene::m_visibleSize.width / 2 - 50, GameScene::m_visibleSize.height / 2);
-	this->setZOrder(1);
 
 	m_stateMachine	= StateFactoryMachine::NOTHING;
 	m_rectFactory	= this->getBoundingBox();

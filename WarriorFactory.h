@@ -7,6 +7,8 @@
 
 USING_NS_CC;
 
+class MapLayer;
+
 class WarriorFactory : public Factory
 {
 public:
@@ -22,7 +24,7 @@ public:
 	};
 
 	WarriorFactory();
-	WarriorFactory(GameScene& i_parentGameScene);
+	WarriorFactory(MapLayer& i_mapLayer);
 	WarriorFactory(WarriorFactory& i_warriorFactory);
 
 	~WarriorFactory();
