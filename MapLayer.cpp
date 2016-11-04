@@ -101,13 +101,13 @@ std::vector<std::vector<int>>& MapLayer::GetMapCoordinate()
 
 void MapLayer::FillRegionFromObject(Point i_point, Size i_size)
 {
-	for (int i = _position.x; i < _position.x + i_size.width; i++)
+	/*for (int i = _position.x; i < _position.x + i_size.width; i++)
 	{
 		for (int j = _position.y; j < _position.y + i_size.height; j++)
 		{
 			this->m_mapCoordinate[i][j] = CNT_TAG_ARCHER;
 		}
-	}
+	}*/
 }
 
 void MapLayer::SetState(StateMap& i_statemap)

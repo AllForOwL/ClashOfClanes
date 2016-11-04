@@ -5,6 +5,7 @@
 #include "MachineFactory.h"
 #include "HeroGraphicComponent.h"
 #include "MapLayer.h"
+#include "HeroInputComponent.h"
 
 ManagerFactory::ManagerFactory()
 {
@@ -33,6 +34,8 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 				Point _positionWarrior = Point(_positionMap);
 				_warriorFactory->setPosition(_positionWarrior);
 				m_vecFactoryWarrior.push_back(_warriorFactory);
+
+				i_manager.m_inputComponent->SetZeroLocation();
 			}
 			m_stateManagerFactory = ManagerFactory::NOTHING;
 

@@ -29,7 +29,7 @@ Knight::Knight(std::string i_knight, GameScene& i_parentGameScene)
 	
 	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 8,
 		GameScene::m_visibleSize.height / this->getContentSize().height / 8);
-	this->setPosition(GameScene::m_visibleSize.width / 2 - 50, GameScene::m_visibleSize.height / 2 + 50);
+	//this->setPosition(GameScene::m_visibleSize.width / 2 - 50, GameScene::m_visibleSize.height / 2 + 50);
 	this->setZOrder(1);
 }
 

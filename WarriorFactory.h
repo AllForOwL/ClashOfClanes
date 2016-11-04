@@ -42,7 +42,10 @@ public:
 	void ShowMenu();
 	void HideMenu();
 	
+	void LoadPositionWarrior();
+
 	bool DetermineCommand();
+
 private:
 	std::chrono::time_point<std::chrono::system_clock> m_startSecond;
 	int					m_timeForCompleteWarrior;
@@ -54,6 +57,9 @@ private:
 	std::vector<std::string>	m_vecNameForSprites;
 	std::vector<Sprite*>		m_vecSpritesForFactoryWarrior;
 	std::vector<Rect>			m_rectForSpritesWarrior;
+
+	std::vector<Point>			m_vecPositionWarrior;
+	int							m_numberWarriorComplete;
 };
 
 #endif

@@ -30,9 +30,14 @@ public:
 
 	void SetState(StateManagerArmy& i_state);
 
+	void SetPositionForWarrior(Point i_positionWarrior);
+
 private:
 	std::vector<Knight*>	m_vecKnight;
 	StateManagerArmy		m_stateManagerArmy;
+
+	Point					m_positionWarrior;
+
 };
 
 #endif

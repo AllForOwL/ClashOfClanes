@@ -22,6 +22,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		case ManagerArmy::ADD_KNIGHT_BLACK:
 		{
 			Knight* _newKnightBlack = new Knight(CNT_TYPE_KNIGHT_BLACK, i_gameScene);
+			_newKnightBlack->setPosition(m_positionWarrior);
 			m_vecKnight.push_back(_newKnightBlack);
 			
 			Point _position	= _newKnightBlack->getPosition();
@@ -35,6 +36,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		case ManagerArmy::ADD_KNIGHT_BRONZE:
 		{
 	   		Knight* _newKnightBronze = new Knight(CNT_TYPE_KNIGHT_BRONZE, i_gameScene);
+			_newKnightBronze->setPosition(m_positionWarrior);
 			m_vecKnight.push_back(_newKnightBronze);
 			
 			Point _position	= _newKnightBronze->getPosition();
@@ -48,6 +50,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		case ManagerArmy::ADD_KNIGHT_SILVER:
 		{
 			Knight* _newKnightSilver = new Knight(CNT_TYPE_KNIGHT_SILVER, i_gameScene);
+			_newKnightSilver->setPosition(m_positionWarrior);
 			m_vecKnight.push_back(_newKnightSilver);
 			
 			Point _position	= _newKnightSilver->getPosition();
@@ -78,6 +81,11 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 void ManagerArmy::SetState(StateManagerArmy& i_state)
 {
 	m_stateManagerArmy = i_state;
+}
+
+void ManagerArmy::SetPositionForWarrior(Point i_positionWarrior)
+{
+	m_positionWarrior = i_positionWarrior;
 }
 
 ManagerArmy::~ManagerArmy()

@@ -34,12 +34,15 @@ WarriorFactory::WarriorFactory(MapLayer& i_mapLayer)
 
 	m_stateWarrior	= StateFactoryWarrior::NOTHING;
 	m_locationTouch = Point::ZERO;
-	m_rectFactory	= this->getBoundingBox();
+	//m_rectFactory.setRect(this->getBoundingBox().getMinX() + _positionMap.x, this->getBoundingBox().getMinY() + _positionMap.y,
+	//	this->getBoundingBox().getMaxX() + _positionMap.x, this->getBoundingBox().getMaxY() + _positionMap.y);
+	m_rectFactory			= this->getBoundingBox();
+	//m_rectFactory.setRect()
+	m_numberWarriorComplete = 0;
 
 	LoadNameForSprites();
 	LoadSprites();
 }
-
 WarriorFactory::WarriorFactory(WarriorFactory& i_warriorFactory)
 {
 
@@ -60,21 +63,40 @@ void WarriorFactory::LoadSprites()
 		m_vecSpritesForFactoryWarrior.push_back(Sprite::create(m_vecNameForSprites[i]));
 		m_vecSpritesForFactoryWarrior[i]->setScale(GameScene::m_visibleSize.width / m_vecSpritesForFactoryWarrior[i]->getContentSize().width / 8,
 			GameScene::m_visibleSize.height / m_vecSpritesForFactoryWarrior[i]->getContentSize().height / 8);
-		m_vecSpritesForFactoryWarrior[i]->setPosition(GameScene::m_visibleSize.width - m_vecSpritesForFactoryWarrior[i]->getBoundingBox().size.width,
-			_positionY);
 		m_vecSpritesForFactoryWarrior[i]->setVisible(false);
 		this->getParent()->addChild(m_vecSpritesForFactoryWarrior[i]);
-
-		_positionY -= m_vecSpritesForFactoryWarrior[i]->getBoundingBox().size.height;
-		m_rectForSpritesWarrior.push_back(m_vecSpritesForFactoryWarrior[i]->getBoundingBox());
 	}
 }
 
 void WarriorFactory::ShowMenu()
 {
+	Point _positionMap = this->getParent()->getPosition();
+	if (_positionMap.x < 0)
+	{
+		_positionMap.x *= -1;
+	}
+	if (_positionMap.y < 0)
+	{
+		_positionMap.y *= -1;
+	}
+
+	float _positionY = GameScene::m_visibleSize.height / 2;
 	for (int i = 0; i < m_vecSpritesForFactoryWarrior.size(); i++)
 	{
+		Point _position = Point(GameScene::m_visibleSize.width - m_vecSpritesForFactoryWarrior[i]->getBoundingBox().size.width + _positionMap.x,
+			_positionY + _positionMap.y);
+
+		m_vecSpritesForFactoryWarrior[i]->setPosition(_position);
 		m_vecSpritesForFactoryWarrior[i]->setVisible(true);
+		_positionY -= 30;
+		_positionMap.x *= -1;
+		_positionMap.y *= -1;
+		Rect _temp = Rect(	m_vecSpritesForFactoryWarrior[i]->getBoundingBox().getMinX() + _positionMap.x, 
+							m_vecSpritesForFactoryWarrior[i]->getBoundingBox().getMinY() + _positionMap.y,
+							m_vecSpritesForFactoryWarrior[i]->getBoundingBox().getMaxX() + _positionMap.x,
+							m_vecSpritesForFactoryWarrior[i]->getBoundingBox().getMaxY() + _positionMap.y
+						);
+		m_rectForSpritesWarrior.push_back(_temp);
 	}
 }
 
@@ -95,6 +117,26 @@ bool WarriorFactory::isComplete()
 	else
 	{
 		return false;
+	}
+}
+
+void WarriorFactory::LoadPositionWarrior()
+{
+	Point _positionMap = this->getParent()->getPosition();
+	_positionMap.x *= -1;
+	_positionMap.y *= -1;
+
+	Point _positionFactory = Point(m_rectFactory.getMinX() + _positionMap.x, m_rectFactory.getMinY() + _positionMap.y);
+	_positionFactory.y -= 10;
+
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			m_vecPositionWarrior.push_back(Point(_positionFactory));
+			_positionFactory.x += 40;
+		}
+		_positionFactory.y += 40;
 	}
 }
 
@@ -142,20 +184,26 @@ bool WarriorFactory::isComplete()
 		{
 			if (isComplete())
 			{
-				m_stateWarrior = StateFactoryWarrior::NOTHING;
+				m_stateWarrior = StateFactoryWarrior::LISTEN;
 				i_manager.m_managerArmy->SetState(m_stateTypeAddWarrior);
+				i_manager.m_managerArmy->SetPositionForWarrior(m_vecPositionWarrior[m_numberWarriorComplete]);
+				++m_numberWarriorComplete;
 			}
 			break;
 		}
 		case StateFactoryWarrior::NOTHING:
 		{
+			Point _positionMap = this->getParent()->getPosition();
+			m_rectFactory.setRect(this->getBoundingBox().getMinX() + _positionMap.x, this->getBoundingBox().getMinY() + _positionMap.y,
+				this->getBoundingBox().getMaxX() + _positionMap.x, this->getBoundingBox().getMaxY() + _positionMap.y);
 			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
-			if (m_rectFactory.containsPoint(m_locationTouch))
+			if (m_rectFactory.containsPoint(m_locationTouch) && m_locationTouch != Point::ZERO)
 			{
+				LoadPositionWarrior();
 				ShowMenu();
-				m_stateWarrior	= StateFactoryWarrior::LISTEN;
+				m_stateWarrior = StateFactoryWarrior::LISTEN;
 				i_manager.m_inputComponent->SetZeroLocation();
-			}
+			}	
 			break;
 		}
 		case StateFactoryWarrior::LISTEN:
@@ -165,11 +213,11 @@ bool WarriorFactory::isComplete()
 			{
 				i_manager.m_inputComponent->SetZeroLocation();
 			}
-			else if (m_locationTouch != Point::ZERO)
-			{
-				HideMenu();
-				m_stateWarrior = StateFactoryWarrior::NOTHING;
-			}
+			//else if (m_locationTouch != Point::ZERO)
+			//{
+				//HideMenu();
+			//	m_stateWarrior = StateFactoryWarrior::NOTHING;
+			//}
 			break;
 		}
 	default:
