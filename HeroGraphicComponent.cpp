@@ -201,7 +201,7 @@ HeroGraphicComponent::~HeroGraphicComponent()
 	ManagerComponent	- контейнер для цих компонентів
 */
 
-/* Tasks on 03:11:2016
+/* Tasks on 08:11:2016
 	- create army from knights and tanks;
 	- create city for hero;
 */

@@ -31,6 +31,7 @@ public:
 
 	void SetState(StateManagerFactory& i_state);
 	void SetPositionBuildFactory(Point i_point);
+	Point GetPositionBuildFactory() const;
 
 private:
 	std::vector<MachineFactory*>	m_vecFactoryMachine;

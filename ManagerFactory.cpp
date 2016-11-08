@@ -25,14 +25,7 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		{
 			if (i_manager.m_hero->CheckProductionFactoryWarrior())
 			{
-				WarriorFactory* _warriorFactory = new WarriorFactory(*i_manager.m_mapLayer);
-				Point _positionMap = i_manager.m_mapLayer->getPosition();
-				_positionMap.x *= -1;
-				_positionMap.y *= -1;
-				_positionMap.x += m_positionBuildFactory.x;
-				_positionMap.y += m_positionBuildFactory.y;
-				Point _positionWarrior = Point(_positionMap);
-				_warriorFactory->setPosition(_positionWarrior);
+				WarriorFactory* _warriorFactory = new WarriorFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
 				m_vecFactoryWarrior.push_back(_warriorFactory);
 
 				i_manager.m_inputComponent->SetZeroLocation();
@@ -76,6 +69,11 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 	default:
 		break;
 	}
+}
+
+Point ManagerFactory::GetPositionBuildFactory() const
+{
+	return m_positionBuildFactory;
 }
 
 void ManagerFactory::SetPositionBuildFactory(Point i_point)

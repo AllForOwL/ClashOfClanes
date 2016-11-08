@@ -7,13 +7,13 @@
 USING_NS_CC;
 
 class ManagerComponent;
-class GameScene;
+class MapLayer;
 
 class Knight : public Warrior
 {
 public:
 	Knight();
-	Knight(std::string i_typeKnight, GameScene& i_parentGameScene);
+	Knight(std::string i_typeKnight, MapLayer& i_parentMapLayer);
 	Knight(Knight& heroGraphiComponent);
 
 	~Knight();

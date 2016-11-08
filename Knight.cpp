@@ -10,9 +10,9 @@ Knight::Knight()
 	this->setZOrder(1);
 }
 
-Knight::Knight(std::string i_knight, GameScene& i_parentGameScene)
+Knight::Knight(std::string i_knight, MapLayer& i_parentMapLayer)
 {			
-	i_parentGameScene.addChild(this);
+	i_parentMapLayer.addChild(this);
 
 	if (i_knight == CNT_TYPE_KNIGHT_BLACK)
 	{

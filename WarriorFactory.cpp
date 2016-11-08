@@ -22,23 +22,41 @@ WarriorFactory::WarriorFactory()
 
 }
 
-WarriorFactory::WarriorFactory(MapLayer& i_mapLayer)
+WarriorFactory::WarriorFactory(Point i_positionVisible, MapLayer& i_mapLayer)
 {
 	i_mapLayer.addChild(this);
 	
-	Point _positionParent = this->getParent()->getPosition();
-	
+	m_positionVisible = i_positionVisible;
+
+	m_positionOrigin	= this->getParent()->getPosition();
+	m_positionOrigin.x	*= (-1);
+	m_positionOrigin.y	*= (-1);
+
 	this->initWithFile(CNT_PATH_TO_RESOURCES + "Home/render4.png");
 	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 6,
 		GameScene::m_visibleSize.height / this->getContentSize().height / 6);
 
 	m_stateWarrior	= StateFactoryWarrior::NOTHING;
 	m_locationTouch = Point::ZERO;
-	//m_rectFactory.setRect(this->getBoundingBox().getMinX() + _positionMap.x, this->getBoundingBox().getMinY() + _positionMap.y,
-	//	this->getBoundingBox().getMaxX() + _positionMap.x, this->getBoundingBox().getMaxY() + _positionMap.y);
-	m_rectFactory			= this->getBoundingBox();
-	//m_rectFactory.setRect()
+	
+	Rect _box = this->getBoundingBox();
+
+	// calculate RectOrigin(system coordinate all MapLayer)
+	m_rectFactoryOrigin = Rect(this->getBoundingBox().getMinX() + m_positionOrigin.x, this->getBoundingBox().getMinY() + m_positionOrigin.y,
+		this->getBoundingBox().size.width, this->getBoundingBox().size.height);
+	// calculate RectVisible(system coordinate visible MapLayer)
+	m_rectFactoryVisible = Rect(this->getBoundingBox().getMinX() + m_positionVisible.x, this->getBoundingBox().getMinY() + m_positionVisible.y,
+		this->getBoundingBox().size.width, this->getBoundingBox().size.height);
+
+	m_rectFactoryOriginWithVisible = Rect(	this->getBoundingBox().getMinX() + m_positionOrigin.x + m_positionVisible.x, 
+											this->getBoundingBox().getMinY() + m_positionOrigin.y + m_positionVisible.y,
+											this->getBoundingBox().size.width, this->getBoundingBox().size.height
+										 );
+
 	m_numberWarriorComplete = 0;
+
+	m_positionOriginWithVisible = m_positionOrigin + m_positionVisible;
+	this->setPosition(m_positionOriginWithVisible);
 
 	LoadNameForSprites();
 	LoadSprites();
@@ -61,8 +79,8 @@ void WarriorFactory::LoadSprites()
 	for (int i = 0; i < m_vecNameForSprites.size(); i++)
 	{
 		m_vecSpritesForFactoryWarrior.push_back(Sprite::create(m_vecNameForSprites[i]));
-		m_vecSpritesForFactoryWarrior[i]->setScale(GameScene::m_visibleSize.width / m_vecSpritesForFactoryWarrior[i]->getContentSize().width / 8,
-			GameScene::m_visibleSize.height / m_vecSpritesForFactoryWarrior[i]->getContentSize().height / 8);
+		m_vecSpritesForFactoryWarrior[i]->setScale(GameScene::m_visibleSize.width / m_vecSpritesForFactoryWarrior[i]->getContentSize().width / 15,
+			GameScene::m_visibleSize.height / m_vecSpritesForFactoryWarrior[i]->getContentSize().height / 15);
 		m_vecSpritesForFactoryWarrior[i]->setVisible(false);
 		this->getParent()->addChild(m_vecSpritesForFactoryWarrior[i]);
 	}
@@ -70,33 +88,15 @@ void WarriorFactory::LoadSprites()
 
 void WarriorFactory::ShowMenu()
 {
-	Point _positionMap = this->getParent()->getPosition();
-	if (_positionMap.x < 0)
-	{
-		_positionMap.x *= -1;
-	}
-	if (_positionMap.y < 0)
-	{
-		_positionMap.y *= -1;
-	}
-
-	float _positionY = GameScene::m_visibleSize.height / 2;
+	Point _positionWarriorMenu = Point(m_positionOriginWithVisible.x + (m_rectFactoryVisible.size.width / 2), 
+									   m_positionOriginWithVisible.y);
 	for (int i = 0; i < m_vecSpritesForFactoryWarrior.size(); i++)
 	{
-		Point _position = Point(GameScene::m_visibleSize.width - m_vecSpritesForFactoryWarrior[i]->getBoundingBox().size.width + _positionMap.x,
-			_positionY + _positionMap.y);
-
-		m_vecSpritesForFactoryWarrior[i]->setPosition(_position);
+		m_vecSpritesForFactoryWarrior[i]->setPosition(_positionWarriorMenu);
 		m_vecSpritesForFactoryWarrior[i]->setVisible(true);
-		_positionY -= 30;
-		_positionMap.x *= -1;
-		_positionMap.y *= -1;
-		Rect _temp = Rect(	m_vecSpritesForFactoryWarrior[i]->getBoundingBox().getMinX() + _positionMap.x, 
-							m_vecSpritesForFactoryWarrior[i]->getBoundingBox().getMinY() + _positionMap.y,
-							m_vecSpritesForFactoryWarrior[i]->getBoundingBox().getMaxX() + _positionMap.x,
-							m_vecSpritesForFactoryWarrior[i]->getBoundingBox().getMaxY() + _positionMap.y
-						);
-		m_rectForSpritesWarrior.push_back(_temp);
+		m_rectForSpritesWarrior.push_back(m_vecSpritesForFactoryWarrior[i]->getBoundingBox());
+
+		_positionWarriorMenu.y -= m_vecSpritesForFactoryWarrior[i]->getBoundingBox().size.height / 2;
 	}
 }
 
@@ -120,23 +120,18 @@ bool WarriorFactory::isComplete()
 	}
 }
 
+// position for spawn warrior
 void WarriorFactory::LoadPositionWarrior()
 {
-	Point _positionMap = this->getParent()->getPosition();
-	_positionMap.x *= -1;
-	_positionMap.y *= -1;
-
-	Point _positionFactory = Point(m_rectFactory.getMinX() + _positionMap.x, m_rectFactory.getMinY() + _positionMap.y);
-	_positionFactory.y -= 10;
-
+	Point _positionWarrior = Point(m_positionOriginWithVisible.x, m_positionOriginWithVisible.y - (m_rectFactoryVisible.size.height / 2));
 	for (int i = 0; i < 5; i++)
 	{
 		for (int j = 0; j < 5; j++)
 		{
-			m_vecPositionWarrior.push_back(Point(_positionFactory));
-			_positionFactory.x += 40;
+			m_vecPositionWarrior.push_back(_positionWarrior);
+			_positionWarrior.x += 40;
 		}
-		_positionFactory.y += 40;
+		_positionWarrior.y += 40;
 	}
 }
 
@@ -177,7 +172,6 @@ void WarriorFactory::LoadPositionWarrior()
 				m_stateWarrior				= StateFactoryWarrior::WORKING;
 				m_stateTypeAddWarrior		= ManagerArmy::StateManagerArmy::ADD_KNIGHT_SILVER;
 			}
-
 			break;
 		}
 		case StateFactoryWarrior::WORKING:
@@ -193,11 +187,13 @@ void WarriorFactory::LoadPositionWarrior()
 		}
 		case StateFactoryWarrior::NOTHING:
 		{
-			Point _positionMap = this->getParent()->getPosition();
-			m_rectFactory.setRect(this->getBoundingBox().getMinX() + _positionMap.x, this->getBoundingBox().getMinY() + _positionMap.y,
-				this->getBoundingBox().getMaxX() + _positionMap.x, this->getBoundingBox().getMaxY() + _positionMap.y);
-			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
-			if (m_rectFactory.containsPoint(m_locationTouch) && m_locationTouch != Point::ZERO)
+			Point m_positionMap = this->getParent()->getPosition();
+			m_locationTouch		= i_manager.m_inputComponent->GetLocationTouch();
+			Point _positionOrigin = this->getParent()->getPosition();
+			_positionOrigin.x *= (-1);
+			_positionOrigin.y *= (-1);
+			m_locationTouch += _positionOrigin;
+			if (m_rectFactoryOriginWithVisible.containsPoint(m_locationTouch) && m_locationTouch != Point::ZERO)
 			{
 				LoadPositionWarrior();
 				ShowMenu();
@@ -209,6 +205,10 @@ void WarriorFactory::LoadPositionWarrior()
 		case StateFactoryWarrior::LISTEN:
 		{
 			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
+			Point _positionOrigin = this->getParent()->getPosition();
+			_positionOrigin.x *= (-1);
+			_positionOrigin.y *= (-1);
+			m_locationTouch += _positionOrigin;
 			if (DetermineCommand())
 			{
 				i_manager.m_inputComponent->SetZeroLocation();

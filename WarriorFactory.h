@@ -24,7 +24,7 @@ public:
 	};
 
 	WarriorFactory();
-	WarriorFactory(MapLayer& i_mapLayer);
+	WarriorFactory(Point i_positionVisible, MapLayer& i_mapLayer);
 	WarriorFactory(WarriorFactory& i_warriorFactory);
 
 	~WarriorFactory();
@@ -52,14 +52,19 @@ private:
 	StateFactoryWarrior m_stateWarrior;
 	ManagerArmy::StateManagerArmy m_stateTypeAddWarrior;
 	Vec2				m_locationTouch;
-	Rect				m_rectFactory;
+	Rect				m_rectFactoryOrigin;
+	Rect				m_rectFactoryVisible;
+	Rect				m_rectFactoryOriginWithVisible;
 
 	std::vector<std::string>	m_vecNameForSprites;
 	std::vector<Sprite*>		m_vecSpritesForFactoryWarrior;
 	std::vector<Rect>			m_rectForSpritesWarrior;
 
-	std::vector<Point>			m_vecPositionWarrior;
-	int							m_numberWarriorComplete;
+	std::vector<Point>	m_vecPositionWarrior;
+	int					m_numberWarriorComplete;
+	Point				m_positionOrigin;
+	Point				m_positionVisible;
+	Point				m_positionOriginWithVisible;
 };
 
 #endif
