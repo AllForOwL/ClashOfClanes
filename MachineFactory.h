@@ -23,7 +23,7 @@ public:
 	};
 
 	MachineFactory();
-	MachineFactory(MapLayer& i_mapLayer);
+	MachineFactory(Point i_positionVisible, MapLayer& i_mapLayer);
 	MachineFactory(MachineFactory& i_machineFactory);
 
 	~MachineFactory();
@@ -37,7 +37,8 @@ public:
 
 	void LoadNameForSprites();
 	void LoadSprites();
-	
+	void LoadPositionMachine();
+
 	bool DetermineCommand();
 
 	void ShowMenu();
@@ -55,6 +56,17 @@ private:
 	std::vector<std::string>	m_vecNameForSprites;
 	std::vector<Sprite*>		m_vecSpritesForFactoryMachine;
 	std::vector<Rect>			m_rectForSpritesMachine;
+	
+	std::vector<Point>	m_vecPositionMachine;
+	int					m_numberMachineComplete;
+	Point				m_positionOrigin;
+	Point				m_positionVisible;
+	Point				m_positionOriginWithVisible;
+
+	Rect	m_rectFactoryOrigin;
+	Rect	m_rectFactoryVisible;
+	Rect	m_rectFactoryOriginWithVisible;
+
 };
 
 #endif

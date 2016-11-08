@@ -7,13 +7,13 @@
 USING_NS_CC;
 
 class ManagerComponent;
-class GameScene;
+class MapLayer;
 
 class Tank : public Warrior
 {
 public:
 	Tank();
-	Tank(GameScene& i_parentGameScene);
+	Tank(MapLayer& i_parentGameScene);
 	Tank(Tank& i_tank);
 
 	~Tank();

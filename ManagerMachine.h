@@ -32,13 +32,14 @@ public:
 	void Update(GameScene& i_gameScene, ManagerComponent& i_manager);
 
 	void SetState(StateManagerMachine& i_state);
-
-	
+	void SetPositionForMachine(Point i_pointBuildMachine);
 
 private:
 	std::vector<Tank*>		m_vecMachineTank;
 	std::vector<Car*>		m_vecMachineCar;
 	StateManagerMachine		m_stateManagerMachine;
+
+	Point	m_pointBuildMachine;
 };
 
 #endif

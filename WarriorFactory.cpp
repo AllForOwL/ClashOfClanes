@@ -213,11 +213,6 @@ void WarriorFactory::LoadPositionWarrior()
 			{
 				i_manager.m_inputComponent->SetZeroLocation();
 			}
-			//else if (m_locationTouch != Point::ZERO)
-			//{
-				//HideMenu();
-			//	m_stateWarrior = StateFactoryWarrior::NOTHING;
-			//}
 			break;
 		}
 	default:

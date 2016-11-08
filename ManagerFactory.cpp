@@ -38,15 +38,10 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		{
 			if (i_manager.m_hero->CheckProductionFactoryMachine())
 			{
-				MachineFactory* _machineFactory = new MachineFactory(*i_manager.m_mapLayer);
-				Point _positionMap = i_manager.m_mapLayer->getPosition();
-				_positionMap.x *= -1;
-				_positionMap.y *= -1;
-				_positionMap.x += m_positionBuildFactory.x;
-				_positionMap.y += m_positionBuildFactory.y;
-				Point _positionMachine = Point(_positionMap);
-				_machineFactory->setPosition(_positionMachine);
+				MachineFactory* _machineFactory = new MachineFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
 				m_vecFactoryMachine.push_back(_machineFactory);
+
+				i_manager.m_inputComponent->SetZeroLocation();
 			}
 			m_stateManagerFactory = ManagerFactory::NOTHING;
 
