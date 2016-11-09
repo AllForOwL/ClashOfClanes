@@ -48,9 +48,9 @@ public:
 
 private:
 	std::chrono::time_point<std::chrono::system_clock> m_startSecond;
+	ManagerArmy::StateManagerArmy m_stateTypeAddWarrior;
 	int					m_timeForCompleteWarrior;
 	StateFactoryWarrior m_stateWarrior;
-	ManagerArmy::StateManagerArmy m_stateTypeAddWarrior;
 	Vec2				m_locationTouch;
 	Rect				m_rectFactoryOrigin;
 	Rect				m_rectFactoryVisible;
