@@ -1,10 +1,3 @@
-/*
-	Architecture game
-	Boom
-*/
-
-
-
 #ifndef __GAME_SCENE_H__
 #define __GAME_SCENE_H__
 
@@ -17,6 +10,7 @@ class FamilyHouse;
 class HeroGraphicComponent;
 class ManagerComponent;
 class HUDLayer;
+class AI;
 
 class GameScene : public cocos2d::Layer
 {
@@ -43,6 +37,8 @@ private:
 
 	ManagerComponent*	m_manager;
 	HUDLayer*			m_HUDLayer;
+	AI*					m_AI;
+
 };
 
 #endif 

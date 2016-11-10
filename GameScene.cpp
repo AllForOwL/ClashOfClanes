@@ -5,6 +5,7 @@
 #include "ManagerComponent.h"
 #include "HUDLayer.h"
 #include "HeroInputComponent.h"
+#include "AI.h"
 
 const float CNT_TIME_UPDATE_SCENE = 0.01;
 
@@ -37,6 +38,9 @@ bool GameScene::init()
 
 	m_HUDLayer = HUDLayer::create();
 	this->addChild(m_HUDLayer, 100);
+
+	m_AI = new AI();
+	m_AI->Train();
 
 	auto _touchListener = EventListenerTouchOneByOne::create();
 	_touchListener->onTouchBegan = CC_CALLBACK_2(HeroInputComponent::onTouchBegan, m_manager->m_inputComponent);

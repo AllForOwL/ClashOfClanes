@@ -9,16 +9,43 @@ const int CNT_HIDDEN_NEURONS	= 3;
 #define RAND_WEIGHT ( ((float)rand() / (float)RAND_MAX) - 0.5)
 #define sqr(x) ((x) * (x))
 
+const AI::ELEMENT AI::samples[CNT_MAX_SAMPLES] =
+{
+	{ 2.0, 0.0, 0.0, 0.0, { 0.0, 0.0, 1.0, 0.0 } },
+	{ 2.0, 0.0, 0.0, 1.0, { 0.0, 0.0, 1.0, 0.0 } },
+	{ 2.0, 0.0, 1.0, 1.0, { 1.0, 0.0, 0.0, 0.0 } },
+	{ 2.0, 0.0, 1.0, 2.0, { 1.0, 0.0, 0.0, 0.0 } },
+	{ 2.0, 1.0, 0.0, 2.0, { 0.0, 0.0, 0.0, 1.0 } },
+	{ 2.0, 1.0, 0.0, 1.0, { 1.0, 0.0, 0.0, 0.0 } },
+	{ 1.0, 0.0, 0.0, 0.0, { 0.0, 0.0, 1.0, 0.0 } },
+	{ 1.0, 0.0, 0.0, 1.0, { 0.0, 0.0, 0.0, 1.0 } },
+	{ 1.0, 0.0, 1.0, 1.0, { 1.0, 0.0, 0.0, 0.0 } },
+	{ 1.0, 0.0, 1.0, 2.0, { 0.0, 0.0, 0.0, 1.0 } },
+	{ 1.0, 1.0, 0.0, 2.0, { 0.0, 0.0, 0.0, 1.0 } },
+	{ 1.0, 1.0, 0.0, 1.0, { 0.0, 0.0, 0.0, 1.0 } },
+	{ 0.0, 0.0, 0.0, 0.0, { 0.0, 0.0, 1.0, 0.0 } },
+	{ 0.0, 0.0, 0.0, 1.0, { 0.0, 0.0, 0.0, 1.0 } },
+	{ 0.0, 0.0, 1.0, 1.0, { 0.0, 0.0, 0.0, 1.0 } },
+	{ 0.0, 0.0, 1.0, 2.0, { 0.0, 1.0, 0.0, 0.0 } },
+	{ 0.0, 1.0, 0.0, 2.0, { 0.0, 1.0, 0.0, 0.0 } },
+	{ 0.0, 1.0, 0.0, 1.0, { 0.0, 0.0, 0.0, 1.0 } }
+};
+
 AI::AI()
 {
-	m_weightInputHidden.resize(CNT_INPUT_NEURONS);
-	for (int i = 0; i < CNT_INPUT_NEURONS; i++)
+	m_strings.push_back("Attack");
+	m_strings.push_back("Run"); 
+	m_strings.push_back("Wander");
+	m_strings.push_back("Hide");
+
+	m_weightInputHidden.resize(CNT_INPUT_NEURONS + 1);
+	for (int i = 0; i < CNT_INPUT_NEURONS + 1; i++)
 	{
 		m_weightInputHidden[i].resize(CNT_HIDDEN_NEURONS);
 	}
 
-	m_weightHiddenOutput.resize(CNT_HIDDEN_NEURONS);
-	for (int i = 0; i < CNT_HIDDEN_NEURONS; i++)
+	m_weightHiddenOutput.resize(CNT_HIDDEN_NEURONS + 1);
+	for (int i = 0; i < CNT_HIDDEN_NEURONS + 1; i++)
 	{
 		m_weightHiddenOutput[i].resize(CNT_OUTPUT_NEURONS);
 	}
@@ -38,9 +65,13 @@ AI::AI(AI& i_AI)
 
 }
 
-//  set weight between layers network
+/*	Задати вагу між:
+		- клітками вхідного шару та нейронами схованого шару;
+		- нейронами схованого шару та нейронами вихідного шару;
+*/
 void AI::AssignRandomWeights()
 {
+	// з'єднанню вхідної клітки з усіма нейронами схованого шару задається вага(випадкове число(-0.5; 0.5))
 	for (int i = 0; i < CNT_INPUT_NEURONS + 1; i++) 
 	{
 		for (int j = 0; j < CNT_HIDDEN_NEURONS; j++) 
@@ -48,6 +79,7 @@ void AI::AssignRandomWeights()
 			m_weightInputHidden[i][j] = RAND_WEIGHT;
 		}
 	}
+	// з'єднанню нейрона схованого шару з усіма нейронами вихідного шару задається вага(випадкове число(-0.5; 0.5))
 	for (int i = 0; i < CNT_HIDDEN_NEURONS + 1; i++) 
 	{
 		for (int j = 0; j < CNT_OUTPUT_NEURONS; j++) 
@@ -57,32 +89,38 @@ void AI::AssignRandomWeights()
 	}
 }
 
+// Обчислення сигмоіда(функція активації) від суми добутків між елементами шарів(кліток, нейронів)
 double AI::Sigmoid(double val)
 {
 	return (1.0 / (1.0 + exp(-val)));
 }
+
+// функція для обрахунку для нейронів схованого шару
 double AI::SigmoidDerivative(double i_value)
 {
 	return (i_value * (1.0 - i_value));
 }
 
-// обчислення значення функцій входу для схованого і вихідного шару
+/*	Обчислення значення функцій входу:
+		- з вхідних кліток в нейрони схованого шару;
+		- з нейронів схованого шару в нейрони вихідного шару;
+*/
 void AI::FeedForward()
 {
 	double _sum;
-	/* Вычислить вход в скрытый слой */
+	// обрахувати вагу входу з вхідних кліток в нейрони схованого шару
 	for (int i = 0; i < CNT_HIDDEN_NEURONS; i++) 
 	{
 		_sum = 0.0;
 		for (int j = 0; j < CNT_INPUT_NEURONS; j++) 
 		{
-			_sum += m_vectorInputs[j] * m_weightInputHidden[j][i];
+			_sum += m_vectorInputs[j] * m_weightInputHidden[j][i];	// добуток значення вхідної клітки і ваги між вхідною кліткою і 
+																	// нейроном схованого шару
 		}
-		/* Добавить смещение */
-		_sum += m_weightInputHidden[CNT_INPUT_NEURONS][i];
-		m_valueFunctionInLayerHidden[i] = Sigmoid(_sum);
+		_sum += m_weightInputHidden[CNT_INPUT_NEURONS][i];	// добавити зміщення 
+		m_valueFunctionInLayerHidden[i] = Sigmoid(_sum);	// обчислює сигмоід даної суми
 	}
-	/* Вычислить вход в выходной слой */
+	// обрахувати вагу входу з нейронів схованого шару в нейрони вихідного шару
 	for (int i = 0; i < CNT_OUTPUT_NEURONS; i++) 
 	{
 		_sum = 0.0;
@@ -90,22 +128,21 @@ void AI::FeedForward()
 		{
 			_sum += m_valueFunctionInLayerHidden[j] * m_weightHiddenOutput[j][i];
 		}
-		/* Добавить смещение */
-		_sum += m_weightHiddenOutput[CNT_HIDDEN_NEURONS][i];
-		m_valueFunctionInLayerOutput[i] = Sigmoid(_sum);
+		_sum += m_weightHiddenOutput[CNT_HIDDEN_NEURONS][i];	// добавити зміщення
+		m_valueFunctionInLayerOutput[i] = Sigmoid(_sum);		// обчислює сигмоід даної суми
 	}
 }
 
 // зворотнє поширення помилки
 void AI::BackPropagate()
 {
-	/* Вычислить ошибку выходного слоя (шаг 3 для выходных ячеек) */
+	// обрахувати помилку для вихідного шару
 	for (int i = 0; i < CNT_OUTPUT_NEURONS; i++) 
 	{
 		m_valueErrorLayerOutput[i] = (m_vectorTarget[i] - m_valueFunctionInLayerOutput[i]) *
 												SigmoidDerivative(m_valueFunctionInLayerOutput[i]);
 	}
-	/* Вычислить ошибку скрытого слоя (шаг 3 для скрытого слоя) */
+	// обрахувати помилку для схованого шару
 	for (int i = 0; i < CNT_HIDDEN_NEURONS; i++) 
 	{
 		m_valueErrorLayerHidden[i] = 0.0;
@@ -115,24 +152,24 @@ void AI::BackPropagate()
 		}
 		m_valueErrorLayerHidden[i] *= SigmoidDerivative(m_valueFunctionInLayerHidden[i]);
 	}
-	/* Обновить веса для выходного слоя (шаг 4 для выходных ячеек) */
+	// обновити ваги для вихідного шару
 	for (int i = 0; i < CNT_OUTPUT_NEURONS; i++) 
 	{
 		for (int j = 0; j < CNT_HIDDEN_NEURONS; j++) 
 		{
 			m_weightHiddenOutput[j][i] += (LEARN_RATE * m_valueErrorLayerOutput[i] * m_valueFunctionInLayerHidden[j]);
 		}
-		/* Обновить смещение */
+		// обновити зміщення
 		m_weightHiddenOutput[CNT_HIDDEN_NEURONS][i] += (LEARN_RATE * m_valueErrorLayerOutput[i]);
 	}
-	/* Обновить веса для скрытого слоя (шаг 4 для скрытого слоя) */
+	// обновити ваги для схованого шару
 	for (int i = 0; i < CNT_HIDDEN_NEURONS; i++) 
 	{
 		for (int j = 0; j < CNT_INPUT_NEURONS; j++) 
 		{
 			m_weightInputHidden[j][i] += (LEARN_RATE * m_valueErrorLayerHidden[i] * m_vectorInputs[j]);
 		}
-		/* Обновить смещение */
+		// обновити зміщення
 		m_weightInputHidden[CNT_INPUT_NEURONS][i] += (LEARN_RATE * m_valueErrorLayerHidden[i]);
 	}
 }
@@ -159,15 +196,17 @@ void AI::Train()
 	double _err;
 	int _sample = 0, iterations = 0;
 	int sum = 0;
-	//out = fopen("stats.txt", "w");
-	/* Инициализировать генератор случайных чисел */
 	srand(time(NULL));
 	AssignRandomWeights();
-	/* Обучить сеть */
+	// навчання мережі
 	while (1) 
 	{
-		if (++_sample == CNT_MAX_SAMPLES) _sample = 0;
+		if (++_sample == CNT_MAX_SAMPLES)
+		{
+			_sample = 0;
+		}
 		
+		// задати вектор вхідних значень та значень які повинні бути на виході
 		m_vectorInputs[0] = samples[_sample].health;
 		m_vectorInputs[1] = samples[_sample].knife;
 		m_vectorInputs[2] = samples[_sample].gun;
@@ -182,12 +221,15 @@ void AI::Train()
 		{
 			_err += sqr((samples[_sample].out[i] - m_valueFunctionInLayerOutput[i]));
 		}
-		_err = 0.5 * _err;
+		_err *= 0.5;
 	
-		if (iterations++ > 100000) break;
+		if (++iterations > 100000)
+		{
+			break;
+		}
 		BackPropagate();
 	}
-	/* Проверить сеть */
+	// перевірити мережу
 	for (int i = 0; i < CNT_MAX_SAMPLES; i++) 
 	{
 		m_vectorInputs[0] = samples[i].health;
@@ -202,15 +244,15 @@ void AI::Train()
 		if (Action(m_valueFunctionInLayerOutput) != Action(m_vectorTarget)) 
 		{
 			m_vectorInputs[0], m_vectorInputs[1], m_vectorInputs[2], m_vectorInputs[3],
-				strings[Action(m_valueFunctionInLayerOutput)], strings[Action(m_vectorTarget)];
+				m_strings[Action(m_valueFunctionInLayerOutput)], m_strings[Action(m_vectorTarget)];
 		}
 		else 
 		{
 			sum++;
 		}
 	}
-	/* Выполнение тестов */
-	/* Здоровье Нож Пистолет Враг*/
+	
+	// тест
 	m_vectorInputs[0] = 2.0; m_vectorInputs[1] = 1.0; m_vectorInputs[2] = 1.0; m_vectorInputs[3] = 1.0;
 	FeedForward();
 
@@ -231,11 +273,19 @@ void AI::Train()
 	
 	m_vectorInputs[0] = 0.0; m_vectorInputs[1] = 1.0; m_vectorInputs[2] = 0.0; m_vectorInputs[3] = 3.0;
 	FeedForward();
-	
-	//fclose(out);
 }
 
 AI::~AI()
 {
 	CCLOG("Destructor AI");
 }
+
+
+/*
+	Tasks on 10:11:2016
+		+ good understand algorithm;
+		- optimize for knight;
+
+		would very good
+			- create enemy and execute AI in game;
+*/
