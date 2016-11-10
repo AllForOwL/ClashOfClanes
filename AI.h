@@ -19,6 +19,7 @@ public:
 	void BackPropagate();
 	int  Action(std::vector<double> i_vector);
 	void Train();
+	int	 FindAct(double i_health, double i_spear, double i_enemy);
 
 	double Sigmoid(double i_value);
 	double SigmoidDerivative(double i_value);

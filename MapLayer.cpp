@@ -115,6 +115,30 @@ void MapLayer::SetState(StateMap& i_statemap)
 	m_stateMap = i_statemap;
 }
 
+int MapLayer::GetQuentityEnemy(Point i_position)
+{
+	int _quentityEnemy = 0;
+
+	Point _thisPosition = this->getPosition();
+	_thisPosition.x *= (-1);
+	_thisPosition.y *= (-1);
+	i_position += _thisPosition;
+
+	for (int x = i_position.x - 8; x < i_position.x + 8; x++)
+	{
+		for (int y = i_position.y - 8; y < i_position.y + 8; y++)
+		{
+			if (this->m_mapCoordinate[x][y] != CNT_POSITION_FREE)
+			{
+				++_quentityEnemy;
+			}
+		}
+	}
+
+	return _quentityEnemy;
+
+}
+
 MapLayer::~MapLayer()
 {
 

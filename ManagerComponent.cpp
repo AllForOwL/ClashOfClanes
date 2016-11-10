@@ -7,6 +7,7 @@
 #include "ManagerFactory.h"
 #include "ManagerMachine.h"
 #include "HeroInputComponent.h"
+#include "AI.h"
 
 ManagerComponent::ManagerComponent(GameScene& i_gameScene)
 {
@@ -18,6 +19,8 @@ ManagerComponent::ManagerComponent(GameScene& i_gameScene)
 	m_managerArmy		= new ManagerArmy();
 	m_managerMachine	= new ManagerMachine();
 	m_managerFactory	= new ManagerFactory();
+	m_AI				= new AI();
+	m_AI->Train();
 }
 
 void ManagerComponent::Update(GameScene& i_gameScene)

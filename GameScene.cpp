@@ -39,9 +39,6 @@ bool GameScene::init()
 	m_HUDLayer = HUDLayer::create();
 	this->addChild(m_HUDLayer, 100);
 
-	m_AI = new AI();
-	m_AI->Train();
-
 	auto _touchListener = EventListenerTouchOneByOne::create();
 	_touchListener->onTouchBegan = CC_CALLBACK_2(HeroInputComponent::onTouchBegan, m_manager->m_inputComponent);
 	_touchListener->onTouchMoved = CC_CALLBACK_2(HeroInputComponent::onTouchMoved, m_manager->m_inputComponent);

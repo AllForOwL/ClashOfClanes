@@ -30,6 +30,7 @@ public:
 	void ReleasePositionAfterSearchWay();
 	void SetState(StateMap& i_statemap);
 	std::vector<std::vector<int>>& GetMapCoordinate();
+	int GetQuentityEnemy(Point i_position);
 
 private:
 	std::vector<std::vector<int>> m_mapCoordinate;

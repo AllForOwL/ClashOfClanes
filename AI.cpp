@@ -190,7 +190,6 @@ void AI::Train()
 {
 	double _err;
 	int _sample = 0, iterations = 0;
-	int sum = 0;
 	srand(time(NULL));
 	AssignRandomWeights();
 	// навчання мережі
@@ -233,15 +232,13 @@ void AI::Train()
 		m_vectorTarget[1] = m_samples[i].m_targetAct[1];
 		m_vectorTarget[2] = m_samples[i].m_targetAct[2];
 		m_vectorTarget[3] = m_samples[i].m_targetAct[3];
+		
 		FeedForward();
-		if (Action(m_valueFunctionInLayerOutput) != Action(m_vectorTarget))
+		
+		int _quentityConcurrence = 0;
+		if (Action(m_valueFunctionInLayerOutput) == Action(m_vectorTarget))
 		{
-			//m_vectorInputs[0], m_vectorInputs[1], m_vectorInputs[2],
-			//	m_act[Action(m_valueFunctionInLayerOutput)], m_act[Action(m_vectorTarget)];
-		}
-		else 
-		{
-			sum++;
+			++_quentityConcurrence;
 		}
 	}
 	
@@ -276,6 +273,16 @@ void AI::Train()
 	_numberAct = Action(m_valueFunctionInLayerOutput);
 }
 
+int AI::FindAct(double i_health, double i_spear, double i_enemy)
+{
+	int _numberAct = 0;
+	m_vectorInputs[0] = i_health; m_vectorInputs[1] = i_spear; m_vectorInputs[2] = i_enemy;
+	FeedForward();
+	_numberAct = Action(m_valueFunctionInLayerOutput);
+
+	return _numberAct;
+}
+
 AI::~AI()
 {
 	CCLOG("Destructor AI");
@@ -285,7 +292,7 @@ AI::~AI()
 /*
 	Tasks on 10:11:2016
 		+ good understand algorithm;
-		- optimize for knight;
+		+ optimize for knight;
 
 		would very good
 			- create enemy and execute AI in game;
