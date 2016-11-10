@@ -29,6 +29,11 @@ public:
 
 	~Knight();
 
+	void ActAttack();
+	void ActRun();
+	void ActWander();
+	void ActHide();
+
 	virtual void Update(ManagerComponent& i_manager);
 
 private:

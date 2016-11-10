@@ -294,6 +294,8 @@ AI::~AI()
 		+ good understand algorithm;
 		+ optimize for knight;
 
-		would very good
-			- create enemy and execute AI in game;
+	Tasks on 11:11:2016
+		- create factory for enemy;
+		- create enemy;
+		- execute AI in game;
 */

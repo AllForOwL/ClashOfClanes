@@ -50,21 +50,25 @@ Knight::Knight(Knight& Knight)
 	{
 		case StateKnight::ATTACK:
 		{
+			ActAttack();			
 
 			break;
 		}
 		case StateKnight::RUN:
 		{
+			ActRun();
 
 			break;
 		}
 		case StateKnight::WANDER:
 		{
+			ActWander();
 
 			break;
 		}
 		case StateKnight::HIDE:
 		{
+			ActHide();
 
 			break;
 		}
@@ -92,9 +96,7 @@ Knight::Knight(Knight& Knight)
 				_health = 0.0;
 			}
 
-
 			int _numberAct =  i_manager.m_AI->FindAct(_health, _spear, _quentityEnemy);
-
 			if (_numberAct == 0)
 			{
 				m_state = StateKnight::ATTACK;
@@ -122,6 +124,26 @@ Knight::Knight(Knight& Knight)
 	default:
 		break;
 	}
+}
+
+void Knight::ActAttack()
+{
+
+}
+
+void Knight::ActRun()
+{
+	this->setPositionX(this->getPositionX() - 1);
+}
+
+void Knight::ActWander()
+{
+	this->setPositionX(this->getPositionX() + 1);
+}
+
+void Knight::ActHide()
+{
+
 }
 
 Knight::~Knight()

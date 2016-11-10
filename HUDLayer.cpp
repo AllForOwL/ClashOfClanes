@@ -1,6 +1,5 @@
 #include "HUDLayer.h"
 #include "GameScene.h"
-#include "constants.h"
 #include "ManagerComponent.h"
 #include "HeroInputComponent.h"
 #include "ManagerFactory.h"

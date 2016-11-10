@@ -31,40 +31,18 @@ public:
 
 	virtual void Update(ManagerComponent& i_manager);
 
-	bool isComplete();
-
 	StateFactoryWarrior& GetStateWarrior();
 
 	void SetState(StateFactoryWarrior& i_stateWarrior);
 
-	void LoadSprites();
 	void LoadNameForSprites();
-	void ShowMenu();
-	void HideMenu();
-	
-	void LoadPositionWarrior();
-
 	bool DetermineCommand();
+	void LoadSprites();
 
 private:
-	std::chrono::time_point<std::chrono::system_clock> m_startSecond;
-	ManagerArmy::StateManagerArmy m_stateTypeAddWarrior;
-	int					m_timeForCompleteWarrior;
-	StateFactoryWarrior m_stateWarrior;
-	Vec2				m_locationTouch;
-	Rect				m_rectFactoryOrigin;
-	Rect				m_rectFactoryVisible;
-	Rect				m_rectFactoryOriginWithVisible;
+	StateFactoryWarrior				m_stateWarrior;
+	ManagerArmy::StateManagerArmy	m_stateTypeAddWarrior;
 
-	std::vector<std::string>	m_vecNameForSprites;
-	std::vector<Sprite*>		m_vecSpritesForFactoryWarrior;
-	std::vector<Rect>			m_rectForSpritesWarrior;
-
-	std::vector<Point>	m_vecPositionWarrior;
-	int					m_numberWarriorComplete;
-	Point				m_positionOrigin;
-	Point				m_positionVisible;
-	Point				m_positionOriginWithVisible;
 };
 
 #endif
