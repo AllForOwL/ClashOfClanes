@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 
 const int CNT_OUTPUT_NEURONS = 4;
-const int CNT_MAX_SAMPLES = 18;
+const int CNT_MAX_SAMPLES = 16;
 
 USING_NS_CC;
 
@@ -38,19 +38,18 @@ private:
 	std::vector<double>	m_valueErrorLayerHidden;
 	std::vector<double>	m_valueErrorLayerOutput;
 
-	std::vector<std::string> m_strings;
+	static const std::vector<std::string> m_act;
 
 	typedef struct 
 	{
-		double health;
-		double knife;
-		double gun;
-		double enemy;
-		double out[CNT_OUTPUT_NEURONS];
+		double m_health;	/*2 - perfectly;	1 - good;		0 - bad;		*/
+		double m_spear;		/*1 - is;							0 - not have;	*/
+		double m_enemy;		/*2 - lot;			1 - little;		0 - not have;	*/
+		double m_targetAct[CNT_OUTPUT_NEURONS];
 	} ELEMENT;
 
-	/* H K G E A R W H */
-	static const ELEMENT samples[CNT_MAX_SAMPLES];
+	/* H S E A R W H */
+	static const ELEMENT m_samples[CNT_MAX_SAMPLES];
 
 };
 

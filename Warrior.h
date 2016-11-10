@@ -12,7 +12,6 @@ public:
 	~Warrior(){};
 
 	virtual void Update(ManagerComponent& i_manager) = 0;
-	
 };
 
 #endif

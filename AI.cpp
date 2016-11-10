@@ -1,43 +1,38 @@
 #include "AI.h"
 #include "constants.h"
 
-const int CNT_INPUT_NEURONS		= 4;
+const int CNT_INPUT_NEURONS		= 3;
 const int CNT_HIDDEN_NEURONS	= 3;
 
 
-#define LEARN_RATE 0.2 /* Коэффициент обучения */
+#define LEARN_RATE 0.2 // коефіцієнт навчання
 #define RAND_WEIGHT ( ((float)rand() / (float)RAND_MAX) - 0.5)
 #define sqr(x) ((x) * (x))
 
-const AI::ELEMENT AI::samples[CNT_MAX_SAMPLES] =
+const AI::ELEMENT AI::m_samples[CNT_MAX_SAMPLES] =
 {
-	{ 2.0, 0.0, 0.0, 0.0, { 0.0, 0.0, 1.0, 0.0 } },
-	{ 2.0, 0.0, 0.0, 1.0, { 0.0, 0.0, 1.0, 0.0 } },
-	{ 2.0, 0.0, 1.0, 1.0, { 1.0, 0.0, 0.0, 0.0 } },
-	{ 2.0, 0.0, 1.0, 2.0, { 1.0, 0.0, 0.0, 0.0 } },
-	{ 2.0, 1.0, 0.0, 2.0, { 0.0, 0.0, 0.0, 1.0 } },
-	{ 2.0, 1.0, 0.0, 1.0, { 1.0, 0.0, 0.0, 0.0 } },
-	{ 1.0, 0.0, 0.0, 0.0, { 0.0, 0.0, 1.0, 0.0 } },
-	{ 1.0, 0.0, 0.0, 1.0, { 0.0, 0.0, 0.0, 1.0 } },
-	{ 1.0, 0.0, 1.0, 1.0, { 1.0, 0.0, 0.0, 0.0 } },
-	{ 1.0, 0.0, 1.0, 2.0, { 0.0, 0.0, 0.0, 1.0 } },
-	{ 1.0, 1.0, 0.0, 2.0, { 0.0, 0.0, 0.0, 1.0 } },
-	{ 1.0, 1.0, 0.0, 1.0, { 0.0, 0.0, 0.0, 1.0 } },
-	{ 0.0, 0.0, 0.0, 0.0, { 0.0, 0.0, 1.0, 0.0 } },
-	{ 0.0, 0.0, 0.0, 1.0, { 0.0, 0.0, 0.0, 1.0 } },
-	{ 0.0, 0.0, 1.0, 1.0, { 0.0, 0.0, 0.0, 1.0 } },
-	{ 0.0, 0.0, 1.0, 2.0, { 0.0, 1.0, 0.0, 0.0 } },
-	{ 0.0, 1.0, 0.0, 2.0, { 0.0, 1.0, 0.0, 0.0 } },
-	{ 0.0, 1.0, 0.0, 1.0, { 0.0, 0.0, 0.0, 1.0 } }
+	{ 2.0, 1.0, 1.0, { 1.0, 0.0, 0.0, 0.0 } },
+	{ 2.0, 1.0, 0.0, { 0.0, 0.0, 1.0, 0.0 } },
+	{ 2.0, 1.0, 2.0, { 0.0, 0.0, 0.0, 1.0 } },
+	{ 2.0, 0.0, 1.0, { 0.0, 0.0, 0.0, 1.0 } },
+	{ 2.0, 0.0, 2.0, { 0.0, 1.0, 0.0, 0.0 } },
+	{ 1.0, 1.0, 1.0, { 1.0, 0.0, 0.0, 0.0 } },
+	{ 1.0, 1.0, 2.0, { 0.0, 0.0, 0.0, 1.0 } },
+	{ 1.0, 1.0, 0.0, { 0.0, 0.0, 1.0, 0.0 } },
+	{ 1.0, 0.0, 1.0, { 0.0, 1.0, 0.0, 0.0 } },
+	{ 1.0, 0.0, 2.0, { 0.0, 1.0, 0.0, 0.0 } },
+	{ 1.0, 0.0, 0.0, { 0.0, 0.0, 1.0, 0.0 } },
+	{ 0.0, 1.0, 1.0, { 0.0, 1.0, 0.0, 0.0 } },
+	{ 0.0, 1.0, 2.0, { 0.0, 1.0, 0.0, 0.0 } },
+	{ 0.0, 1.0, 0.0, { 0.0, 0.0, 1.0, 0.0 } },
+	{ 0.0, 0.0, 1.0, { 0.0, 1.0, 0.0, 0.0 } },
+	{ 0.0, 0.0, 2.0, { 0.0, 1.0, 0.0, 0.0 } },
 };
+
+const std::vector<std::string> AI::m_act = { "Attack", "Run", "Wander", "Hide" };
 
 AI::AI()
 {
-	m_strings.push_back("Attack");
-	m_strings.push_back("Run"); 
-	m_strings.push_back("Wander");
-	m_strings.push_back("Hide");
-
 	m_weightInputHidden.resize(CNT_INPUT_NEURONS + 1);
 	for (int i = 0; i < CNT_INPUT_NEURONS + 1; i++)
 	{
@@ -207,19 +202,18 @@ void AI::Train()
 		}
 		
 		// задати вектор вхідних значень та значень які повинні бути на виході
-		m_vectorInputs[0] = samples[_sample].health;
-		m_vectorInputs[1] = samples[_sample].knife;
-		m_vectorInputs[2] = samples[_sample].gun;
-		m_vectorInputs[3] = samples[_sample].enemy;
-		m_vectorTarget[0] = samples[_sample].out[0];
-		m_vectorTarget[1] = samples[_sample].out[1];
-		m_vectorTarget[2] = samples[_sample].out[2];
-		m_vectorTarget[3] = samples[_sample].out[3];
+		m_vectorInputs[0] = m_samples[_sample].m_health;
+		m_vectorInputs[1] = m_samples[_sample].m_spear;
+		m_vectorInputs[2] = m_samples[_sample].m_enemy;
+		m_vectorTarget[0] = m_samples[_sample].m_targetAct[0];
+		m_vectorTarget[1] = m_samples[_sample].m_targetAct[1];
+		m_vectorTarget[2] = m_samples[_sample].m_targetAct[2];
+		m_vectorTarget[3] = m_samples[_sample].m_targetAct[3];
 		FeedForward();
 		_err = 0.0;
 		for (int i = 0; i < CNT_OUTPUT_NEURONS; i++) 
 		{
-			_err += sqr((samples[_sample].out[i] - m_valueFunctionInLayerOutput[i]));
+			_err += sqr((m_samples[_sample].m_targetAct[i] - m_valueFunctionInLayerOutput[i]));
 		}
 		_err *= 0.5;
 	
@@ -232,19 +226,18 @@ void AI::Train()
 	// перевірити мережу
 	for (int i = 0; i < CNT_MAX_SAMPLES; i++) 
 	{
-		m_vectorInputs[0] = samples[i].health;
-		m_vectorInputs[1] = samples[i].knife;
-		m_vectorInputs[2] = samples[i].gun;
-		m_vectorInputs[3] = samples[i].enemy;
-		m_vectorTarget[0] = samples[i].out[0];
-		m_vectorTarget[1] = samples[i].out[1];
-		m_vectorTarget[2] = samples[i].out[2];
-		m_vectorTarget[3] = samples[i].out[3];
+		m_vectorInputs[0] = m_samples[i].m_health;
+		m_vectorInputs[1] = m_samples[i].m_spear;
+		m_vectorInputs[2] = m_samples[i].m_enemy;
+		m_vectorTarget[0] = m_samples[i].m_targetAct[0];
+		m_vectorTarget[1] = m_samples[i].m_targetAct[1];
+		m_vectorTarget[2] = m_samples[i].m_targetAct[2];
+		m_vectorTarget[3] = m_samples[i].m_targetAct[3];
 		FeedForward();
-		if (Action(m_valueFunctionInLayerOutput) != Action(m_vectorTarget)) 
+		if (Action(m_valueFunctionInLayerOutput) != Action(m_vectorTarget))
 		{
-			m_vectorInputs[0], m_vectorInputs[1], m_vectorInputs[2], m_vectorInputs[3],
-				m_strings[Action(m_valueFunctionInLayerOutput)], m_strings[Action(m_vectorTarget)];
+			//m_vectorInputs[0], m_vectorInputs[1], m_vectorInputs[2],
+			//	m_act[Action(m_valueFunctionInLayerOutput)], m_act[Action(m_vectorTarget)];
 		}
 		else 
 		{
@@ -253,26 +246,34 @@ void AI::Train()
 	}
 	
 	// тест
-	m_vectorInputs[0] = 2.0; m_vectorInputs[1] = 1.0; m_vectorInputs[2] = 1.0; m_vectorInputs[3] = 1.0;
+	int _numberAct = 0;
+	m_vectorInputs[0] = 0.0; m_vectorInputs[1] = 0.0; m_vectorInputs[2] = 0.0;
 	FeedForward();
+	_numberAct = Action(m_valueFunctionInLayerOutput);
 
-	m_vectorInputs[0] = 1.0; m_vectorInputs[1] = 1.0; m_vectorInputs[2] = 1.0; m_vectorInputs[3] = 2.0;
+	m_vectorInputs[0] = 1.0; m_vectorInputs[1] = 1.0; m_vectorInputs[2] = 1.0;
 	FeedForward();
-	
-	m_vectorInputs[0] = 0.0; m_vectorInputs[1] = 0.0; m_vectorInputs[2] = 0.0; m_vectorInputs[3] = 0.0;
+	_numberAct = Action(m_valueFunctionInLayerOutput);
+
+	m_vectorInputs[0] = 0.0; m_vectorInputs[1] = 0.0; m_vectorInputs[2] = 0.0;
 	FeedForward();
-	
-	m_vectorInputs[0] = 0.0; m_vectorInputs[1] = 1.0; m_vectorInputs[2] = 1.0; m_vectorInputs[3] = 1.0;
+	_numberAct = Action(m_valueFunctionInLayerOutput);
+
+	m_vectorInputs[0] = 0.0; m_vectorInputs[1] = 1.0; m_vectorInputs[2] = 1.0; 
 	FeedForward();
-	
-	m_vectorInputs[0] = 2.0; m_vectorInputs[1] = 0.0; m_vectorInputs[2] = 1.0; m_vectorInputs[3] = 3.0;
+	_numberAct = Action(m_valueFunctionInLayerOutput);
+
+	m_vectorInputs[0] = 2.0; m_vectorInputs[1] = 0.0; m_vectorInputs[2] = 1.0;
 	FeedForward();
-	
-	m_vectorInputs[0] = 2.0; m_vectorInputs[1] = 1.0; m_vectorInputs[2] = 0.0; m_vectorInputs[3] = 3.0;
+	_numberAct = Action(m_valueFunctionInLayerOutput);
+
+	m_vectorInputs[0] = 2.0; m_vectorInputs[1] = 1.0; m_vectorInputs[2] = 0.0;
 	FeedForward();
-	
-	m_vectorInputs[0] = 0.0; m_vectorInputs[1] = 1.0; m_vectorInputs[2] = 0.0; m_vectorInputs[3] = 3.0;
+	_numberAct = Action(m_valueFunctionInLayerOutput);
+
+	m_vectorInputs[0] = 0.0; m_vectorInputs[1] = 1.0; m_vectorInputs[2] = 0.0;
 	FeedForward();
+	_numberAct = Action(m_valueFunctionInLayerOutput);
 }
 
 AI::~AI()
