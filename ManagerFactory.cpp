@@ -7,6 +7,7 @@
 #include "MapLayer.h"
 #include "HeroInputComponent.h"
 #include "EnemyWarriorFactory.h"
+#include "EnemyMachineFactory.h"
 
 ManagerFactory::ManagerFactory()
 {
@@ -61,7 +62,13 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerFactory::ADD_FACTORY_ENEMY_MACHINE:
 		{
-			
+			EnemyMachineFactory* _enemyMachineFactory = new EnemyMachineFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
+			m_vecFactoryEnemyMachine.push_back(_enemyMachineFactory);
+
+			i_manager.m_inputComponent->SetZeroLocation();
+
+			m_stateManagerFactory = ManagerFactory::NOTHING;
+
 			break;
 		}
 		case ManagerFactory::NOTHING:
@@ -79,6 +86,11 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 			for (int i = 0; i < m_vecFactoryEnemyWarrior.size(); i++)
 			{
 				m_vecFactoryEnemyWarrior[i]->Update(i_manager);
+			}
+
+			for (int i = 0; i < m_vecFactoryEnemyMachine.size(); i++)
+			{
+				m_vecFactoryEnemyMachine[i]->Update(i_manager);
 			}
 
 			break;

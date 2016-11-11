@@ -14,3 +14,7 @@ const std::string CNT_TYPE_BOWMAN		= "Bowman";
 const std::string CNT_TYPE_ENEMY_KNIGHT = "Enemy Knight";
 const std::string CNT_TYPE_WIZARD		= "Wizard";
 const std::string CNT_TYPE_PALADIN		= "Paladin";
+
+const std::string CNT_TYPE_OCTOPEDE = "Octopede";
+const std::string CNT_TYPE_BRAIN	= "Brain";
+const std::string CNT_TYPE_TURTLE	= "Turtle";

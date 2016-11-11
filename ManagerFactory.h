@@ -6,11 +6,11 @@
 USING_NS_CC;
 
 class GameScene;
-class Archer;
 class ManagerComponent;
 class MachineFactory;
 class WarriorFactory;
 class EnemyWarriorFactory;
+class EnemyMachineFactory;
 
 class ManagerFactory
 {
@@ -40,7 +40,8 @@ private:
 	std::vector<MachineFactory*>		m_vecFactoryMachine;
 	std::vector<WarriorFactory*>		m_vecFactoryWarrior;
 	std::vector<EnemyWarriorFactory*>	m_vecFactoryEnemyWarrior;
-	
+	std::vector<EnemyMachineFactory*>	m_vecFactoryEnemyMachine;
+
 	StateManagerFactory				m_stateManagerFactory;
 	Point							m_positionBuildFactory;
 };

@@ -22,6 +22,14 @@ bool HUDLayer::init()
 
 void HUDLayer::LoadSpritesForMenu()
 {
+	Sprite* _spriteFactoryEnemyMachine = Sprite::create(CNT_PATH_TO_RESOURCES + "HUDLayer/Jelly.png");
+	_spriteFactoryEnemyMachine->setScale(GameScene::m_visibleSize.width / _spriteFactoryEnemyMachine->getContentSize().width / 8,
+		GameScene::m_visibleSize.height / _spriteFactoryEnemyMachine->getContentSize().height / 8);
+	_spriteFactoryEnemyMachine->setPosition(GameScene::m_visibleSize.width - _spriteFactoryEnemyMachine->getBoundingBox().size.width,
+		GameScene::m_visibleSize.height / 2);
+	m_rectFactoryEnemyMachine = _spriteFactoryEnemyMachine->getBoundingBox();
+	this->addChild(_spriteFactoryEnemyMachine);
+
 	Sprite* _spriteFactoryMachine = Sprite::create(CNT_PATH_TO_RESOURCES + "HUDLayer/Coal.png");
 	_spriteFactoryMachine->setScale(GameScene::m_visibleSize.width / _spriteFactoryMachine->getContentSize().width / 8,
 		GameScene::m_visibleSize.height / _spriteFactoryMachine->getContentSize().height / 8);
@@ -74,6 +82,11 @@ bool HUDLayer::DetermineCommandForManagerFactory()
 	else if (m_rectFactoryEnemyWarrior.containsPoint(m_locationTouch))
 	{
 		m_command = Command::CREATE_FACTORY_ENEMY_WARRIOR;
+		return true;
+	}
+	else if (m_rectFactoryEnemyMachine.containsPoint(m_locationTouch))
+	{
+		m_command = Command::CREATE_FACTORY_ENEMY_MACHINE;
 		return true;
 	}
 	return false;

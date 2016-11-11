@@ -30,6 +30,7 @@ EnemyWarriorFactory::EnemyWarriorFactory(Point i_positionVisible, MapLayer& i_ma
 {
 	m_stateWarrior	= StateFactoryWarrior::NOTHING;
 }
+
 EnemyWarriorFactory::EnemyWarriorFactory(EnemyWarriorFactory& i_EnemyWarriorFactory)
 {
 

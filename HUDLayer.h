@@ -39,6 +39,7 @@ private:
 	Rect	m_rectFactoryMachine;
 	Rect	m_rectFactoryWarrior;
 	Rect	m_rectFactoryEnemyWarrior;
+	Rect	m_rectFactoryEnemyMachine;
 
 };
 

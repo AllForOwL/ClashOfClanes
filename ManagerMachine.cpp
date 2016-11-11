@@ -5,6 +5,7 @@
 #include "Car.h"
 #include "Tank.h"
 #include "MapLayer.h"
+#include "EnemyMachine.h"
 
 ManagerMachine::ManagerMachine()
 {
@@ -40,6 +41,36 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 
 			break;
 		}
+		case ManagerMachine::ADD_ENEMY_OCTOPEDE:
+		{
+			EnemyMachine* _newOctopede = new EnemyMachine(CNT_TYPE_OCTOPEDE, *i_manager.m_mapLayer);
+			_newOctopede->setPosition(m_pointBuildMachine);
+			m_vecEnemyMachine.push_back(_newOctopede);
+
+			m_stateManagerMachine = StateManagerMachine::NOTHING;
+
+			break;
+		}
+		case ManagerMachine::ADD_ENEMY_BRAIN:
+		{
+			EnemyMachine* _newOctopede = new EnemyMachine(CNT_TYPE_BRAIN, *i_manager.m_mapLayer);
+			_newOctopede->setPosition(m_pointBuildMachine);
+			m_vecEnemyMachine.push_back(_newOctopede);
+
+			m_stateManagerMachine = StateManagerMachine::NOTHING;
+
+		   break;
+		}
+		case ManagerMachine::ADD_ENEMY_TURTLE:
+		{
+			EnemyMachine* _newOctopede = new EnemyMachine(CNT_TYPE_TURTLE, *i_manager.m_mapLayer);
+			_newOctopede->setPosition(m_pointBuildMachine);
+			m_vecEnemyMachine.push_back(_newOctopede);
+
+			m_stateManagerMachine = StateManagerMachine::NOTHING;
+
+			break;
+		}
 		case ManagerMachine::NOTHING:
 		{
 			if (m_vecMachineCar.size())
@@ -55,6 +86,14 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 				for (int i = 0; i < m_vecMachineTank.size(); i++)
 				{
 					m_vecMachineTank[i]->Update(i_manager);
+				}
+			}
+
+			if (m_vecEnemyMachine.size())
+			{
+				for (int i = 0; i < m_vecEnemyMachine.size(); i++)
+				{
+					m_vecEnemyMachine[i]->Update(i_manager);
 				}
 			}
 
