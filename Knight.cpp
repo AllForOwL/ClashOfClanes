@@ -5,19 +5,13 @@
 #include "ManagerComponent.h"
 #include "AI.h"
 
-const int CNT_HEALTH_DEFAULT = 100;
-
 Knight::Knight()
 {
-	this->initWithFile(CNT_PATH_TO_RESOURCES + "Hero/Walk_1.png");
-	this->setPosition(GameScene::m_visibleSize.width / 2 - 50, GameScene::m_visibleSize.height / 2);
-	this->setZOrder(1);
+
 }
 
-Knight::Knight(std::string i_knight, MapLayer& i_parentMapLayer)
+Knight::Knight(std::string i_knight, MapLayer& i_parentMapLayer) : Warrior(i_parentMapLayer)
 {			
-	i_parentMapLayer.addChild(this);
-
 	if (i_knight == CNT_TYPE_KNIGHT_BLACK)
 	{
 		this->initWithFile(CNT_PATH_TO_RESOURCES + "Warrior/black_knight/attack_1.png");
@@ -30,12 +24,8 @@ Knight::Knight(std::string i_knight, MapLayer& i_parentMapLayer)
 	{
 		this->initWithFile(CNT_PATH_TO_RESOURCES + "Warrior/silver_knight/attack_1.png");
 	}
-	
-	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 8,
-		GameScene::m_visibleSize.height / this->getContentSize().height / 8);
 
 	m_spear		= true;
-	m_health	= CNT_HEALTH_DEFAULT; 
 	m_state		= StateKnight::FIND_ACT;
 }
 
@@ -128,17 +118,19 @@ Knight::Knight(Knight& Knight)
 
 void Knight::ActAttack()
 {
-
+	
 }
 
 void Knight::ActRun()
 {
-	this->setPositionX(this->getPositionX() - 1);
+	// here need add verify direction
+	MoveRight();
 }
 
 void Knight::ActWander()
 {
-	this->setPositionX(this->getPositionX() + 1);
+	// here need add verify direction
+	MoveLeft();
 }
 
 void Knight::ActHide()

@@ -15,6 +15,10 @@ public:
 
 	enum StateFactoryWarrior
 	{
+		START_BOWMAN,
+		START_ENEMY_KNIGHT,
+		START_WIZARD,
+		START_PALADIN,
 		WORKING,
 		LISTEN,
 		NOTHING
@@ -37,7 +41,9 @@ public:
 	bool DetermineCommand();
 
 private:
-	StateFactoryWarrior m_stateWarrior;
+	StateFactoryWarrior				m_stateWarrior;
+	ManagerArmy::StateManagerArmy	m_stateTypeAddWarrior;
+
 };
 
 #endif

@@ -37,7 +37,6 @@ public:
 
 	void LoadNameForSprites();
 	bool DetermineCommand();
-	void LoadSprites();
 
 private:
 	StateFactoryWarrior				m_stateWarrior;

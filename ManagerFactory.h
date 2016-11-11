@@ -10,6 +10,7 @@ class Archer;
 class ManagerComponent;
 class MachineFactory;
 class WarriorFactory;
+class EnemyWarriorFactory;
 
 class ManagerFactory
 {
@@ -19,6 +20,8 @@ public:
 	{
 		ADD_FACTORY_WARRIOR,
 		ADD_FACTORY_MACHINE,
+		ADD_FACTORY_ENEMY_WARRIOR,
+		ADD_FACTORY_ENEMY_MACHINE,
 		NOTHING
 	};
 
@@ -34,8 +37,10 @@ public:
 	Point GetPositionBuildFactory() const;
 
 private:
-	std::vector<MachineFactory*>	m_vecFactoryMachine;
-	std::vector<WarriorFactory*>	m_vecFactoryWarrior;
+	std::vector<MachineFactory*>		m_vecFactoryMachine;
+	std::vector<WarriorFactory*>		m_vecFactoryWarrior;
+	std::vector<EnemyWarriorFactory*>	m_vecFactoryEnemyWarrior;
+	
 	StateManagerFactory				m_stateManagerFactory;
 	Point							m_positionBuildFactory;
 };

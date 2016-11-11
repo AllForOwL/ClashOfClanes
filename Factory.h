@@ -43,41 +43,38 @@ public:
 			this->getBoundingBox().size.width, this->getBoundingBox().size.height
 			);
 
-		m_numberWarriorComplete = 0;
+		m_numberComplete = 0;
 
 		m_positionOriginWithVisible = m_positionOrigin + m_positionVisible;
 		this->setPosition(m_positionOriginWithVisible);
 
 	}
-	~Factory(){};
-
-
 
 	void ShowMenu()
 	{
 		Point _positionWarriorMenu = Point(m_positionOriginWithVisible.x + (m_rectFactoryVisible.size.width / 2),
 			m_positionOriginWithVisible.y);
-		for (int i = 0; i < m_vecSpritesForFactoryWarrior.size(); i++)
+		for (int i = 0; i < m_vecSpritesForFactory.size(); i++)
 		{
-			m_vecSpritesForFactoryWarrior[i]->setPosition(_positionWarriorMenu);
-			m_vecSpritesForFactoryWarrior[i]->setVisible(true);
-			m_rectForSpritesWarrior.push_back(m_vecSpritesForFactoryWarrior[i]->getBoundingBox());
+			m_vecSpritesForFactory[i]->setPosition(_positionWarriorMenu);
+			m_vecSpritesForFactory[i]->setVisible(true);
+			m_rectForSprites.push_back(m_vecSpritesForFactory[i]->getBoundingBox());
 
-			_positionWarriorMenu.y -= m_vecSpritesForFactoryWarrior[i]->getBoundingBox().size.height / 2;
+			_positionWarriorMenu.y -= m_vecSpritesForFactory[i]->getBoundingBox().size.height / 2;
 		}
 	}
 
 	void HideMenu()
 	{
-		for (int i = 0; i < m_vecSpritesForFactoryWarrior.size(); i++)
+		for (int i = 0; i < m_vecSpritesForFactory.size(); i++)
 		{
-			m_vecSpritesForFactoryWarrior[i]->setVisible(false);
+			m_vecSpritesForFactory[i]->setVisible(false);
 		}
 	}
 
 	bool isComplete()
 	{
-		if ((int)std::chrono::duration<double>(GraphicComponent::GetTime() - m_startSecond).count() == m_timeForCompleteWarrior)
+		if ((int)std::chrono::duration<double>(GraphicComponent::GetTime() - m_startSecond).count() == m_timeForComplete)
 		{
 			return true;
 		}
@@ -87,41 +84,54 @@ public:
 		}
 	}
 
-	void LoadPositionWarrior()
+	void LoadPosition()
 	{
 		Point _positionWarrior = Point(m_positionOriginWithVisible.x, m_positionOriginWithVisible.y - (m_rectFactoryVisible.size.height / 2));
 		for (int i = 0; i < 5; i++)
 		{
 			for (int j = 0; j < 5; j++)
 			{
-				m_vecPositionWarrior.push_back(_positionWarrior);
-				_positionWarrior.x += 40;
+				m_vecPosition.push_back(_positionWarrior);
+				_positionWarrior.x += 60;
 			}
-			_positionWarrior.y += 40;
+			_positionWarrior.y += 60;
+		}
+	}
+
+	void LoadSprites()
+	{
+		float _positionY = GameScene::m_visibleSize.height / 2;
+		for (int i = 0; i < m_vecNameForSprites.size(); i++)
+		{
+			m_vecSpritesForFactory.push_back(Sprite::create(m_vecNameForSprites[i]));
+			m_vecSpritesForFactory[i]->setScale(GameScene::m_visibleSize.width / m_vecSpritesForFactory[i]->getContentSize().width / 15,
+				GameScene::m_visibleSize.height / m_vecSpritesForFactory[i]->getContentSize().height / 15);
+			m_vecSpritesForFactory[i]->setVisible(false);
+			this->getParent()->addChild(m_vecSpritesForFactory[i]);
 		}
 	}
 
 	virtual void Update(ManagerComponent& i_manager) = 0;
-	
+
+	~Factory(){};
+
 protected:
 	std::chrono::time_point<std::chrono::system_clock> m_startSecond;
-	int					m_timeForCompleteWarrior;
+	int					m_timeForComplete;
 	Vec2				m_locationTouch;
 	Rect				m_rectFactoryOrigin;
 	Rect				m_rectFactoryVisible;
 	Rect				m_rectFactoryOriginWithVisible;
 
 	std::vector<std::string>	m_vecNameForSprites;
-	std::vector<Sprite*>		m_vecSpritesForFactoryWarrior;
-	std::vector<Rect>			m_rectForSpritesWarrior;
-	std::vector<Rect>			m_rectForSpritesMachine;
+	std::vector<Sprite*>		m_vecSpritesForFactory;
+	std::vector<Rect>			m_rectForSprites;
 
-	std::vector<Point>	m_vecPositionWarrior;
-	int					m_numberWarriorComplete;
+	std::vector<Point>	m_vecPosition;
+	int					m_numberComplete;
 	Point				m_positionOrigin;
 	Point				m_positionVisible;
 	Point				m_positionOriginWithVisible;
-
 };
 
 #endif

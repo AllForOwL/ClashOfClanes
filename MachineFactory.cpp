@@ -9,8 +9,8 @@
 #include "HUDLayer.h"
 #include "MapLayer.h"
 
-const int CNT_TIME_FOR_COMPLETE_TANK = 40;
-const int CNT_TIME_FOR_COMPLETE_CAR = 30;
+const int CNT_TIME_FOR_COMPLETE_TANK	= 40;
+const int CNT_TIME_FOR_COMPLETE_CAR		= 30;
 
 const int CNT_INDEX_TANK = 0;
 
@@ -22,8 +22,6 @@ MachineFactory::MachineFactory()
 MachineFactory::MachineFactory(Point i_positionVisible, MapLayer& i_mapLayer) : Factory(i_positionVisible, i_mapLayer, "Castle/FactoryMachine.png")
 {
 	m_stateMachine	= StateFactoryMachine::NOTHING;
-	
-	LoadNameForSprites();
 }
 
 MachineFactory::MachineFactory(MachineFactory& i_MachineFactory)
@@ -43,13 +41,13 @@ void MachineFactory::LoadNameForSprites()
 
 /*virtual*/ void MachineFactory::Update(ManagerComponent& i_manager)
 {
-	/*switch (m_stateMachine)
+	switch (m_stateMachine)
 	{
 		case StateFactoryMachine::START_TANK:
 		{
 			if (i_manager.m_hero->CheckProductionTank())
 			{
-				m_timeForCompleteMachine	= CNT_TIME_FOR_COMPLETE_TANK;
+				m_timeForComplete	= CNT_TIME_FOR_COMPLETE_TANK;
 				m_startSecond				= GraphicComponent::GetTime();
 				m_stateMachine				= StateFactoryMachine::WORKING;
 				m_stateManagerMachine		= ManagerMachine::StateManagerMachine::ADD_TANK;
@@ -60,7 +58,7 @@ void MachineFactory::LoadNameForSprites()
 		{
 			if (i_manager.m_hero->CheckProductionCar())
 			{
-				m_timeForCompleteMachine	= CNT_TIME_FOR_COMPLETE_CAR;
+				m_timeForComplete	= CNT_TIME_FOR_COMPLETE_CAR;
 				m_startSecond				= GraphicComponent::GetTime();
 				m_stateMachine				= StateFactoryMachine::WORKING;
 				m_stateManagerMachine		= ManagerMachine::StateManagerMachine::ADD_CAR;
@@ -73,8 +71,8 @@ void MachineFactory::LoadNameForSprites()
 			{
 				m_stateMachine = StateFactoryMachine::NOTHING;
 				i_manager.m_managerMachine->SetState(m_stateManagerMachine);
-				i_manager.m_managerMachine->SetPositionForMachine(m_vecPositionMachine[m_numberMachineComplete]);
-				++m_numberMachineComplete;
+				i_manager.m_managerMachine->SetPositionForMachine(m_vecPosition[m_numberComplete]);
+				++m_numberComplete;
 			}
 			break;
 		}
@@ -88,8 +86,14 @@ void MachineFactory::LoadNameForSprites()
 			m_locationTouch += _positionOrigin;
 			if (m_rectFactoryOriginWithVisible.containsPoint(m_locationTouch))
 			{
+				if (m_vecNameForSprites.empty())
+				{
+					LoadNameForSprites();
+					LoadSprites();
+				}
+
 				ShowMenu();
-				LoadPositionMachine();
+				LoadPosition();
 				m_stateMachine	= StateFactoryMachine::LISTEN;
 				i_manager.m_inputComponent->SetZeroLocation();
 			}
@@ -111,12 +115,12 @@ void MachineFactory::LoadNameForSprites()
 		}
 	default:
 		break;
-	}*/
+	}
 }
 
 bool MachineFactory::DetermineCommand()
 {
-	if (m_rectForSpritesMachine[CNT_INDEX_TANK].containsPoint(m_locationTouch))
+	if (m_rectForSprites[CNT_INDEX_TANK].containsPoint(m_locationTouch))
 	{
 		m_stateMachine = StateFactoryMachine::START_TANK;
 		return true;

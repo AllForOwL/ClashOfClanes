@@ -15,6 +15,8 @@ public:
 	{
 		CREATE_FACTORY_MACHINE,
 		CREATE_FACTORY_WARRIOR,
+		CREATE_FACTORY_ENEMY_WARRIOR,
+		CREATE_FACTORY_ENEMY_MACHINE,
 		NOTHING
 	};
 
@@ -36,7 +38,8 @@ private:
 	Vec2	m_locationTouch;
 	Rect	m_rectFactoryMachine;
 	Rect	m_rectFactoryWarrior;
-	
+	Rect	m_rectFactoryEnemyWarrior;
+
 };
 
 #endif // __HUD_LAYER_H__

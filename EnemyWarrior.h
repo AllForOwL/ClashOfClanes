@@ -1,5 +1,5 @@
-#ifndef __KNIGHT_H__
-#define __KNIGHT_H__
+#ifndef __EnemyWarrior_H__
+#define __EnemyWarrior_H__
 
 #include "cocos2d.h"
 #include "Warrior.h"
@@ -9,11 +9,11 @@ USING_NS_CC;
 class ManagerComponent;
 class MapLayer;
 
-class Knight : public Warrior
+class EnemyWarrior : public Warrior
 {
 public:
 
-	enum StateKnight
+	enum StateEnemyWarrior
 	{
 		ATTACK,
 		RUN,
@@ -23,11 +23,11 @@ public:
 		NOTHING
 	};
 
-	Knight();
-	Knight(std::string i_typeKnight, MapLayer& i_parentMapLayer);
-	Knight(Knight& heroGraphiComponent);
+	EnemyWarrior();
+	EnemyWarrior(std::string i_typeEnemyWarrior, MapLayer& i_parentMapLayer);
+	EnemyWarrior(EnemyWarrior& heroGraphiComponent);
 
-	~Knight();
+	~EnemyWarrior();
 
 	void ActAttack();
 	void ActRun();
@@ -37,8 +37,7 @@ public:
 	virtual void Update(ManagerComponent& i_manager);
 
 private:
-	bool		m_spear;
-	StateKnight	m_state;
+	StateEnemyWarrior	m_state;
 };
 
 #endif

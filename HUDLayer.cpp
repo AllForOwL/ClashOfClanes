@@ -37,6 +37,14 @@ void HUDLayer::LoadSpritesForMenu()
 		GameScene::m_visibleSize.height / 2 - 100);
 	m_rectFactoryWarrior = _spriteFactoryWarrior->getBoundingBox();
 	this->addChild(_spriteFactoryWarrior);
+
+	Sprite* _spriteFactoryEnemyWarrior = Sprite::create(CNT_PATH_TO_RESOURCES + "HUDLayer/Ore.png");
+	_spriteFactoryEnemyWarrior->setScale(GameScene::m_visibleSize.width / _spriteFactoryEnemyWarrior->getContentSize().width / 8,
+		GameScene::m_visibleSize.height / _spriteFactoryEnemyWarrior->getContentSize().height / 8);
+	_spriteFactoryEnemyWarrior->setPosition(GameScene::m_visibleSize.width - _spriteFactoryEnemyWarrior->getBoundingBox().size.width,
+		GameScene::m_visibleSize.height / 2 - 150);
+	m_rectFactoryEnemyWarrior = _spriteFactoryEnemyWarrior->getBoundingBox();
+	this->addChild(_spriteFactoryEnemyWarrior);
 }
 
 void HUDLayer::Update(ManagerComponent& i_manager)
@@ -61,6 +69,11 @@ bool HUDLayer::DetermineCommandForManagerFactory()
 	else if (m_rectFactoryWarrior.containsPoint(m_locationTouch))
 	{
 		m_command = Command::CREATE_FACTORY_WARRIOR;
+		return true;
+	}
+	else if (m_rectFactoryEnemyWarrior.containsPoint(m_locationTouch))
+	{
+		m_command = Command::CREATE_FACTORY_ENEMY_WARRIOR;
 		return true;
 	}
 	return false;
@@ -88,6 +101,26 @@ void HUDLayer::ExecuteCommandForManagerFactory(ManagerComponent& i_manager)
 
 			m_command = Command::NOTHING;
 
+			break;
+		}
+		case Command::CREATE_FACTORY_ENEMY_WARRIOR:
+		{
+			ManagerFactory::StateManagerFactory _state = ManagerFactory::StateManagerFactory::ADD_FACTORY_ENEMY_WARRIOR;
+			i_manager.m_managerFactory->SetState(_state);
+			i_manager.m_managerFactory->SetPositionBuildFactory(i_manager.m_inputComponent->GetPreviousLocationTouch());
+
+			m_command = Command::NOTHING;
+			
+			break;
+		}
+		case Command::CREATE_FACTORY_ENEMY_MACHINE:
+		{
+			ManagerFactory::StateManagerFactory _state = ManagerFactory::StateManagerFactory::ADD_FACTORY_ENEMY_MACHINE;
+			i_manager.m_managerFactory->SetState(_state);
+			i_manager.m_managerFactory->SetPositionBuildFactory(i_manager.m_inputComponent->GetPreviousLocationTouch());
+
+			m_command = Command::NOTHING;
+			
 			break;
 		}
 	default:
