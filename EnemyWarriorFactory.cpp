@@ -8,10 +8,10 @@
 #include "HUDLayer.h"
 #include "MapLayer.h"
 
-const int CNT_TIME_FOR_COMPLETE_BOWMAN			= 15;
-const int CNT_TIME_FOR_COMPLETE_ENEMY_KNIGHT	= 20;
-const int CNT_TIME_FOR_COMPLETE_WIZARD			= 25;
-const int CNT_TIME_FOR_COMPLETE_PALADIN			= 30;
+const int CNT_TIME_FOR_COMPLETE_BOWMAN			= 5;
+const int CNT_TIME_FOR_COMPLETE_ENEMY_KNIGHT	= 5;
+const int CNT_TIME_FOR_COMPLETE_WIZARD			= 5;
+const int CNT_TIME_FOR_COMPLETE_PALADIN			= 5;
 
 const int CNT_INDEX_BOWMAN			= 0;
 const int CNT_INDEX_ENEMY_KNIGHT	= 1;

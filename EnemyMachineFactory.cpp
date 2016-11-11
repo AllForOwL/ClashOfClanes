@@ -9,9 +9,9 @@
 #include "HUDLayer.h"
 #include "MapLayer.h"
 
-const int CNT_TIME_FOR_COMPLETE_OCTOPEDE	= 30;
-const int CNT_TIME_FOR_COMPLETE_BRAIN		= 40;
-const int CNT_TIME_FOR_COMPLETE_TURTLE		= 50;
+const int CNT_TIME_FOR_COMPLETE_OCTOPEDE	= 5;
+const int CNT_TIME_FOR_COMPLETE_BRAIN		= 5;
+const int CNT_TIME_FOR_COMPLETE_TURTLE		= 5;
 
 const int INDEX_OCTOPEDE	= 0;
 const int INDEX_BRAIN		= 1;

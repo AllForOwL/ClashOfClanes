@@ -34,7 +34,10 @@ EnemyWarrior::EnemyWarrior(std::string i_EnemyWarrior, MapLayer& i_parentMapLaye
 		this->initWithFile(CNT_PATH_TO_RESOURCES + "Enemy/Paladin.png");
 	}
 
-	m_state		= StateEnemyWarrior::FIND_ACT;
+	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 8,
+		GameScene::m_visibleSize.height / this->getContentSize().height / 8);
+
+	m_state		= StateEnemyWarrior::NOTHING;
 }
 
 EnemyWarrior::EnemyWarrior(EnemyWarrior& EnemyWarrior)

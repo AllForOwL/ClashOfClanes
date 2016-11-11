@@ -295,8 +295,8 @@ AI::~AI()
 		+ optimize for knight;
 
 	Tasks on 11:11:2016					!-!-!-(Day Enemy!!!!!)-!-!-!
-		- create factory for enemy(+warrior and machine);
-		- create manager factory for enemy????;
+		+ create factory for enemy(warrior and machine);
+		// create manager factory for enemy????;(not need)
 		- create enemy;
 		- execute AI in game;
 */

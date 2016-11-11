@@ -21,9 +21,6 @@ public:
 	{
 		i_parentMapLayer.addChild(this);
 
-		this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 8,
-			GameScene::m_visibleSize.height / this->getContentSize().height / 8);
-
 		m_health	= CNT_HEALTH_DEFAULT;
 		m_speed		= CNT_DEFAULT_SPEED;
 		m_damage	= CNT_DEFAULT_DAMAGE;

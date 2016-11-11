@@ -30,7 +30,7 @@ EnemyMachine::EnemyMachine(std::string i_EnemyMachine, MapLayer& i_parentMapLaye
 		this->initWithFile(CNT_PATH_TO_RESOURCES + "Enemy/Machine/Turtle.png");
 	}
 
-	m_state	= StateEnemyMachine::FIND_ACT;
+	m_state	= StateEnemyMachine::NOTHING;
 }
 
 EnemyMachine::EnemyMachine(EnemyMachine& EnemyMachine)
