@@ -358,6 +358,7 @@ void AI::TrainWander()
 		}
 	}
 
+	int _numberAct = 0;
 	m_vectorInputs[0] = 0.0; m_vectorInputs[1] = 0.0; m_vectorInputs[2] = 1.0; m_vectorInputs[3] = 1.0;
 	FeedForward();
 	_numberAct = Action(m_valueFunctionInLayerOutput);
@@ -389,7 +390,6 @@ AI::~AI()
 	CCLOG("Destructor AI");
 }
 
-
 /*
 	Tasks on 10:11:2016
 		+ good understand algorithm;
@@ -400,8 +400,13 @@ AI::~AI()
 		// create manager factory for enemy????;(not need)
 		+ create enemy;
 		
-		Tasks on 12:11:2016
-		- execute AI in game;
-			+ fill region for each objects;
-			+ need add AI for act---> Wander <---;
+		|
+		|			Tasks on 12:11:2016
+  ------|------		step for execute AI in game:
+		|				+ fill region for each objects;
+		|				+ need add AI for act---> Wander <---;
+
+		Tasks on 13:11:2016
+			+ Execute AI;
+
 */

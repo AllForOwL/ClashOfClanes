@@ -38,4 +38,4 @@ private:
 	HUDLayer*			m_HUDLayer;
 };
 
-#endif 
+#endif

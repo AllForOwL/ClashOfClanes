@@ -21,6 +21,7 @@ ManagerComponent::ManagerComponent(GameScene& i_gameScene)
 	m_managerFactory	= new ManagerFactory();
 	m_AI				= new AI();
 	m_AI->Train();
+	m_AI->TrainWander();
 }
 
 void ManagerComponent::Update(GameScene& i_gameScene)
