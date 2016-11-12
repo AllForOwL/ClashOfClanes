@@ -4,6 +4,7 @@
 #include "Knight.h"
 #include "MapLayer.h"
 #include "EnemyWarrior.h"
+#include "HeroInputComponent.h"
 #include "constants.h"
 
 ManagerArmy::ManagerArmy()
@@ -16,6 +17,15 @@ ManagerArmy::ManagerArmy(ManagerArmy& i_managerArmy)
 
 }
 
+void ManagerArmy::LaunchFillRegion(const Warrior& i_warrior, ManagerComponent& i_manager, int i_typeWarrior)
+{
+	m_positionNewWarrior	= i_warrior.getPosition();
+	m_sizeNewWarrior		= i_warrior.getBoundingBox().size;
+
+	i_manager.m_mapLayer->FillRegionFromObject(i_typeWarrior, m_positionNewWarrior, m_sizeNewWarrior);
+	i_manager.m_inputComponent->SetZeroLocation();
+}
+
 void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 {
 	switch (m_stateManagerArmy)
@@ -25,10 +35,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 			Knight* _newKnightBlack = new Knight(CNT_TYPE_KNIGHT_BLACK, *i_manager.m_mapLayer);
 			_newKnightBlack->setPosition(m_positionWarrior);
 			m_vecKnight.push_back(_newKnightBlack);
-			
-			Point _position	= _newKnightBlack->getPosition();
-			Size _size		= _newKnightBlack->getBoundingBox().size;
-			i_manager.m_mapLayer->FillRegionFromObject(_position, _size);
+			LaunchFillRegion(*m_vecKnight[m_vecKnight.size() - 1], i_manager, CNT_OBJECT_KNIGHT_BLACK);
 
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
@@ -39,10 +46,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 	   		Knight* _newKnightBronze = new Knight(CNT_TYPE_KNIGHT_BRONZE, *i_manager.m_mapLayer);
 			_newKnightBronze->setPosition(m_positionWarrior);
 			m_vecKnight.push_back(_newKnightBronze);
-			
-			Point _position	= _newKnightBronze->getPosition();
-			Size _size		= _newKnightBronze->getBoundingBox().size;
-			i_manager.m_mapLayer->FillRegionFromObject(_position, _size);
+			LaunchFillRegion(*m_vecKnight[m_vecKnight.size() - 1], i_manager, CNT_OBJECT_KNIGHT_BRONZE);
 
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
@@ -53,10 +57,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 			Knight* _newKnightSilver = new Knight(CNT_TYPE_KNIGHT_SILVER, *i_manager.m_mapLayer);
 			_newKnightSilver->setPosition(m_positionWarrior);
 			m_vecKnight.push_back(_newKnightSilver);
-			
-			Point _position	= _newKnightSilver->getPosition();
-			Size _size		= _newKnightSilver->getBoundingBox().size;
-			i_manager.m_mapLayer->FillRegionFromObject(_position, _size);
+			LaunchFillRegion(*m_vecKnight[m_vecKnight.size() - 1], i_manager, CNT_OBJECT_KNIGHT_SILVER);
 
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
@@ -67,11 +68,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 			EnemyWarrior* _newEnemyBowman = new EnemyWarrior(CNT_TYPE_BOWMAN, *i_manager.m_mapLayer);
 			_newEnemyBowman->setPosition(m_positionWarrior);
 			m_vecEnemy.push_back(_newEnemyBowman);
-			
-			Point _position = _newEnemyBowman->getPosition();
-			Size _size		= _newEnemyBowman->getBoundingBox().size;
-			// here need add fill region enemy
-			//i_manager.m_mapLayer->FillRegionFromObject(_position, _size);
+			LaunchFillRegion(*m_vecEnemy[m_vecEnemy.size() - 1], i_manager, CNT_OBJECT_ENEMY_BOWMAN);
 
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
@@ -82,11 +79,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 			EnemyWarrior* _newEnemyBowman = new EnemyWarrior(CNT_TYPE_ENEMY_KNIGHT, *i_manager.m_mapLayer);
 			_newEnemyBowman->setPosition(m_positionWarrior);
 			m_vecEnemy.push_back(_newEnemyBowman);
-			
-			Point _position = _newEnemyBowman->getPosition();
-			Size _size		= _newEnemyBowman->getBoundingBox().size;
-			// here need add fill region enemy
-			//i_manager.m_mapLayer->FillRegionFromObject(_position, _size);
+			LaunchFillRegion(*m_vecEnemy[m_vecEnemy.size() - 1], i_manager, CNT_OBJECT_ENEMY_KNIGHT);
 
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
@@ -97,11 +90,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 			EnemyWarrior* _newEnemyBowman = new EnemyWarrior(CNT_TYPE_WIZARD, *i_manager.m_mapLayer);
 			_newEnemyBowman->setPosition(m_positionWarrior);
 			m_vecEnemy.push_back(_newEnemyBowman);
-			
-			Point _position = _newEnemyBowman->getPosition();
-			Size _size		= _newEnemyBowman->getBoundingBox().size;
-			// here need add fill region enemy
-			//i_manager.m_mapLayer->FillRegionFromObject(_position, _size);
+			LaunchFillRegion(*m_vecEnemy[m_vecEnemy.size() - 1], i_manager, CNT_OBJECT_ENEMY_WIZARD);
 
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
@@ -112,14 +101,9 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 			EnemyWarrior* _newEnemyBowman = new EnemyWarrior(CNT_TYPE_PALADIN, *i_manager.m_mapLayer);
 			_newEnemyBowman->setPosition(m_positionWarrior);
 			m_vecEnemy.push_back(_newEnemyBowman);
-			
-			Point _position = _newEnemyBowman->getPosition();
-			Size _size		= _newEnemyBowman->getBoundingBox().size;
-			// here need add fill region enemy
-			//i_manager.m_mapLayer->FillRegionFromObject(_position, _size);
+			LaunchFillRegion(*m_vecEnemy[m_vecEnemy.size() - 1], i_manager, CNT_OBJECT_ENEMY_PALADIN);
 
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
-
 
 			break;
 		}

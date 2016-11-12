@@ -8,7 +8,7 @@
 Knight::Knight()
 {
 
-}
+} 
 
 Knight::Knight(std::string i_knight, MapLayer& i_parentMapLayer) : Warrior(i_parentMapLayer)
 {			
@@ -24,6 +24,9 @@ Knight::Knight(std::string i_knight, MapLayer& i_parentMapLayer) : Warrior(i_par
 	{
 		this->initWithFile(CNT_PATH_TO_RESOURCES + "Warrior/silver_knight/attack_1.png");
 	}
+
+	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 10,
+		GameScene::m_visibleSize.height / this->getContentSize().height / 10);
 
 	m_spear		= true;
 	m_state		= StateKnight::FIND_ACT;

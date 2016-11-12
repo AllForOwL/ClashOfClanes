@@ -297,6 +297,9 @@ AI::~AI()
 	Tasks on 11:11:2016					!-!-!-(Day Enemy!!!!!)-!-!-!
 		+ create factory for enemy(warrior and machine);
 		// create manager factory for enemy????;(not need)
-		- create enemy;
+		+ create enemy;
+		
+		Tasks on 12:11:2016
 		- execute AI in game;
+			- fill region for each objects;
 */

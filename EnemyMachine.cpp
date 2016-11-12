@@ -30,6 +30,9 @@ EnemyMachine::EnemyMachine(std::string i_EnemyMachine, MapLayer& i_parentMapLaye
 		this->initWithFile(CNT_PATH_TO_RESOURCES + "Enemy/Machine/Turtle.png");
 	}
 
+	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 13,
+		GameScene::m_visibleSize.height / this->getContentSize().height / 13);
+
 	m_state	= StateEnemyMachine::NOTHING;
 }
 

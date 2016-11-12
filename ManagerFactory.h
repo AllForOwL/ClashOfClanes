@@ -11,6 +11,7 @@ class MachineFactory;
 class WarriorFactory;
 class EnemyWarriorFactory;
 class EnemyMachineFactory;
+class Factory;
 
 class ManagerFactory
 {
@@ -36,14 +37,20 @@ public:
 	void SetPositionBuildFactory(Point i_point);
 	Point GetPositionBuildFactory() const;
 
+	void LaunchFillRegion(const Factory& i_factory, ManagerComponent& i_manager, int i_typeFactory);
+
 private:
-	std::vector<MachineFactory*>		m_vecFactoryMachine;
-	std::vector<WarriorFactory*>		m_vecFactoryWarrior;
-	std::vector<EnemyWarriorFactory*>	m_vecFactoryEnemyWarrior;
-	std::vector<EnemyMachineFactory*>	m_vecFactoryEnemyMachine;
+	std::vector<Factory*>	m_vecFactoryMachine;
+	std::vector<Factory*>	m_vecFactoryWarrior;
+	std::vector<Factory*>	m_vecFactoryEnemyWarrior;
+	std::vector<Factory*>	m_vecFactoryEnemyMachine;
 
 	StateManagerFactory				m_stateManagerFactory;
 	Point							m_positionBuildFactory;
+
+	Point m_positionNewFactory;
+	Size  m_sizeNewFactory;
+
 };
 
 #endif

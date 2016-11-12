@@ -26,7 +26,7 @@ public:
 	~MapLayer();
 
 	void Update(ManagerComponent& i_manager);
-	void FillRegionFromObject(Point i_point, Size i_size);
+	void FillRegionFromObject(int i_typeObject, Point i_point, Size i_size);
 	void ReleasePositionAfterSearchWay();
 	void SetState(StateMap& i_statemap);
 	std::vector<std::vector<int>>& GetMapCoordinate();

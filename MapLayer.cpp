@@ -99,15 +99,17 @@ std::vector<std::vector<int>>& MapLayer::GetMapCoordinate()
 	return m_mapCoordinate;
 }
 
-void MapLayer::FillRegionFromObject(Point i_point, Size i_size)
+void MapLayer::FillRegionFromObject(int i_typeObject, Point i_point, Size i_size)
 {
-	/*for (int i = _position.x; i < _position.x + i_size.width; i++)
+	Point _positionBegin = Point(i_point.x - (i_size.width / 2), i_point.y + (i_size.height / 2));
+	Point _positionEnd	 = Point(i_point.x + (i_size.width / 2), i_point.y - (i_size.height / 2));
+	for (int i = _positionBegin.x; i < _positionEnd.x; i++)
 	{
-		for (int j = _position.y; j < _position.y + i_size.height; j++)
+		for (int j = _positionBegin.y; j < _positionEnd.y; j++)
 		{
-			this->m_mapCoordinate[i][j] = CNT_TAG_ARCHER;
+			this->m_mapCoordinate[i][j] = i_typeObject;
 		}
-	}*/
+	}
 }
 
 void MapLayer::SetState(StateMap& i_statemap)

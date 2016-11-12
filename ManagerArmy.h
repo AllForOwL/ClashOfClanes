@@ -9,6 +9,8 @@ class GameScene;
 class Knight;
 class ManagerComponent;
 class EnemyWarrior;
+class Warrior;
+class InputComponent;
 
 class ManagerArmy
 {
@@ -37,13 +39,18 @@ public:
 
 	void SetPositionForWarrior(Point i_positionWarrior);
 
+	void LaunchFillRegion(const Warrior& i_warrior, ManagerComponent& i_manager, int i_typeWarrior);
+
 private:
-	std::vector<Knight*>		m_vecKnight;
-	std::vector<EnemyWarrior*>	m_vecEnemy;
+	std::vector<Warrior*>	m_vecKnight;
+	std::vector<Warrior*>	m_vecEnemy;
 
 	StateManagerArmy		m_stateManagerArmy;
 
 	Point					m_positionWarrior;
+
+	Point	m_positionNewWarrior;
+	Size	m_sizeNewWarrior;
 
 };
 
