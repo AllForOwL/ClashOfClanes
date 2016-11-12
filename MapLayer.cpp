@@ -123,6 +123,24 @@ void MapLayer::SetState(StateMap& i_statemap)
 	m_stateMap = i_statemap;
 }
 
+double MapLayer::StatusCells(Point i_position)
+{
+	Point _thisPosition = this->getPosition();
+	_thisPosition.x *= (-1);
+	_thisPosition.y *= (-1);
+	i_position += _thisPosition;
+	
+	if (m_mapCoordinate[i_position.x][i_position.y] == CNT_POSITION_FREE)
+	{
+		return 1.0;
+	}
+	else
+	{
+		return 0.0;
+	}
+
+}
+
 int MapLayer::GetQuentityEnemy(Point i_position)
 {
 	int _quentityEnemy = 0;

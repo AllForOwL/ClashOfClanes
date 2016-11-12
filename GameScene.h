@@ -36,7 +36,6 @@ private:
 
 	ManagerComponent*	m_manager;
 	HUDLayer*			m_HUDLayer;
-
 };
 
 #endif 

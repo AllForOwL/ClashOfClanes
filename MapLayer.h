@@ -31,6 +31,7 @@ public:
 	void SetState(StateMap& i_statemap);
 	std::vector<std::vector<int>>& GetMapCoordinate();
 	int GetQuentityEnemy(Point i_position);
+	double StatusCells(Point i_position);	// STATUS = { FREE = 1.0, BUSY = 0.0 }
 
 private:
 	std::vector<std::vector<int>> m_mapCoordinate;

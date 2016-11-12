@@ -4,6 +4,7 @@
 const int CNT_INPUT_NEURONS		= 3;
 const int CNT_HIDDEN_NEURONS	= 3;
 
+const int CNT_INPUT_NEURONS_WANDER = 4;
 
 #define LEARN_RATE 0.2 // коефіцієнт навчання
 #define RAND_WEIGHT ( ((float)rand() / (float)RAND_MAX) - 0.5)
@@ -29,7 +30,17 @@ const AI::ELEMENT AI::m_samples[CNT_MAX_SAMPLES] =
 	{ 0.0, 0.0, 2.0, { 0.0, 1.0, 0.0, 0.0 } },
 };
 
-const std::vector<std::string> AI::m_act = { "Attack", "Run", "Wander", "Hide" };
+const AI::WANDER_ELEMENT AI::m_samplesWander[CNT_MAX_SAMPLES_WANDER] =
+{
+	{ 1.0, 0.0, 0.0, 0.0, { 1.0, 0.0, 0.0, 0.0 } },
+	{ 0.0, 1.0, 0.0, 0.0, { 0.0, 1.0, 0.0, 0.0 } },
+	{ 0.0, 0.0, 1.0, 0.0, { 0.0, 0.0, 1.0, 0.0 } },
+	{ 0.0, 0.0, 0.0, 1.0, { 0.0, 0.0, 0.0, 1.0 } }
+};
+
+
+const std::vector<std::string> AI::m_act		= { "Attack", "Run", "Wander", "Hide" };
+const std::vector<std::string> AI::m_actWander	= { "Top", "Right", "Bottom", "Left" };
 
 AI::AI()
 {
@@ -193,7 +204,7 @@ void AI::Train()
 	srand(time(NULL));
 	AssignRandomWeights();
 	// навчання мережі
-	while (1) 
+	while (true) 
 	{
 		if (++_sample == CNT_MAX_SAMPLES)
 		{
@@ -283,6 +294,96 @@ int AI::FindAct(double i_health, double i_spear, double i_enemy)
 	return _numberAct;
 }
 
+void AI::TrainWander()
+{
+	int _samples	= 0;
+	double _err		= 0.0;
+	int _iterators	= 0;
+
+	AssignRandomWeights();
+	
+	m_vectorInputs.resize(CNT_INPUT_NEURONS_WANDER);
+	while (true)
+	{
+		if (++_samples == CNT_MAX_SAMPLES_WANDER)
+		{
+			_samples = 0;
+		}
+
+		m_vectorInputs[0] = m_samplesWander[_samples].m_positionTop;
+		m_vectorInputs[1] = m_samplesWander[_samples].m_positionRight;
+		m_vectorInputs[2] = m_samplesWander[_samples].m_positionBottom;
+		m_vectorInputs[3] = m_samplesWander[_samples].m_positionLeft;
+
+		m_vectorTarget[0] = m_samplesWander[_samples].m_targetActWander[0];
+		m_vectorTarget[1] = m_samplesWander[_samples].m_targetActWander[1];
+		m_vectorTarget[2] = m_samplesWander[_samples].m_targetActWander[2];
+		m_vectorTarget[3] = m_samplesWander[_samples].m_targetActWander[3];
+
+		FeedForward();
+
+		_err = 0.0;
+		for (int i = 0; i < CNT_OUTPUT_NEURONS; i++)
+		{
+			_err += sqr(m_samplesWander[_samples].m_targetActWander[i] - m_valueFunctionInLayerOutput[i]);
+		}
+		_err *= 0.5;
+
+		if (++_iterators == 100000)
+		{
+			break;
+		}
+
+		BackPropagate();
+	}
+
+	int _quentityMatches = 0;
+	for (int i = 0; i < CNT_MAX_SAMPLES_WANDER; i++)
+	{
+		m_vectorInputs[0] = m_samplesWander[i].m_positionTop;
+		m_vectorInputs[1] = m_samplesWander[i].m_positionRight;
+		m_vectorInputs[2] = m_samplesWander[i].m_positionBottom;
+		m_vectorInputs[3] = m_samplesWander[i].m_positionLeft;
+
+		m_vectorTarget[0] = m_samplesWander[i].m_targetActWander[0];
+		m_vectorTarget[1] = m_samplesWander[i].m_targetActWander[1];
+		m_vectorTarget[2] = m_samplesWander[i].m_targetActWander[2];
+		m_vectorTarget[3] = m_samplesWander[i].m_targetActWander[3];
+
+		FeedForward();
+
+		if (Action(m_vectorInputs) == Action(m_vectorTarget))
+		{
+			++_quentityMatches;
+		}
+	}
+
+	m_vectorInputs[0] = 0.0; m_vectorInputs[1] = 0.0; m_vectorInputs[2] = 1.0; m_vectorInputs[3] = 1.0;
+	FeedForward();
+	_numberAct = Action(m_valueFunctionInLayerOutput);
+
+	m_vectorInputs[0] = 0.0; m_vectorInputs[1] = 1.0; m_vectorInputs[2] = 0.0; m_vectorInputs[3] = 0.0;
+	FeedForward();
+	_numberAct = Action(m_valueFunctionInLayerOutput);
+
+	m_vectorInputs[0] = 0.0; m_vectorInputs[1] = 1.0; m_vectorInputs[2] = 1.0; m_vectorInputs[3] = 0.0;
+	FeedForward();
+	_numberAct = Action(m_valueFunctionInLayerOutput);
+	
+	_numberAct = Action(m_valueFunctionInLayerOutput);
+}
+
+int AI::FindActWander(double i_top, double i_right, double i_bottom, double i_left)
+{
+	int _numberActWander = 0;
+
+	m_vectorInputs[0] = i_top; m_vectorInputs[1] = i_right; m_vectorInputs[2] = i_bottom; m_vectorInputs[3] = i_left;
+	FeedForward();
+	_numberActWander = Action(m_valueFunctionInLayerOutput);
+
+	return _numberActWander;
+}
+
 AI::~AI()
 {
 	CCLOG("Destructor AI");
@@ -302,4 +403,5 @@ AI::~AI()
 		Tasks on 12:11:2016
 		- execute AI in game;
 			+ fill region for each objects;
+			+ need add AI for act---> Wander <---;
 */

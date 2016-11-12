@@ -17,7 +17,10 @@ public:
 	{
 		ATTACK,
 		RUN,
-		WANDER,
+		MOVE_TOP,
+		MOVE_RIGHT,
+		MOVE_BOTTOM,
+		MOVE_LEFT,
 		HIDE,
 		FIND_ACT,
 		NOTHING

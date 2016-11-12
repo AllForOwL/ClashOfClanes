@@ -55,9 +55,30 @@ Knight::Knight(Knight& Knight)
 
 			break;
 		}
-		case StateKnight::WANDER:
+		case StateKnight::MOVE_TOP:
 		{
-			ActWander();
+			MoveUp();
+			m_state = StateKnight::FIND_ACT;
+
+			break;
+		}
+		case StateKnight::MOVE_RIGHT:
+		{
+			MoveRight();
+			m_state = StateKnight::FIND_ACT;
+
+			break;
+		}
+		case StateKnight::MOVE_BOTTOM:
+		{
+			MoveDown();
+			m_state = StateKnight::FIND_ACT;
+
+			break;
+		}
+		case StateKnight::MOVE_LEFT:
+		{
+			MoveLeft();
 			m_state = StateKnight::FIND_ACT;
 
 			break;
@@ -110,7 +131,29 @@ Knight::Knight(Knight& Knight)
 			}
 			else if (_numberAct == 2)
 			{
-				m_state = StateKnight::WANDER;
+				double _statusTop		= i_manager.m_mapLayer->StatusCells(Point(this->getPositionX(),		this->getPositionY() + 1));
+				double _statusRight		= i_manager.m_mapLayer->StatusCells(Point(this->getPositionX() + 1, this->getPositionY()));
+				double _statusBottom	= i_manager.m_mapLayer->StatusCells(Point(this->getPositionX(),		this->getPositionY() - 1));
+				double _statusLeft		= i_manager.m_mapLayer->StatusCells(Point(this->getPositionX() - 1, this->getPositionY()));
+
+				int _numberActWander = i_manager.m_AI->FindActWander(_statusTop, _statusRight, _statusBottom, _statusLeft);
+			
+				if (_numberActWander == 0)
+				{
+					m_state = StateKnight::MOVE_TOP;
+				}
+				else if (_numberActWander == 1)
+				{
+					m_state = StateKnight::MOVE_RIGHT;
+				}
+				else if (_numberActWander == 2)
+				{
+					m_state = StateKnight::MOVE_BOTTOM;
+				}
+				else
+				{
+					m_state = StateKnight::MOVE_LEFT;
+				}
 			}
 			else
 			{

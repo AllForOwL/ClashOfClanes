@@ -3,8 +3,9 @@
 
 #include "cocos2d.h"
 
-const int CNT_OUTPUT_NEURONS = 4;
-const int CNT_MAX_SAMPLES = 16;
+const int CNT_OUTPUT_NEURONS		= 4;
+const int CNT_MAX_SAMPLES			= 16;
+const int CNT_MAX_SAMPLES_WANDER	= 4;
 
 USING_NS_CC;
 
@@ -20,6 +21,9 @@ public:
 	int  Action(std::vector<double> i_vector);
 	void Train();
 	int	 FindAct(double i_health, double i_spear, double i_enemy);
+
+	void TrainWander();
+	int	 FindActWander(double i_top, double i_right, double i_bottom, double i_left);
 
 	double Sigmoid(double i_value);
 	double SigmoidDerivative(double i_value);
@@ -39,7 +43,8 @@ private:
 	std::vector<double>	m_valueErrorLayerHidden;
 	std::vector<double>	m_valueErrorLayerOutput;
 
-	static const std::vector<std::string> m_act;
+	static const std::vector<std::string>	m_act;
+	static const std::vector<std::string>	m_actWander;
 
 	typedef struct 
 	{
@@ -49,9 +54,22 @@ private:
 		double m_targetAct[CNT_OUTPUT_NEURONS];
 	} ELEMENT;
 
-	/* H S E A R W H */
-	static const ELEMENT m_samples[CNT_MAX_SAMPLES];
 
+						/*	1 - free, 0 - busy	*/
+	typedef struct
+	{
+		double m_positionTop;
+		double m_positionRight;
+		double m_positionBottom;
+		double m_positionLeft;
+		double m_targetActWander[CNT_OUTPUT_NEURONS];
+	} WANDER_ELEMENT;
+
+	/* H S E A R W H */
+	static const ELEMENT		m_samples[CNT_MAX_SAMPLES];
+	
+	/* T R B L T(ou) R(ou) B(ou) L(ou) */
+	static const WANDER_ELEMENT m_samplesWander[CNT_MAX_SAMPLES_WANDER];
 };
 
 #endif
