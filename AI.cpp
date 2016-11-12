@@ -301,5 +301,5 @@ AI::~AI()
 		
 		Tasks on 12:11:2016
 		- execute AI in game;
-			- fill region for each objects;
+			+ fill region for each objects;
 */

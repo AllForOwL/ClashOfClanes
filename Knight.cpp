@@ -44,24 +44,28 @@ Knight::Knight(Knight& Knight)
 		case StateKnight::ATTACK:
 		{
 			ActAttack();			
+			m_state = StateKnight::FIND_ACT;
 
 			break;
 		}
 		case StateKnight::RUN:
 		{
 			ActRun();
+			m_state = StateKnight::FIND_ACT;
 
 			break;
 		}
 		case StateKnight::WANDER:
 		{
 			ActWander();
+			m_state = StateKnight::FIND_ACT;
 
 			break;
 		}
 		case StateKnight::HIDE:
 		{
 			ActHide();
+			m_state = StateKnight::FIND_ACT;
 
 			break;
 		}
@@ -69,6 +73,12 @@ Knight::Knight(Knight& Knight)
 		{
 			int _quentityEnemy = i_manager.m_mapLayer->GetQuentityEnemy(this->getPosition());
 			
+			if (_quentityEnemy)
+			{
+				int b;
+				b = 10;
+			}
+
 			double _spear = 0.0;
 			if (m_spear)
 			{
@@ -121,24 +131,24 @@ Knight::Knight(Knight& Knight)
 
 void Knight::ActAttack()
 {
-	
+	MoveUp();
 }
 
 void Knight::ActRun()
 {
 	// here need add verify direction
-	MoveRight();
+	MoveLeft();
 }
 
 void Knight::ActWander()
 {
 	// here need add verify direction
-	MoveLeft();
+	MoveRight();
 }
 
 void Knight::ActHide()
 {
-
+	MoveDown();
 }
 
 Knight::~Knight()

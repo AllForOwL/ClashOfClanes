@@ -30,11 +30,11 @@ public:
 
 	virtual void MoveRight()
 	{
-		this->setPositionX(this->getPositionX() - m_speed);
+		this->setPositionX(this->getPositionX() + m_speed);
 	}
 	virtual void MoveLeft()
 	{
-		this->setPositionX(this->getPositionX() + m_speed);
+		this->setPositionX(this->getPositionX() - m_speed);
 	}
 	virtual void MoveUp()
 	{

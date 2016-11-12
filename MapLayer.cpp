@@ -103,9 +103,15 @@ void MapLayer::FillRegionFromObject(int i_typeObject, Point i_point, Size i_size
 {
 	Point _positionBegin = Point(i_point.x - (i_size.width / 2), i_point.y + (i_size.height / 2));
 	Point _positionEnd	 = Point(i_point.x + (i_size.width / 2), i_point.y - (i_size.height / 2));
+	Point _thisPosition = this->getPosition();
+	_thisPosition.x *= (-1);
+	_thisPosition.y *= (-1);
+
+	_positionBegin	+= _thisPosition;
+	_positionEnd	+= _thisPosition;
 	for (int i = _positionBegin.x; i < _positionEnd.x; i++)
 	{
-		for (int j = _positionBegin.y; j < _positionEnd.y; j++)
+		for (int j = _positionBegin.y; j > _positionEnd.y; j--)
 		{
 			this->m_mapCoordinate[i][j] = i_typeObject;
 		}
@@ -136,9 +142,7 @@ int MapLayer::GetQuentityEnemy(Point i_position)
 			}
 		}
 	}
-
 	return _quentityEnemy;
-
 }
 
 MapLayer::~MapLayer()
