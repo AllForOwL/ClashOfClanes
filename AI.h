@@ -5,7 +5,7 @@
 
 const int CNT_OUTPUT_NEURONS		= 4;
 const int CNT_MAX_SAMPLES			= 16;
-const int CNT_MAX_SAMPLES_WANDER	= 4;
+const int CNT_MAX_SAMPLES_WANDER	= 9;
 
 USING_NS_CC;
 

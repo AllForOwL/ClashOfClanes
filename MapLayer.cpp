@@ -130,7 +130,7 @@ double MapLayer::StatusCells(Point i_position)
 	_thisPosition.y *= (-1);
 	i_position += _thisPosition;
 	
-	if (m_mapCoordinate[i_position.x][i_position.y] == CNT_POSITION_FREE)
+	if (m_mapCoordinate[i_position.x][i_position.y] == CNT_POSITION_FREE || m_mapCoordinate[i_position.x][i_position.y] == CNT_OBJECT_KNIGHT_BLACK)
 	{
 		return 1.0;
 	}

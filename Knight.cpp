@@ -61,6 +61,13 @@ void Knight::SetStatusPositionForCurrentDirection(ManagerComponent& i_manager)
 		m_position.right	= Point(this->getPositionX(),		this->getPositionY() - 1);
 		m_position.left		= Point(this->getPositionX(),		this->getPositionY() + 1);
 	}
+	else if (m_direction[INDEX_DIRECTION_SOUTH])
+	{
+		m_position.forward	= Point(this->getPositionX(),		this->getPositionY() - 1);
+		m_position.back		= Point(this->getPositionX(),		this->getPositionY() + 1);
+		m_position.right	= Point(this->getPositionX() - 1,	this->getPositionY());
+		m_position.left		= Point(this->getPositionX() + 1,	this->getPositionY());
+	}
 	else if (m_direction[INDEX_DIRECTION_WEST])
 	{
 		m_position.forward	= Point(this->getPositionX() - 1,	this->getPositionY());
@@ -75,13 +82,6 @@ void Knight::SetStatusPositionForCurrentDirection(ManagerComponent& i_manager)
 		m_position.right	= Point(this->getPositionX() + 1,	this->getPositionY());
 		m_position.left		= Point(this->getPositionX() - 1,	this->getPositionY());
 	}
-	else
-	{
-		m_position.forward	= Point(this->getPositionX(),		this->getPositionY() - 1);
-		m_position.back		= Point(this->getPositionX(),		this->getPositionY() + 1);
-		m_position.right	= Point(this->getPositionX() - 1,	this->getPositionY());
-		m_position.left		= Point(this->getPositionX() + 1,	this->getPositionY());
-	}
 
 	m_statusPosition.forward	= i_manager.m_mapLayer->StatusCells(m_position.forward);
 	m_statusPosition.back		= i_manager.m_mapLayer->StatusCells(m_position.back);
@@ -95,57 +95,55 @@ void Knight::UpdateDirection(ManagerComponent& i_manager)
 	m_actWander.current = i_manager.m_AI->FindActWander(m_statusPosition.forward, m_statusPosition.back,
 		m_statusPosition.right, m_statusPosition.left);
 	
-	if (m_actWander.current != m_actWander.previous && m_actWander.previous >= 0 || m_state == StateKnight::FIND_ACT)
-	{
-		if (m_actWander.current == CNT_DIRECTION_RIGHT)
-		{
-			if (m_indexDirection != INDEX_DIRECTION_NORTH)
-			{
-				m_direction[m_indexDirection] = false;
-				m_direction[++m_indexDirection] = true;
-			}
-			else
-			{
-				m_direction[m_indexDirection] = false;
-				m_indexDirection = INDEX_DIRECTION_EAST;
-				m_direction[m_indexDirection] = true;
-			}
-			m_state = StateKnight::MOVE_RIGHT;
-		}
-		else if (m_actWander.current == CNT_DIRECTION_LEFT)
-		{
-			if (m_indexDirection != INDEX_DIRECTION_EAST)
-			{
-				m_direction[m_indexDirection] = false;
-				m_direction[--m_indexDirection] = true;
-			}
-			else
-			{
-				m_direction[m_indexDirection] = false;
-				m_indexDirection = INDEX_DIRECTION_NORTH;
-				m_direction[m_indexDirection] = true;
-			}
-			m_state = StateKnight::MOVE_LEFT;
-		}
-		else if (m_actWander.current == CNT_DIRECTION_BACK)
-		{
-			m_direction[m_indexDirection] = false;
-			if (m_indexDirection >= 2)
-			{
-				m_indexDirection -= 2;
-			}
-			else
-			{
-				m_indexDirection += 2;
-			}
-			m_direction[m_indexDirection] = true;
 
-			m_state = StateKnight::MOVE_BACK;
+	if (m_actWander.current == CNT_DIRECTION_RIGHT)
+	{
+		if (m_indexDirection != INDEX_DIRECTION_NORTH)
+		{
+			m_direction[m_indexDirection]	= false;
+			m_direction[++m_indexDirection] = true;
 		}
 		else
 		{
-			m_state = StateKnight::MOVE_FORWARD;
+			m_direction[m_indexDirection]	= false;
+			m_indexDirection				= INDEX_DIRECTION_EAST;
+			m_direction[m_indexDirection]	= true;
 		}
+		m_state = StateKnight::MOVE_RIGHT;
+	}
+	else if (m_actWander.current == CNT_DIRECTION_LEFT)
+	{
+		if (m_indexDirection != INDEX_DIRECTION_EAST)
+		{
+			m_direction[m_indexDirection]	= false;
+			m_direction[--m_indexDirection] = true;
+		}
+		else
+		{
+			m_direction[m_indexDirection]	= false;
+			m_indexDirection				= INDEX_DIRECTION_NORTH;
+			m_direction[m_indexDirection]	= true;
+		}
+		m_state = StateKnight::MOVE_LEFT;
+	}
+	else if (m_actWander.current == CNT_DIRECTION_BACK)
+	{
+		m_direction[m_indexDirection] = false;
+		if (m_indexDirection >= 2)
+		{
+			m_indexDirection -= 2;
+		}
+		else
+		{
+			m_indexDirection += 2;
+		}
+		m_direction[m_indexDirection] = true;
+
+		m_state = StateKnight::MOVE_BACK;
+	}
+	else
+	{
+		m_state = StateKnight::MOVE_FORWARD;
 	}
 }
 
