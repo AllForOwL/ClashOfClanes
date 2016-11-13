@@ -68,7 +68,7 @@ private:
 	/* H S E A R W H */
 	static const ELEMENT		m_samples[CNT_MAX_SAMPLES];
 	
-	/* T R B L T(ou) R(ou) B(ou) L(ou) */
+	/* F B R L F(ou) B(ou) R(ou) L(ou) */
 	static const WANDER_ELEMENT m_samplesWander[CNT_MAX_SAMPLES_WANDER];
 };
 

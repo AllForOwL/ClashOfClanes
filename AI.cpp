@@ -40,7 +40,7 @@ const AI::WANDER_ELEMENT AI::m_samplesWander[CNT_MAX_SAMPLES_WANDER] =
 
 
 const std::vector<std::string> AI::m_act		= { "Attack", "Run", "Wander", "Hide" };
-const std::vector<std::string> AI::m_actWander	= { "Top", "Right", "Bottom", "Left" };
+const std::vector<std::string> AI::m_actWander	= { "Forward", "Back", "Right", "Left" };
 
 AI::AI()
 {

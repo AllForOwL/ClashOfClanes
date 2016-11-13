@@ -5,6 +5,16 @@
 #include "ManagerComponent.h"
 #include "AI.h"
 
+const int CNT_DIRECTION_FORWARD = 0;
+const int CNT_DIRECTION_BACK	= 1;
+const int CNT_DIRECTION_RIGHT	= 2;
+const int CNT_DIRECTION_LEFT	= 3;
+
+const int INDEX_DIRECTION_EAST	= 0;
+const int INDEX_DIRECTION_SOUTH	= 1;
+const int INDEX_DIRECTION_WEST	= 2;
+const int INDEX_DIRECTION_NORTH	= 3;
+
 Knight::Knight()
 {
 
@@ -30,6 +40,11 @@ Knight::Knight(std::string i_knight, MapLayer& i_parentMapLayer) : Warrior(i_par
 
 	m_spear		= true;
 	m_state		= StateKnight::FIND_ACT;
+	
+	m_direction.resize(4);	// 4 - quentity directions
+	std::fill(m_direction.begin(), m_direction.end(), false);
+	m_indexDirection				= INDEX_DIRECTION_EAST;
+	m_direction[m_indexDirection]	= true;
 }
 
 Knight::Knight(Knight& Knight)
@@ -37,128 +52,135 @@ Knight::Knight(Knight& Knight)
 	
 }
 
+void Knight::SetStatusPositionForCurrentDirection(ManagerComponent& i_manager)
+{
+	if (m_direction[INDEX_DIRECTION_EAST])
+	{
+		m_position.forward	= Point(this->getPositionX() + 1,	this->getPositionY());
+		m_position.back		= Point(this->getPositionX() - 1,	this->getPositionY());
+		m_position.right	= Point(this->getPositionX(),		this->getPositionY() - 1);
+		m_position.left		= Point(this->getPositionX(),		this->getPositionY() + 1);
+	}
+	else if (m_direction[INDEX_DIRECTION_WEST])
+	{
+		m_position.forward	= Point(this->getPositionX() - 1,	this->getPositionY());
+		m_position.back		= Point(this->getPositionX() + 1,	this->getPositionY());
+		m_position.right	= Point(this->getPositionX(),		this->getPositionY() + 1);
+		m_position.left		= Point(this->getPositionX(),		this->getPositionY() - 1);
+	}
+	else if (m_direction[INDEX_DIRECTION_NORTH])
+	{
+		m_position.forward	= Point(this->getPositionX(),		this->getPositionY() + 1);
+		m_position.back		= Point(this->getPositionX(),		this->getPositionY() - 1);
+		m_position.right	= Point(this->getPositionX() + 1,	this->getPositionY());
+		m_position.left		= Point(this->getPositionX() - 1,	this->getPositionY());
+	}
+	else
+	{
+		m_position.forward	= Point(this->getPositionX(),		this->getPositionY() - 1);
+		m_position.back		= Point(this->getPositionX(),		this->getPositionY() + 1);
+		m_position.right	= Point(this->getPositionX() - 1,	this->getPositionY());
+		m_position.left		= Point(this->getPositionX() + 1,	this->getPositionY());
+	}
+
+	m_statusPosition.forward	= i_manager.m_mapLayer->StatusCells(m_position.forward);
+	m_statusPosition.back		= i_manager.m_mapLayer->StatusCells(m_position.back);
+	m_statusPosition.right		= i_manager.m_mapLayer->StatusCells(m_position.right);
+	m_statusPosition.left		= i_manager.m_mapLayer->StatusCells(m_position.left);
+}
+
+void Knight::UpdateDirection(ManagerComponent& i_manager)
+{
+	m_actWander.previous = m_actWander.current;
+	m_actWander.current = i_manager.m_AI->FindActWander(m_statusPosition.forward, m_statusPosition.back,
+		m_statusPosition.right, m_statusPosition.left);
+	
+	if (m_actWander.current != m_actWander.previous && m_actWander.previous >= 0 || m_state == StateKnight::FIND_ACT)
+	{
+		if (m_actWander.current == CNT_DIRECTION_RIGHT)
+		{
+			if (m_indexDirection != INDEX_DIRECTION_NORTH)
+			{
+				m_direction[m_indexDirection] = false;
+				m_direction[++m_indexDirection] = true;
+			}
+			else
+			{
+				m_direction[m_indexDirection] = false;
+				m_indexDirection = INDEX_DIRECTION_EAST;
+				m_direction[m_indexDirection] = true;
+			}
+			m_state = StateKnight::MOVE_RIGHT;
+		}
+		else if (m_actWander.current == CNT_DIRECTION_LEFT)
+		{
+			if (m_indexDirection != INDEX_DIRECTION_EAST)
+			{
+				m_direction[m_indexDirection] = false;
+				m_direction[--m_indexDirection] = true;
+			}
+			else
+			{
+				m_direction[m_indexDirection] = false;
+				m_indexDirection = INDEX_DIRECTION_NORTH;
+				m_direction[m_indexDirection] = true;
+			}
+			m_state = StateKnight::MOVE_LEFT;
+		}
+		else if (m_actWander.current == CNT_DIRECTION_BACK)
+		{
+			m_direction[m_indexDirection] = false;
+			if (m_indexDirection >= 2)
+			{
+				m_indexDirection -= 2;
+			}
+			else
+			{
+				m_indexDirection += 2;
+			}
+			m_direction[m_indexDirection] = true;
+
+			m_state = StateKnight::MOVE_BACK;
+		}
+		else
+		{
+			m_state = StateKnight::MOVE_FORWARD;
+		}
+	}
+}
+
 /*virtual*/ void Knight::Update(ManagerComponent& i_manager)
 {
 	switch (m_state)
 	{
-		case StateKnight::ATTACK:
+		case StateKnight::MOVE_FORWARD:
 		{
-			ActAttack();			
+			MoveForward();
 			m_state = StateKnight::FIND_ACT;
-
 			break;
 		}
-		case StateKnight::RUN:
+		case StateKnight::MOVE_BACK:
 		{
-			ActRun();
+			MoveBack();
 			m_state = StateKnight::FIND_ACT;
-
-			break;
-		}
-		case StateKnight::MOVE_TOP:
-		{
-			MoveUp();
-			m_state = StateKnight::FIND_ACT;
-
 			break;
 		}
 		case StateKnight::MOVE_RIGHT:
 		{
 			MoveRight();
 			m_state = StateKnight::FIND_ACT;
-
-			break;
-		}
-		case StateKnight::MOVE_BOTTOM:
-		{
-			MoveDown();
-			m_state = StateKnight::FIND_ACT;
-
 			break;
 		}
 		case StateKnight::MOVE_LEFT:
 		{
 			MoveLeft();
 			m_state = StateKnight::FIND_ACT;
-
-			break;
-		}
-		case StateKnight::HIDE:
-		{
-			ActHide();
-			m_state = StateKnight::FIND_ACT;
-
 			break;
 		}
 		case StateKnight::FIND_ACT:
 		{
-			int _quentityEnemy = i_manager.m_mapLayer->GetQuentityEnemy(this->getPosition());
-			
-			if (_quentityEnemy)
-			{
-				int b;
-				b = 10;
-			}
-
-			double _spear = 0.0;
-			if (m_spear)
-			{
-				_spear = 1.0;
-			}
-
-			double _health = 0.0;
-			if (m_health >= 75)
-			{
-				_health = 2.0;
-			}
-			else if (m_health >= 35)
-			{
-				_health = 1.0;
-			}
-			else
-			{
-				_health = 0.0;
-			}
-
-			int _numberAct =  i_manager.m_AI->FindAct(_health, _spear, _quentityEnemy);
-			if (_numberAct == 0)
-			{
-				m_state = StateKnight::ATTACK;
-			}
-			else if (_numberAct == 1)
-			{
-				m_state = StateKnight::RUN;
-			}
-			else if (_numberAct == 2)
-			{
-				double _statusTop		= i_manager.m_mapLayer->StatusCells(Point(this->getPositionX(),		this->getPositionY() + 1));
-				double _statusRight		= i_manager.m_mapLayer->StatusCells(Point(this->getPositionX() + 1, this->getPositionY()));
-				double _statusBottom	= i_manager.m_mapLayer->StatusCells(Point(this->getPositionX(),		this->getPositionY() - 1));
-				double _statusLeft		= i_manager.m_mapLayer->StatusCells(Point(this->getPositionX() - 1, this->getPositionY()));
-
-				int _numberActWander = i_manager.m_AI->FindActWander(_statusTop, _statusRight, _statusBottom, _statusLeft);
-			
-				if (_numberActWander == 0)
-				{
-					m_state = StateKnight::MOVE_TOP;
-				}
-				else if (_numberActWander == 1)
-				{
-					m_state = StateKnight::MOVE_RIGHT;
-				}
-				else if (_numberActWander == 2)
-				{
-					m_state = StateKnight::MOVE_BOTTOM;
-				}
-				else
-				{
-					m_state = StateKnight::MOVE_LEFT;
-				}
-			}
-			else
-			{
-				m_state = StateKnight::HIDE;
-			}
+			SetStatusPositionForCurrentDirection(i_manager);
+			UpdateDirection(i_manager);
 
 			break;
 		}
@@ -172,26 +194,24 @@ Knight::Knight(Knight& Knight)
 	}
 }
 
-void Knight::ActAttack()
+void Knight::MoveForward()
 {
-	MoveUp();
+	this->setPosition(m_position.forward);
 }
 
-void Knight::ActRun()
+void Knight::MoveBack()
 {
-	// here need add verify direction
-	MoveLeft();
+	this->setPosition(m_position.back);
 }
 
-void Knight::ActWander()
+void Knight::MoveRight()
 {
-	// here need add verify direction
-	MoveRight();
+	this->setPosition(m_position.right);
 }
 
-void Knight::ActHide()
+void Knight::MoveLeft()
 {
-	MoveDown();
+	this->setPosition(m_position.left);
 }
 
 Knight::~Knight()
