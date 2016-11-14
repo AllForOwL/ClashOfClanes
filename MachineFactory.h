@@ -16,7 +16,6 @@ public:
 	enum StateFactoryMachine
 	{
 		START_TANK,
-		START_CAR,
 		WORKING,
 		LISTEN,
 		NOTHING

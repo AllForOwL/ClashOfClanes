@@ -1,13 +1,10 @@
 #include "EnemyMachineFactory.h"
 #include "ManagerComponent.h"
-#include "ManagerFactory.h"
-#include "HeroGraphicComponent.h"
-#include "GameScene.h"
 #include "GraphicComponent.h"
 #include "ManagerMachine.h"
-#include "HeroInputComponent.h"
-#include "HUDLayer.h"
 #include "MapLayer.h"
+#include "HeroGraphicComponent.h"
+#include "HeroInputComponent.h"
 
 const int CNT_TIME_FOR_COMPLETE_OCTOPEDE	= 5;
 const int CNT_TIME_FOR_COMPLETE_BRAIN		= 5;

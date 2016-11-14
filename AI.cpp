@@ -1,5 +1,4 @@
 #include "AI.h"
-#include "constants.h"
 
 const int CNT_INPUT_NEURONS		= 3;
 const int CNT_HIDDEN_NEURONS	= 3;

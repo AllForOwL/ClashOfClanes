@@ -12,7 +12,6 @@ class MapLayer;
 class HeroMachine : public Machine
 {
 public:
-
 	HeroMachine();
 	HeroMachine(std::string i_typeHeroMachine, MapLayer& i_parentMapLayer);
 	HeroMachine(HeroMachine& i_heroMachine);
@@ -22,6 +21,7 @@ public:
 	virtual void Update(ManagerComponent& i_manager);
 
 private:
+
 
 };
 

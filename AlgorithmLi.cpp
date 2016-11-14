@@ -24,7 +24,7 @@ bool AlgorithmLi::WayFound()
 
 std::vector<Point>& AlgorithmLi::GetFoundWay()
 {
-	return m_vecFoundWay;
+	return m_vecFoundWay;	
 }
 
 void AlgorithmLi::SearchWay(Point i_pointBegin, Point i_pointEnd, std::vector<std::vector<int>>& i_field)

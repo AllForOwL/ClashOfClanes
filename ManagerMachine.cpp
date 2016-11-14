@@ -3,6 +3,7 @@
 #include "ManagerComponent.h"
 #include "MapLayer.h"
 #include "EnemyMachine.h"
+#include "HeroMachine.h"
 
 ManagerMachine::ManagerMachine()
 {
@@ -20,21 +21,17 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 	{
 		case ManagerMachine::ADD_TANK:
 		{
-			
-			m_stateManagerMachine = StateManagerMachine::NOTHING;
+			Machine* _newMachine = new HeroMachine(CNT_TYPE_TANK, *i_manager.m_mapLayer);
+			_newMachine->setPosition(m_pointBuildMachine);
+			m_vecMachineTank.push_back(_newMachine);
 
-			break;
-		}
-		case ManagerMachine::ADD_CAR:
-		{
-					
 			m_stateManagerMachine = StateManagerMachine::NOTHING;
 
 			break;
 		}
 		case ManagerMachine::ADD_ENEMY_OCTOPEDE:
 		{
-			EnemyMachine* _newOctopede = new EnemyMachine(CNT_TYPE_OCTOPEDE, *i_manager.m_mapLayer);
+			Machine* _newOctopede = new EnemyMachine(CNT_TYPE_OCTOPEDE, *i_manager.m_mapLayer);
 			_newOctopede->setPosition(m_pointBuildMachine);
 			m_vecEnemyMachine.push_back(_newOctopede);
 
@@ -44,7 +41,7 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerMachine::ADD_ENEMY_BRAIN:
 		{
-			EnemyMachine* _newOctopede = new EnemyMachine(CNT_TYPE_BRAIN, *i_manager.m_mapLayer);
+			Machine* _newOctopede = new EnemyMachine(CNT_TYPE_BRAIN, *i_manager.m_mapLayer);
 			_newOctopede->setPosition(m_pointBuildMachine);
 			m_vecEnemyMachine.push_back(_newOctopede);
 
@@ -54,7 +51,7 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerMachine::ADD_ENEMY_TURTLE:
 		{
-			EnemyMachine* _newOctopede = new EnemyMachine(CNT_TYPE_TURTLE, *i_manager.m_mapLayer);
+			Machine* _newOctopede = new EnemyMachine(CNT_TYPE_TURTLE, *i_manager.m_mapLayer);
 			_newOctopede->setPosition(m_pointBuildMachine);
 			m_vecEnemyMachine.push_back(_newOctopede);
 
@@ -64,14 +61,6 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerMachine::NOTHING:
 		{
-			if (m_vecMachineCar.size())
-			{
-				for (int i = 0; i < m_vecMachineCar.size(); i++)
-				{
-					m_vecMachineCar[i]->Update(i_manager);
-				}
-			}
-			
 			if (m_vecMachineTank.size())
 			{
 				for (int i = 0; i < m_vecMachineTank.size(); i++)

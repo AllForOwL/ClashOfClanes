@@ -6,7 +6,7 @@
 USING_NS_CC;
 
 class GameScene;
-class Warrior;
+class Machine;
 class ManagerComponent;
 
 class ManagerMachine
@@ -16,7 +16,6 @@ public:
 	enum StateManagerMachine
 	{
 		ADD_TANK,
-		ADD_CAR,
 		ADD_ENEMY_OCTOPEDE,
 		ADD_ENEMY_BRAIN,
 		ADD_ENEMY_TURTLE,
@@ -34,9 +33,8 @@ public:
 	void SetPositionForMachine(Point i_pointBuildMachine);
 
 private:
-	std::vector<Warrior*>			m_vecMachineTank;
-	std::vector<Warrior*>			m_vecMachineCar;
-	std::vector<Warrior*>	m_vecEnemyMachine;
+	std::vector<Machine*>	m_vecMachineTank;
+	std::vector<Machine*>	m_vecEnemyMachine;
 	StateManagerMachine		m_stateManagerMachine;
 
 	Point	m_pointBuildMachine;

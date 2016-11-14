@@ -5,7 +5,6 @@
 #include "ManagerComponent.h"
 #include "HUDLayer.h"
 #include "HeroInputComponent.h"
-#include "AI.h"
 
 const float CNT_TIME_UPDATE_SCENE = 0.01;
 

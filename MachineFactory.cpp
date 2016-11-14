@@ -52,17 +52,6 @@ void MachineFactory::LoadNameForSprites()
 			}
 			break;
 		}
-		case StateFactoryMachine::START_CAR:
-		{
-			if (i_manager.m_hero->CheckProductionCar())
-			{
-				m_timeForComplete	= CNT_TIME_FOR_COMPLETE_CAR;
-				m_startSecond				= GraphicComponent::GetTime();
-				m_stateMachine				= StateFactoryMachine::WORKING;
-				m_stateManagerMachine		= ManagerMachine::StateManagerMachine::ADD_CAR;
-			}												
-			break;
-		}
 		case StateFactoryMachine::WORKING:
 		{
 			if (isComplete())

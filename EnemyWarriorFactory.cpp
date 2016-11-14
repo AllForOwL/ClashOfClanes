@@ -1,12 +1,9 @@
 #include "EnemyWarriorFactory.h"
 #include "ManagerComponent.h"
-#include "HeroGraphicComponent.h"
-#include "GameScene.h"
 #include "GraphicComponent.h"
 #include "ManagerArmy.h"
-#include "HeroInputComponent.h"
-#include "HUDLayer.h"
 #include "MapLayer.h"
+#include "HeroInputComponent.h"
 
 const int CNT_TIME_FOR_COMPLETE_BOWMAN			= 5;
 const int CNT_TIME_FOR_COMPLETE_ENEMY_KNIGHT	= 5;

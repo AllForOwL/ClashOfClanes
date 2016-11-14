@@ -11,27 +11,28 @@ EnemyMachine::EnemyMachine()
 
 }
 
-EnemyMachine::EnemyMachine(std::string i_EnemyMachine, MapLayer& i_parentMapLayer) : Warrior(i_parentMapLayer)
+EnemyMachine::EnemyMachine(std::string i_EnemyMachine, MapLayer& i_parentMapLayer) : Machine(i_parentMapLayer)
 {			
 	if (i_EnemyMachine == CNT_TYPE_OCTOPEDE)
 	{
 		this->initWithFile(CNT_PATH_TO_RESOURCES + "Enemy/Machine/Octopede.png");
-		m_speed = CNT_SPEED_OCTOPEDE;
+		m_speed			= CNT_SPEED_OCTOPEDE;
+		m_typeObject	= CNT_OBJECT_ENEMY_OCTOPEDE;	
 	}
 	else if (i_EnemyMachine == CNT_TYPE_BRAIN)
 	{
 		this->initWithFile(CNT_PATH_TO_RESOURCES + "Enemy/Machine/Brain.png");
-		m_speed = CNT_SPEED_BRAIN;
+		m_speed			= CNT_SPEED_BRAIN;
+		m_typeObject	= CNT_OBJECT_ENEMY_BRAIN;
 	}
 	else if (i_EnemyMachine == CNT_TYPE_TURTLE)
 	{
 		this->initWithFile(CNT_PATH_TO_RESOURCES + "Enemy/Machine/Turtle.png");
+		m_typeObject	= CNT_OBJECT_ENEMY_TURTLE;
 	}
 
 	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 13,
 		GameScene::m_visibleSize.height / this->getContentSize().height / 13);
-
-	m_state	= StateEnemyMachine::NOTHING;
 }
 
 EnemyMachine::EnemyMachine(EnemyMachine& EnemyMachine)
@@ -43,75 +44,42 @@ EnemyMachine::EnemyMachine(EnemyMachine& EnemyMachine)
 {
 	switch (m_state)
 	{
-		case StateEnemyMachine::ATTACK:
+		case StateCombatant::MOVE_FORWARD:
 		{
-			ActAttack();			
+			MoveForward();
+			m_state	= StateCombatant::FIND_ACT;
 
 			break;
 		}
-		case StateEnemyMachine::RUN:
+		case StateCombatant::MOVE_BACK:
 		{
-			ActRun();
+			MoveBack();
+			m_state = StateCombatant::FIND_ACT;
 
 			break;
 		}
-		case StateEnemyMachine::WANDER:
+		case StateCombatant::MOVE_RIGHT:
 		{
-			ActWander();
+			MoveRight();
+			m_state = StateCombatant::FIND_ACT;
 
 			break;
 		}
-		case StateEnemyMachine::HIDE:
+		case StateCombatant::MOVE_LEFT:
 		{
-			ActHide();
+			MoveLeft();
+			m_state = StateCombatant::FIND_ACT;
 
 			break;
 		}
-		case StateEnemyMachine::FIND_ACT:
+		case StateCombatant::FIND_ACT:
 		{
-			int _quentityEnemy = i_manager.m_mapLayer->GetQuentityEnemy(this->getPosition());
-			
-			double _spear = 0.0;
-			/*if (m_spear)
-			{
-				_spear = 1.0;
-			}*/
-
-			double _health = 0.0;
-			if (m_health >= 75)
-			{
-				_health = 2.0;
-			}
-			else if (m_health >= 35)
-			{
-				_health = 1.0;
-			}
-			else
-			{
-				_health = 0.0;
-			}
-
-			int _numberAct =  i_manager.m_AI->FindAct(_health, _spear, _quentityEnemy);
-			if (_numberAct == 0)
-			{
-				m_state = StateEnemyMachine::ATTACK;
-			}
-			else if (_numberAct == 1)
-			{
-				m_state = StateEnemyMachine::RUN;
-			}
-			else if (_numberAct == 2)
-			{
-				m_state = StateEnemyMachine::WANDER;
-			}
-			else
-			{
-				m_state = StateEnemyMachine::HIDE;
-			}
+			SetStatusPositionForCurrentDirection(i_manager);
+			UpdateDirection(i_manager);
 
 			break;
 		}
-		case StateEnemyMachine::NOTHING:
+		case StateCombatant::NOTHING:
 		{
 
 			break;
@@ -119,28 +87,6 @@ EnemyMachine::EnemyMachine(EnemyMachine& EnemyMachine)
 	default:
 		break;
 	}
-}
-
-void EnemyMachine::ActAttack()
-{
-	
-}
-
-void EnemyMachine::ActRun()
-{
-	// here need add verify direction
-	MoveRight();
-}
-
-void EnemyMachine::ActWander()
-{
-	// here need add verify direction
-	MoveLeft();
-}
-
-void EnemyMachine::ActHide()
-{
-
 }
 
 EnemyMachine::~EnemyMachine()

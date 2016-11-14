@@ -2,10 +2,10 @@
 #define __COMBATANT_H__
 
 #include "cocos2d.h"
+#include "constants.h"
 
 #include "MapLayer.h"
 #include "GraphicComponent.h"
-#include "constants.h"
 #include "ManagerComponent.h"
 #include "AI.h"
 
@@ -16,7 +16,6 @@ const int CNT_DEFAULT_SPEED			=  1;
 const int CNT_QUENTITY_DIRECTION	= 4;
 const double CNT_DEFAULT_DAMAGE		= 20.0;
 const double CNT_DEFAULT_ARMOR		= 100.0;
-
 
 class Combatant : public GraphicComponent
 {
