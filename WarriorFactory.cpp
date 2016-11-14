@@ -2,10 +2,8 @@
 #include "ManagerComponent.h"
 #include "HeroGraphicComponent.h"
 #include "GameScene.h"
-#include "GraphicComponent.h"
 #include "ManagerArmy.h"
 #include "HeroInputComponent.h"
-#include "HUDLayer.h"
 #include "MapLayer.h"
 
 const int CNT_TIME_FOR_COMPLETE_KNIGHT_BLACK	= 10;

@@ -12,32 +12,14 @@ class MapLayer;
 class EnemyWarrior : public Warrior
 {
 public:
-
-	enum StateEnemyWarrior
-	{
-		ATTACK,
-		RUN,
-		WANDER,
-		HIDE,
-		FIND_ACT,
-		NOTHING
-	};
-
 	EnemyWarrior();
 	EnemyWarrior(std::string i_typeEnemyWarrior, MapLayer& i_parentMapLayer);
 	EnemyWarrior(EnemyWarrior& heroGraphiComponent);
 
 	~EnemyWarrior();
 
-	void ActAttack();
-	void ActRun();
-	void ActWander();
-	void ActHide();
-
 	virtual void Update(ManagerComponent& i_manager);
-
 private:
-	StateEnemyWarrior	m_state;
 };
 
 #endif

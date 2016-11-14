@@ -1,12 +1,10 @@
 #include "MachineFactory.h"
 #include "ManagerComponent.h"
-#include "ManagerFactory.h"
 #include "HeroGraphicComponent.h"
 #include "GameScene.h"
 #include "GraphicComponent.h"
 #include "ManagerMachine.h"
 #include "HeroInputComponent.h"
-#include "HUDLayer.h"
 #include "MapLayer.h"
 
 const int CNT_TIME_FOR_COMPLETE_TANK	= 40;

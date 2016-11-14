@@ -1,9 +1,7 @@
 ﻿#include "EnemyMachine.h"
 #include "GameScene.h"
-#include "constants.h"
 #include "MapLayer.h"
 #include "ManagerComponent.h"
-#include "AI.h"
 
 const int CNT_SPEED_OCTOPEDE	= 2;
 const int CNT_SPEED_BRAIN		= 3;

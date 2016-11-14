@@ -123,14 +123,15 @@ void MapLayer::SetState(StateMap& i_statemap)
 	m_stateMap = i_statemap;
 }
 
-double MapLayer::StatusCells(Point i_position)
+double MapLayer::StatusCells(Point i_position, int i_typeObject)
 {
 	Point _thisPosition = this->getPosition();
 	_thisPosition.x *= (-1);
 	_thisPosition.y *= (-1);
 	i_position += _thisPosition;
 	
-	if (m_mapCoordinate[i_position.x][i_position.y] == CNT_POSITION_FREE || m_mapCoordinate[i_position.x][i_position.y] == CNT_OBJECT_KNIGHT_BLACK)
+	if (m_mapCoordinate[i_position.x][i_position.y] == CNT_POSITION_FREE || 
+		m_mapCoordinate[i_position.x][i_position.y] == i_typeObject)
 	{
 		return 1.0;
 	}

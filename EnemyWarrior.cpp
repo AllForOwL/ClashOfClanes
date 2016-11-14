@@ -1,9 +1,7 @@
 ﻿#include "EnemyWarrior.h"
 #include "GameScene.h"
-#include "constants.h"
 #include "MapLayer.h"
 #include "ManagerComponent.h"
-#include "AI.h"
 
 const int CNT_SPEED_BOWMAN			= 2;
 const int CNT_SPEED_ENEMY_KNIGHT	= 3;
@@ -18,26 +16,28 @@ EnemyWarrior::EnemyWarrior(std::string i_EnemyWarrior, MapLayer& i_parentMapLaye
 	if (i_EnemyWarrior == CNT_TYPE_BOWMAN)
 	{
 		this->initWithFile(CNT_PATH_TO_RESOURCES + "Enemy/Bowman.png");
-		m_speed = CNT_SPEED_BOWMAN;
+		m_speed			= CNT_SPEED_BOWMAN;
+		m_typeObject	= CNT_OBJECT_ENEMY_BOWMAN;
 	}
 	else if (i_EnemyWarrior == CNT_TYPE_ENEMY_KNIGHT)
 	{
 		this->initWithFile(CNT_PATH_TO_RESOURCES + "Enemy/EnemyKnight.png");
-		m_speed = CNT_SPEED_ENEMY_KNIGHT;
+		m_speed			= CNT_SPEED_ENEMY_KNIGHT;
+		m_typeObject	= CNT_OBJECT_ENEMY_KNIGHT;
 	}
 	else if (i_EnemyWarrior == CNT_TYPE_WIZARD)
 	{
 		this->initWithFile(CNT_PATH_TO_RESOURCES + "Enemy/Wizard.png");
+		m_typeObject	= CNT_OBJECT_ENEMY_WIZARD;
 	}
 	else if (i_EnemyWarrior == CNT_TYPE_PALADIN)
 	{
 		this->initWithFile(CNT_PATH_TO_RESOURCES + "Enemy/Paladin.png");
+		m_typeObject	= CNT_OBJECT_ENEMY_PALADIN;
 	}
 
 	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 13,
 		GameScene::m_visibleSize.height / this->getContentSize().height / 13);
-
-	m_state		= StateEnemyWarrior::NOTHING;
 }
 
 EnemyWarrior::EnemyWarrior(EnemyWarrior& EnemyWarrior)
@@ -49,75 +49,38 @@ EnemyWarrior::EnemyWarrior(EnemyWarrior& EnemyWarrior)
 {
 	switch (m_state)
 	{
-		case StateEnemyWarrior::ATTACK:
+		case StateWarrior::MOVE_FORWARD:
 		{
-			ActAttack();			
+			MoveForward();
 
 			break;
 		}
-		case StateEnemyWarrior::RUN:
+		case StateWarrior::MOVE_BACK:
 		{
-			ActRun();
+			MoveBack();
+		
+			break;
+		}
+		case StateWarrior::MOVE_RIGHT:
+		{
+			MoveRight();
+		
+			break;
+		}
+		case StateWarrior::MOVE_LEFT:
+		{
+			MoveLeft();
 
 			break;
 		}
-		case StateEnemyWarrior::WANDER:
+		case StateWarrior::FIND_ACT:
 		{
-			ActWander();
+			SetStatusPositionForCurrentDirection(i_manager);
+			UpdateDirection(i_manager);
 
 			break;
 		}
-		case StateEnemyWarrior::HIDE:
-		{
-			ActHide();
-
-			break;
-		}
-		case StateEnemyWarrior::FIND_ACT:
-		{
-			int _quentityEnemy = i_manager.m_mapLayer->GetQuentityEnemy(this->getPosition());
-			
-			double _spear = 0.0;
-			/*if (m_spear)
-			{
-				_spear = 1.0;
-			}*/
-
-			double _health = 0.0;
-			if (m_health >= 75)
-			{
-				_health = 2.0;
-			}
-			else if (m_health >= 35)
-			{
-				_health = 1.0;
-			}
-			else
-			{
-				_health = 0.0;
-			}
-
-			int _numberAct =  i_manager.m_AI->FindAct(_health, _spear, _quentityEnemy);
-			if (_numberAct == 0)
-			{
-				m_state = StateEnemyWarrior::ATTACK;
-			}
-			else if (_numberAct == 1)
-			{
-				m_state = StateEnemyWarrior::RUN;
-			}
-			else if (_numberAct == 2)
-			{
-				m_state = StateEnemyWarrior::WANDER;
-			}
-			else
-			{
-				m_state = StateEnemyWarrior::HIDE;
-			}
-
-			break;
-		}
-		case StateEnemyWarrior::NOTHING:
+		case StateWarrior::NOTHING:
 		{
 
 			break;
@@ -125,28 +88,7 @@ EnemyWarrior::EnemyWarrior(EnemyWarrior& EnemyWarrior)
 	default:
 		break;
 	}
-}
-
-void EnemyWarrior::ActAttack()
-{
-	
-}
-
-void EnemyWarrior::ActRun()
-{
-	// here need add verify direction
-	MoveRight();
-}
-
-void EnemyWarrior::ActWander()
-{
-	// here need add verify direction
-	MoveLeft();
-}
-
-void EnemyWarrior::ActHide()
-{
-
+	m_state = StateWarrior::FIND_ACT;
 }
 
 EnemyWarrior::~EnemyWarrior()

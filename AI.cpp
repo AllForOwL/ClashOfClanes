@@ -414,4 +414,7 @@ AI::~AI()
 		Tasks on 13:11:2016
 			+ Execute AI;
 
+		Tasks on 14:11:2016
+			- add AI for all objects;
+
 */

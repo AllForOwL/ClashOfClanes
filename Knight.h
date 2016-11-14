@@ -13,31 +13,13 @@ class Knight : public Warrior
 {
 public:
 
-	enum StateKnight
-	{
-		MOVE_FORWARD,
-		MOVE_BACK,
-		MOVE_RIGHT, 
-		MOVE_LEFT,
-		FIND_ACT,
-		NOTHING
-	};
-
 	Knight();
 	Knight(std::string i_typeKnight, MapLayer& i_parentMapLayer);
 	Knight(Knight& heroGraphiComponent);
 
 	~Knight();
 
-	void MoveForward();
-	void MoveBack();
-	void MoveRight();
-	void MoveLeft();
-
 	virtual void Update(ManagerComponent& i_manager);
-
-	void SetStatusPositionForCurrentDirection(ManagerComponent& i_manager);
-	void UpdateDirection(ManagerComponent& i_manager);
 
 private:
 
@@ -57,42 +39,7 @@ private:
 		}
 	};
 
-	struct StatusPosition
-	{
-		double forward;
-		double back;
-		double right;
-		double left;
-	};
-
-	struct Position
-	{
-		Point forward;
-		Point back;
-		Point right;
-		Point left;
-	};
-
-	struct ActWander
-	{
-		int current;
-		int previous;
-
-		ActWander() :	current(-1),
-						previous(-1)
-		{
-
-		}
-	};
-
-	bool				m_spear;
-	StateKnight			m_state;
-	std::vector<bool>	m_direction;
-	int					m_indexDirection;
-	StatusPosition		m_statusPosition;
-	Position			m_position;
-	ActWander			m_actWander;
-
+	bool	m_spear;
 };
 
 #endif

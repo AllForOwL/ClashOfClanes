@@ -1,9 +1,8 @@
 #include "ManagerMachine.h"
 #include "GameScene.h"
 #include "ManagerComponent.h"
-#include "WarriorFactory.h"
-#include "Car.h"
 #include "Tank.h"
+#include "Car.h"
 #include "MapLayer.h"
 #include "EnemyMachine.h"
 

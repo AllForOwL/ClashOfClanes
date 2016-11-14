@@ -1,11 +1,10 @@
 #include "ManagerArmy.h"
 #include "GameScene.h"
 #include "ManagerComponent.h"
-#include "Knight.h"
 #include "MapLayer.h"
 #include "EnemyWarrior.h"
 #include "HeroInputComponent.h"
-#include "constants.h"
+#include "Knight.h"
 
 ManagerArmy::ManagerArmy()
 {

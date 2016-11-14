@@ -6,13 +6,8 @@
 USING_NS_CC;
 
 class GameScene;
-class Archer;
-class Tank;
-class Car;
+class Warrior;
 class ManagerComponent;
-class MachineFactory;
-class WarriorFactory;
-class EnemyMachine;
 
 class ManagerMachine
 {
@@ -39,9 +34,9 @@ public:
 	void SetPositionForMachine(Point i_pointBuildMachine);
 
 private:
-	std::vector<Tank*>			m_vecMachineTank;
-	std::vector<Car*>			m_vecMachineCar;
-	std::vector<EnemyMachine*>	m_vecEnemyMachine;
+	std::vector<Warrior*>			m_vecMachineTank;
+	std::vector<Warrior*>			m_vecMachineCar;
+	std::vector<Warrior*>	m_vecEnemyMachine;
 	StateManagerMachine		m_stateManagerMachine;
 
 	Point	m_pointBuildMachine;
