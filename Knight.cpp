@@ -41,38 +41,42 @@ Knight::Knight(Knight& Knight)
 {
 	switch (m_state)
 	{
-		case StateWarrior::MOVE_FORWARD:
+		case StateCombatant::MOVE_FORWARD:
 		{
 			MoveForward();
+			m_state = StateCombatant::FIND_ACT;
 
 			break;
 		}
-		case StateWarrior::MOVE_BACK:
+		case StateCombatant::MOVE_BACK:
 		{
 			MoveBack();
+			m_state = StateCombatant::FIND_ACT;
 
 			break;
 		}
-		case StateWarrior::MOVE_RIGHT:
+		case StateCombatant::MOVE_RIGHT:
 		{
 			MoveRight();
+			m_state = StateCombatant::FIND_ACT;
 
 			break;
 		}
-		case StateWarrior::MOVE_LEFT:
+		case StateCombatant::MOVE_LEFT:
 		{
 			MoveLeft();
+			m_state = StateCombatant::FIND_ACT;
 
 			break;
 		}
-		case StateWarrior::FIND_ACT:
+		case StateCombatant::FIND_ACT:
 		{
 			SetStatusPositionForCurrentDirection(i_manager);
 			UpdateDirection(i_manager);
 
 			break;
 		}
-		case StateWarrior::NOTHING:
+		case StateCombatant::NOTHING:
 		{
 
 			break;
@@ -80,7 +84,6 @@ Knight::Knight(Knight& Knight)
 	default:
 		break;
 	}
-	m_state = StateWarrior::FIND_ACT;
 }
 
 Knight::~Knight()

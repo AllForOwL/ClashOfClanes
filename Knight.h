@@ -12,7 +12,6 @@ class MapLayer;
 class Knight : public Warrior
 {
 public:
-
 	Knight();
 	Knight(std::string i_typeKnight, MapLayer& i_parentMapLayer);
 	Knight(Knight& heroGraphiComponent);
@@ -22,23 +21,6 @@ public:
 	virtual void Update(ManagerComponent& i_manager);
 
 private:
-
-	struct Direction
-	{
-		bool m_west;
-		bool m_east;
-		bool m_north;
-		bool m_south;
-
-		Direction() :	m_west(false),
-						m_east(true),
-						m_north(false),
-						m_south(false)
-		{
-
-		}
-	};
-
 	bool	m_spear;
 };
 

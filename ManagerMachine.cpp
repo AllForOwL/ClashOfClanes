@@ -1,8 +1,6 @@
 #include "ManagerMachine.h"
 #include "GameScene.h"
 #include "ManagerComponent.h"
-#include "Tank.h"
-#include "Car.h"
 #include "MapLayer.h"
 #include "EnemyMachine.h"
 
@@ -22,9 +20,6 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 	{
 		case ManagerMachine::ADD_TANK:
 		{
-			Tank* _tank = new Tank(*i_manager.m_mapLayer);
-			_tank->setPosition(m_pointBuildMachine);
-			m_vecMachineTank.push_back(_tank);
 			
 			m_stateManagerMachine = StateManagerMachine::NOTHING;
 
@@ -32,10 +27,7 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerMachine::ADD_CAR:
 		{
-			Car* _car = new Car(i_gameScene);
-			_car->setPosition(m_pointBuildMachine);
-			m_vecMachineCar.push_back(_car);
-			
+					
 			m_stateManagerMachine = StateManagerMachine::NOTHING;
 
 			break;

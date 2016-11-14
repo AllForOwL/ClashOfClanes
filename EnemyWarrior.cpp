@@ -49,38 +49,38 @@ EnemyWarrior::EnemyWarrior(EnemyWarrior& EnemyWarrior)
 {
 	switch (m_state)
 	{
-		case StateWarrior::MOVE_FORWARD:
+		case StateCombatant::MOVE_FORWARD:
 		{
 			MoveForward();
 
 			break;
 		}
-		case StateWarrior::MOVE_BACK:
+		case StateCombatant::MOVE_BACK:
 		{
 			MoveBack();
 		
 			break;
 		}
-		case StateWarrior::MOVE_RIGHT:
+		case StateCombatant::MOVE_RIGHT:
 		{
 			MoveRight();
 		
 			break;
 		}
-		case StateWarrior::MOVE_LEFT:
+		case StateCombatant::MOVE_LEFT:
 		{
 			MoveLeft();
 
 			break;
 		}
-		case StateWarrior::FIND_ACT:
+		case StateCombatant::FIND_ACT:
 		{
 			SetStatusPositionForCurrentDirection(i_manager);
 			UpdateDirection(i_manager);
 
 			break;
 		}
-		case StateWarrior::NOTHING:
+		case StateCombatant::NOTHING:
 		{
 
 			break;
@@ -88,7 +88,7 @@ EnemyWarrior::EnemyWarrior(EnemyWarrior& EnemyWarrior)
 	default:
 		break;
 	}
-	m_state = StateWarrior::FIND_ACT;
+	m_state = StateCombatant::FIND_ACT;
 }
 
 EnemyWarrior::~EnemyWarrior()
