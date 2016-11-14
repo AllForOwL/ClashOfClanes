@@ -414,6 +414,24 @@ AI::~AI()
 			+ Execute AI;
 
 		Tasks on 14:11:2016
-			- add AI for all objects;
+			+ add AI for all objects;
 
+		Tasks on 15:11:2016
+			- create and realize possibility add for knight tasks ():
+				+ list tasks:
+					- find gold;
+					- find tree;
+					- find oil;
+				- add on map region from recources for execute tasks:
+					+ fill region for each type resources;
+					- show tasks when click on hero;
+				- each hero responsible zone on map(gold, tree and etc.);
+			- add act : 
+			{
+				- attack;
+				- run;
+				- hide;
+				- wander;
+			};
+			- save game  write mapCoordinate in XML (need read about best solution) /;
 */

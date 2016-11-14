@@ -53,9 +53,7 @@ private:
 		double m_enemy;		/*2 - lot;			1 - little;		0 - not have;	*/
 		double m_targetAct[CNT_OUTPUT_NEURONS];
 	} ELEMENT;
-
-
-						/*	1 - free, 0 - busy	*/
+				/*	1 - free, 0 - busy	*/
 	typedef struct
 	{
 		double m_positionTop;

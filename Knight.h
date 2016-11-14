@@ -18,10 +18,14 @@ public:
 
 	~Knight();
 
+	void LoadNameForSprites();
+	bool DetermineCommand();
+
 	virtual void Update(ManagerComponent& i_manager);
 
 private:
 	bool	m_spear;
+	Point	m_locationTouch;
 };
 
 #endif

@@ -3,9 +3,10 @@
 #include "GameScene.h"
 #include "ManagerComponent.h"
 
-const int CNT_TAG_ARCHER = 1000;
-
 const int CNT_SPEED_MAP = 1;
+
+const int CNT_ZONE_WIDTH_RESOURCES	= 100;
+const int CNT_ZONE_HEIGHT_RESOURCES = 100;
 
 MapLayer::MapLayer()
 {
@@ -37,6 +38,7 @@ MapLayer::MapLayer(GameScene& i_parentGameScene)
 		}
 	}
 
+	FillRegionForResources();
 }
 
 void MapLayer::Update(ManagerComponent& i_manager)
@@ -121,6 +123,44 @@ void MapLayer::FillRegionFromObject(int i_typeObject, Point i_point, Size i_size
 void MapLayer::SetState(StateMap& i_statemap)
 {
 	m_stateMap = i_statemap;
+}
+
+void MapLayer::FillRegionForResources()
+{
+	/*srand(time(NULL));
+
+	int _x	= rand() % 700 + 500;
+	int _y	= rand() % 300 + 100;
+	Point	_positionBegin	= Point(_x, _y);
+	for (int x = _positionBegin.x; x < _positionBegin.x + CNT_ZONE_WIDTH_RESOURCES; x++)
+	{
+		for (int y = _positionBegin.y; y < _positionBegin.y + CNT_ZONE_HEIGHT_RESOURCES; y++)
+		{
+			m_mapCoordinate[x][y]	= CNT_RESOURCES_GOLD;
+		}
+	}
+
+	_x	= rand() % 700 + 600;
+	_y	= rand() % 700 + 500;
+	_positionBegin.setPoint(_x, _y);
+	for (int x = _positionBegin.x; x < _positionBegin.x + CNT_ZONE_WIDTH_RESOURCES; x++)
+	{
+		for (int y = _positionBegin.y; y < _positionBegin.y + CNT_ZONE_HEIGHT_RESOURCES; y++)
+		{
+			m_mapCoordinate[x][y] = CNT_RESOURCES_TREE;
+		}
+	}
+
+	_x	= rand() % 1000 + 500;
+	_y	= rand() % 900 + 800;
+	_positionBegin.setPoint(_x, _y);
+	for (int x = _positionBegin.x; x < _positionBegin.x + CNT_ZONE_WIDTH_RESOURCES; x++)
+	{
+		for (int y = _positionBegin.y; y < _positionBegin.y + CNT_ZONE_HEIGHT_RESOURCES; y++)
+		{
+			m_mapCoordinate[x][y] = CNT_RESOURCES_OIL;
+		}
+	}*/
 }
 
 double MapLayer::StatusCells(Point i_position, int i_typeObject)

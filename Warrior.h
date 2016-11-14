@@ -13,7 +13,7 @@ public:
 	Warrior(){};
 	Warrior(MapLayer& i_parentMapLayer) : Combatant(i_parentMapLayer)
 	{
-
+		m_state = StateCombatant::NOTHING;
 	}
 	~Warrior(){};
 

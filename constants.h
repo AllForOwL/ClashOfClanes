@@ -50,3 +50,7 @@
 	const int INDEX_DIRECTION_SOUTH = 1;
 	const int INDEX_DIRECTION_WEST = 2;
 	const int INDEX_DIRECTION_NORTH = 3;
+
+	const int CNT_RESOURCES_GOLD	= 4000;
+	const int CNT_RESOURCES_TREE	= 4001;
+	const int CNT_RESOURCES_OIL		= 4002;

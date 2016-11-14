@@ -22,23 +22,27 @@ class Combatant : public GraphicComponent
 public:
 	enum StateCombatant
 	{
+		FIND_GOLD,
+		FIND_OIL,
+		FIND_TREE,
 		MOVE_FORWARD,
 		MOVE_BACK,
 		MOVE_RIGHT,
 		MOVE_LEFT,
 		FIND_ACT,
-		NOTHING
+		NOTHING,
+		LISTEN
 	};
 
 	Combatant(){};
-	Combatant(MapLayer& i_parentMapLayer)
+	Combatant(MapLayer& i_parentMapLayer) 
 	{
 		i_parentMapLayer.addChild(this);
 
-		m_health = CNT_HEALTH_DEFAULT;
-		m_speed = CNT_DEFAULT_SPEED;
-		m_damage = CNT_DEFAULT_DAMAGE;
-		m_armor = CNT_DEFAULT_ARMOR;
+		m_health	= CNT_HEALTH_DEFAULT;
+		m_speed		= CNT_DEFAULT_SPEED;
+		m_damage	= CNT_DEFAULT_DAMAGE;
+		m_armor		= CNT_DEFAULT_ARMOR;
 
 		m_state = StateCombatant::FIND_ACT;
 

@@ -12,7 +12,10 @@ class Machine : public Combatant
 {
 public:
 	Machine(){};
-	Machine(MapLayer& i_parentMapLayer) : Combatant(i_parentMapLayer){};
+	Machine(MapLayer& i_parentMapLayer) : Combatant(i_parentMapLayer)
+	{
+
+	};
 	~Machine(){};
 
 	virtual void Update(ManagerComponent& i_manager) = 0;
