@@ -47,6 +47,7 @@ public:
 		m_indexDirection = INDEX_DIRECTION_EAST;
 		m_direction[m_indexDirection] = true;
 	}
+
 	virtual ~Combatant()
 	{
 		CCLOG("COMBATANT DESTRUCTOR");

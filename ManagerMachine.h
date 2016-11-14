@@ -32,12 +32,16 @@ public:
 	void SetState(StateManagerMachine& i_state);
 	void SetPositionForMachine(Point i_pointBuildMachine);
 
+	void LaunchFillRegion(const Machine& i_machine, ManagerComponent& i_manager, int i_typeMachine);
 private:
 	std::vector<Machine*>	m_vecMachineTank;
 	std::vector<Machine*>	m_vecEnemyMachine;
 	StateManagerMachine		m_stateManagerMachine;
 
 	Point	m_pointBuildMachine;
+
+	Point	m_positionNewMachine;
+	Size	m_sizeNewMachine;
 };
 
 #endif
