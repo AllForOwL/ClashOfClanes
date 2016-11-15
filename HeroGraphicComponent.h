@@ -46,6 +46,8 @@ private:
 
 	std::vector<Point>	m_vecWayWalkHero;
 	int					m_iterInWayWalk;
+
+	bool				m_loadProperties;
 };
 
 #endif

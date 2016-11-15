@@ -80,7 +80,6 @@ public:
 
 	void ConvertToOrigin()
 	{
-		Point m_positionMap = this->getParent()->getPosition();
 		Point _positionOrigin = this->getParent()->getPosition();
 		_positionOrigin.x *= (-1);
 		_positionOrigin.y *= (-1);

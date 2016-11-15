@@ -33,12 +33,13 @@ HeroGraphicComponent::HeroGraphicComponent(MapLayer& i_parentMapLayer)
 {
 	i_parentMapLayer.addChild(this);
 	this->initWithFile(CNT_PATH_TO_RESOURCES + "Hero/Walk_1.png");
-	this->setPosition(GameScene::m_visibleSize.width / 2, GameScene::m_visibleSize.height / 2);
+
+	GraphicComponent::LoadProperties(Point(100, 100));
 
 	m_coin				= CNT_COINT_IN_BEGIN;
 	m_positionTarget	= Point::ZERO;
 	m_stateHero			= StateHero::NOTHING;
-	m_rectHero			= this->getBoundingBox();
+	m_loadProperties	= true;
 }
 
 HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComponent)
@@ -78,14 +79,15 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 			this->setPosition(m_vecWayWalkHero[m_iterInWayWalk]);
 			if (++m_iterInWayWalk == m_vecWayWalkHero.size())
 			{
+				m_rectHero	=	this->getBoundingBox();
 				m_stateHero = StateHero::NOTHING;
-				m_rectHero  = this->getBoundingBox();
 				m_vecWayWalkHero.clear();
 			}
 			break;
 		}
 		case HeroGraphicComponent::NOTHING:
 		{
+			m_rectHero			= this->getBoundingBox();
 			if (CheckToGoTarget(i_manager))
 			{
 				m_stateHero  = StateHero::SEARCH_WAY;

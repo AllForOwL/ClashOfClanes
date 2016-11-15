@@ -427,6 +427,7 @@ AI::~AI()
 					+ show tasks when click on hero
 					 (!!! add positionWarrior in her constructor;)
 				+ each hero responsible zone on map(gold, tree and etc.);
+				+ hero add on mapLayer;
 			When hero goes find gold, tree, oil(LI):
 				- look enemy her need assess the situation(AI);
 			- add act : 
