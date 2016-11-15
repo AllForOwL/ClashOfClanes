@@ -22,7 +22,8 @@ public:
 
 	AlgorithmLi();
 	AlgorithmLi(AlgorithmLi& i_AlgorithmLi);
-	AlgorithmLi(Point i_begin, 
+	AlgorithmLi(Point i_origin,
+				Point i_begin, 
 				Point i_end, 
 				std::vector<std::vector<int>>& i_field);
 
@@ -37,9 +38,10 @@ public:
 	std::vector<Point>& GetFoundWay();
 
 private:
-	bool m_wayFound;
-	std::vector<point> m_vecPassableElement;
-	std::vector<Point> m_vecFoundWay;
+	bool				m_wayFound;
+	std::vector<point>	m_vecPassableElement;
+	std::vector<Point>	m_vecFoundWay;
+	Point				m_positionOrigin;
 };
 
 #endif

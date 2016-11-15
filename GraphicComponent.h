@@ -53,7 +53,7 @@ public:
 
 	void LoadPosition()
 	{
-		Point _positionWarrior = Point(m_positionOriginWithVisible.x, m_positionOriginWithVisible.y - (m_rectVisible.size.height / 2));
+		Point _positionWarrior = Point(m_positionVisible.x, m_positionVisible.y - (m_rectVisible.size.height / 2));
 		for (int i = 0; i < 5; i++)
 		{
 			for (int j = 0; j < 5; j++)
@@ -81,7 +81,6 @@ public:
 	void ConvertToOrigin()
 	{
 		Point m_positionMap = this->getParent()->getPosition();
-		m_locationTouch = m_locationTouch;
 		Point _positionOrigin = this->getParent()->getPosition();
 		_positionOrigin.x *= (-1);
 		_positionOrigin.y *= (-1);

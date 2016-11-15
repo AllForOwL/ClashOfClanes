@@ -29,9 +29,9 @@ HeroGraphicComponent::HeroGraphicComponent()
 	m_rectHero			= this->getBoundingBox();
 }
 
-HeroGraphicComponent::HeroGraphicComponent(GameScene& i_parentGameScene)
+HeroGraphicComponent::HeroGraphicComponent(MapLayer& i_parentMapLayer)
 {
-	i_parentGameScene.addChild(this);
+	i_parentMapLayer.addChild(this);
 	this->initWithFile(CNT_PATH_TO_RESOURCES + "Hero/Walk_1.png");
 	this->setPosition(GameScene::m_visibleSize.width / 2, GameScene::m_visibleSize.height / 2);
 
@@ -52,7 +52,11 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 	{
 		case HeroGraphicComponent::SEARCH_WAY:
 		{
-			AlgorithmLi* _searchWay = new AlgorithmLi(this->getPosition(), 
+			Point _positionOriginMapLayer = this->getParent()->getPosition();
+			_positionOriginMapLayer.x	*=	(-1);
+			_positionOriginMapLayer.y	*=	(-1);
+			AlgorithmLi* _searchWay = new AlgorithmLi(	_positionOriginMapLayer, 
+														this->getPosition(), 
 														m_positionTarget, 
 														i_manager.m_mapLayer->GetMapCoordinate());
 			if (_searchWay->WayFound())
@@ -102,6 +106,20 @@ bool HeroGraphicComponent::CheckToGoTarget(ManagerComponent& i_manager)
 	{
 		m_positionTarget = _currentLocationTouch;
 		return true;
+	}
+	else
+	{
+		Point _origin = this->getParent()->getPosition();
+		_origin.x	*=	(-1);
+		_origin.y	*=	(-1);
+		_previousLocationTouch.x	+=	_origin.x;
+		_previousLocationTouch.y	+=	_origin.y;
+		if (m_rectHero.containsPoint(_previousLocationTouch))
+		{
+			m_positionTarget	=	_currentLocationTouch;
+			m_positionTarget	+=	_origin;
+			return true;
+		}
 	}
 	return false;
 }

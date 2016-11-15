@@ -2,6 +2,7 @@
 #include "constants.h"
 #include "GameScene.h"
 #include "ManagerComponent.h"
+#include "HeroGraphicComponent.h"
 
 const int CNT_SPEED_MAP = 1;
 
@@ -48,24 +49,28 @@ void MapLayer::Update(ManagerComponent& i_manager)
 		case StateMap::MOVE_UP:
 		{
 			setPositionY(getPositionY() + CNT_SPEED_MAP);
+			i_manager.m_hero->setPositionY(i_manager.m_hero->getPositionY() - CNT_SPEED_MAP);
 
 			break;
 		}
 		case StateMap::MOVE_DOWN:
 		{
 			setPositionY(getPositionY() - CNT_SPEED_MAP);
+			i_manager.m_hero->setPositionY(i_manager.m_hero->getPositionY() + CNT_SPEED_MAP);
 
 			break;
 		}
 		case StateMap::MOVE_LEFT:
 		{
 			setPositionX(getPositionX() - CNT_SPEED_MAP);
+			i_manager.m_hero->setPositionX(i_manager.m_hero->getPositionX() + CNT_SPEED_MAP);
 
 			break;
 		}
 		case StateMap::MOVE_RIGHT:
 		{
 			setPositionX(getPositionX() + CNT_SPEED_MAP);			
+			i_manager.m_hero->setPositionX(i_manager.m_hero->getPositionX() - CNT_SPEED_MAP);
 
 			break;
 		}
@@ -111,6 +116,7 @@ void MapLayer::FillRegionFromObject(int i_typeObject, Point i_point, Size i_size
 
 	_positionBegin	+= _thisPosition;
 	_positionEnd	+= _thisPosition;
+
 	for (int i = _positionBegin.x; i < _positionEnd.x; i++)
 	{
 		for (int j = _positionBegin.y; j > _positionEnd.y; j--)

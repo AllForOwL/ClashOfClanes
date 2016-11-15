@@ -11,9 +11,10 @@ AlgorithmLi::AlgorithmLi(AlgorithmLi& i_AlgorithmLi)
 
 }
 
-AlgorithmLi::AlgorithmLi(Point i_begin, Point i_end, std::vector<std::vector<int>>& i_field)
+AlgorithmLi::AlgorithmLi(Point i_origin, Point i_begin, Point i_end, std::vector<std::vector<int>>& i_field)
 {
-	m_wayFound = false;
+	m_positionOrigin	= i_origin;
+	m_wayFound			= false;
 	SearchWay(i_begin, i_end, i_field);
 }
 
@@ -29,10 +30,15 @@ std::vector<Point>& AlgorithmLi::GetFoundWay()
 
 void AlgorithmLi::SearchWay(Point i_pointBegin, Point i_pointEnd, std::vector<std::vector<int>>& i_field)
 {	
+	i_pointEnd.x	+=	m_positionOrigin.x;
+	i_pointEnd.y	+=	m_positionOrigin.y;
+
 	point _current;
-	_current.x		= i_pointBegin.x;
-	_current.y		= i_pointBegin.y;
-	_current.index	= 9;
+	_current.x		=	i_pointBegin.x;
+	_current.y		=	i_pointBegin.y;
+	_current.x		+=	m_positionOrigin.x;
+	_current.y		+=	m_positionOrigin.y;
+	_current.index	=	9;
 	m_vecPassableElement.push_back(_current);
 
 	++_current.index;
@@ -108,7 +114,7 @@ void AlgorithmLi::SearchWay(Point i_pointBegin, Point i_pointEnd, std::vector<st
 void AlgorithmLi::RestoreWay()
 {
 	int _iterInVector	= m_vecPassableElement.size() - 1;
-	m_vecFoundWay.push_back(Point(m_vecPassableElement[_iterInVector].x, m_vecPassableElement[_iterInVector].y));
+	m_vecFoundWay.push_back(Point(m_vecPassableElement[_iterInVector].x - m_positionOrigin.x, m_vecPassableElement[_iterInVector].y - m_positionOrigin.y));
 
 	int _indexRestore = m_vecPassableElement.size() - 1;
 	bool _addElement = true;
@@ -118,17 +124,17 @@ void AlgorithmLi::RestoreWay()
 		_addElement = false;
 		for (int i = _indexRestore; i > 0; i--)
 		{
-			if ((m_vecPassableElement[i].x		== m_vecFoundWay[0].x &&
-				(m_vecPassableElement[i].y - 1	== m_vecFoundWay[0].y ||
-				 m_vecPassableElement[i].y + 1	== m_vecFoundWay[0].y)
+			if ((m_vecPassableElement[i].x - m_positionOrigin.x			== m_vecFoundWay[0].x &&
+				((m_vecPassableElement[i].y - 1) - m_positionOrigin.y	== m_vecFoundWay[0].y ||
+				 (m_vecPassableElement[i].y + 1) - m_positionOrigin.y	== m_vecFoundWay[0].y)
 				)
 				||
-				(m_vecPassableElement[i].y		== m_vecFoundWay[0].y &&
-				(m_vecPassableElement[i].x - 1	== m_vecFoundWay[0].x ||
-				 m_vecPassableElement[i].x + 1	== m_vecFoundWay[0].x))
+				(m_vecPassableElement[i].y - m_positionOrigin.y	== m_vecFoundWay[0].y &&
+				((m_vecPassableElement[i].x - 1) - m_positionOrigin.x	== m_vecFoundWay[0].x ||
+				 (m_vecPassableElement[i].x + 1) - m_positionOrigin.x	== m_vecFoundWay[0].x))
 				)
 			{
-				m_vecFoundWay.insert(m_vecFoundWay.begin(), Point(m_vecPassableElement[i].x, m_vecPassableElement[i].y));
+				m_vecFoundWay.insert(m_vecFoundWay.begin(), Point(m_vecPassableElement[i].x - m_positionOrigin.x, m_vecPassableElement[i].y - m_positionOrigin.y));
 				_indexRestore = i;
 				_addElement = true;
 				

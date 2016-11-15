@@ -12,7 +12,7 @@
 ManagerComponent::ManagerComponent(GameScene& i_gameScene)
 {
 	m_mapLayer		= new MapLayer(i_gameScene);
-	m_hero			= new HeroGraphicComponent(i_gameScene);
+	m_hero			= new HeroGraphicComponent(*m_mapLayer);
 	
 	m_inputComponent = new HeroInputComponent();
 

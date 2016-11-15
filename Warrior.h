@@ -11,7 +11,7 @@ class Warrior : public Combatant
 {
 public:
 	Warrior(){};
-	Warrior(Point i_positionVisible, MapLayer& i_parentMapLayer, std::string i_fileWarrior) : Combatant(i_parentMapLayer)
+	Warrior(Point i_positionVisible, MapLayer& i_parentMapLayer, std::string i_fileWarrior)
 	{
 		i_parentMapLayer.addChild(this);
 		this->initWithFile(CNT_PATH_TO_RESOURCES + i_fileWarrior);
@@ -19,8 +19,6 @@ public:
 			GameScene::m_visibleSize.height / this->getContentSize().height / 10);
 
 		LoadProperties(i_positionVisible);
-
-		//this->setPosition(i_positionVisible);
 
 		m_state = StateCombatant::NOTHING;
 	}

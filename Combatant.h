@@ -22,6 +22,7 @@ class Combatant : public GraphicComponent
 public:
 	enum StateCombatant
 	{
+		GOES_TO_TARGET,
 		FIND_GOLD,
 		FIND_OIL,
 		FIND_TREE,
@@ -34,11 +35,8 @@ public:
 		LISTEN
 	};
 
-	Combatant(){};
-	Combatant(MapLayer& i_parentMapLayer) 
+	Combatant() 
 	{
-	//	i_parentMapLayer.addChild(this);
-
 		m_health	= CNT_HEALTH_DEFAULT;
 		m_speed		= CNT_DEFAULT_SPEED;
 		m_damage	= CNT_DEFAULT_DAMAGE;

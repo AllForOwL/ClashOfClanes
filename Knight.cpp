@@ -28,9 +28,16 @@ Knight::Knight(Knight& Knight)
 {
 	switch (m_state)
 	{
+		case StateCombatant::GOES_TO_TARGET:
+		{
+			
+
+			break;
+		}
 		case StateCombatant::FIND_GOLD:
 		{
-		
+			
+
 			break;
 		}
 		case StateCombatant::FIND_OIL:

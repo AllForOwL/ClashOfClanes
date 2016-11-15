@@ -20,7 +20,7 @@ public:
 	};
 
 	HeroGraphicComponent();
-	HeroGraphicComponent(GameScene& i_parentGameScene);
+	HeroGraphicComponent(MapLayer& i_parentMapLayer);
 	HeroGraphicComponent(HeroGraphicComponent& heroGraphiComponent);
 
 	~HeroGraphicComponent();
@@ -37,7 +37,6 @@ public:
 	bool CheckToGoTarget(ManagerComponent& i_manager);
 
 private:
-
 	std::vector<std::vector<int>> m_mapCoordinate;
 
 	int			m_coin;
