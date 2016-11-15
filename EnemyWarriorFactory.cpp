@@ -95,7 +95,7 @@ void EnemyWarriorFactory::LoadNameForSprites()
 		case StateFactoryWarrior::LISTEN:
 		{
 			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
-			ConvertToOrigin(m_locationTouch);
+			ConvertToOrigin();
 			if (DetermineCommand())
 			{
 				i_manager.m_inputComponent->SetZeroLocation();
@@ -105,7 +105,7 @@ void EnemyWarriorFactory::LoadNameForSprites()
 		case StateFactoryWarrior::NOTHING:
 		{
 			m_locationTouch		= i_manager.m_inputComponent->GetLocationTouch();
-			ConvertToOrigin(m_locationTouch);
+			ConvertToOrigin();
 			if (m_rectOriginWithVisible.containsPoint(m_locationTouch) && m_locationTouch != Point::ZERO)
 			{
 				if (m_vecNameForSprites.empty())

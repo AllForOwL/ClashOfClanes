@@ -424,7 +424,8 @@ AI::~AI()
 					- find oil;
 				- add on map region from recources for execute tasks:
 					+ fill region for each type resources;
-					- show tasks when click on hero;
+					-+ show tasks when click on hero
+					 !!! add positionWarrior in her constructor;
 				- each hero responsible zone on map(gold, tree and etc.);
 			- add act : 
 			{

@@ -78,15 +78,45 @@ public:
 		}
 	}
 
-	void ConvertToOrigin(Point& i_locationTouch)
+	void ConvertToOrigin()
 	{
 		Point m_positionMap = this->getParent()->getPosition();
-		m_locationTouch = i_locationTouch;
+		m_locationTouch = m_locationTouch;
 		Point _positionOrigin = this->getParent()->getPosition();
 		_positionOrigin.x *= (-1);
 		_positionOrigin.y *= (-1);
 
 		m_locationTouch += _positionOrigin;
+	}
+
+	void LoadProperties(Point i_positionVisible)
+	{
+		m_positionVisible = i_positionVisible;
+
+		m_positionOrigin = this->getParent()->getPosition();
+		m_positionOrigin.x *= (-1);
+		m_positionOrigin.y *= (-1);
+
+		m_locationTouch = Point::ZERO;
+
+		Rect _box = this->getBoundingBox();
+
+		// calculate RectOrigin(system coordinate all MapLayer)
+		m_rectOrigin = Rect(this->getBoundingBox().getMinX() + m_positionOrigin.x, this->getBoundingBox().getMinY() + m_positionOrigin.y,
+			this->getBoundingBox().size.width, this->getBoundingBox().size.height);
+		// calculate RectVisible(system coordinate visible MapLayer)
+		m_rectVisible = Rect(this->getBoundingBox().getMinX() + m_positionVisible.x, this->getBoundingBox().getMinY() + m_positionVisible.y,
+			this->getBoundingBox().size.width, this->getBoundingBox().size.height);
+
+		m_rectOriginWithVisible = Rect(this->getBoundingBox().getMinX() + m_positionOrigin.x + m_positionVisible.x,
+			this->getBoundingBox().getMinY() + m_positionOrigin.y + m_positionVisible.y,
+			this->getBoundingBox().size.width, this->getBoundingBox().size.height
+			);
+
+		m_numberComplete = 0;
+
+		m_positionOriginWithVisible = m_positionOrigin + m_positionVisible;
+		this->setPosition(m_positionOriginWithVisible);
 	}
 
 	virtual std::chrono::time_point<std::chrono::system_clock> GetTime()
@@ -99,7 +129,6 @@ public:
 protected:
 	std::chrono::time_point<std::chrono::system_clock> m_startSecond;
 	int					m_timeForComplete;
-	Vec2				m_locationTouch;
 	Rect				m_rectOrigin;
 	Rect				m_rectVisible;
 	Rect				m_rectOriginWithVisible;
@@ -114,7 +143,7 @@ protected:
 	Point				m_positionVisible;
 	Point				m_positionOriginWithVisible;
 
-
+	Point				m_locationTouch;
 };
 
 #endif

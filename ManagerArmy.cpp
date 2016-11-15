@@ -31,8 +31,8 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 	{
 		case ManagerArmy::ADD_KNIGHT_BLACK:
 		{
-			Knight* _newKnightBlack = new Knight(CNT_TYPE_KNIGHT_BLACK, *i_manager.m_mapLayer);
-			_newKnightBlack->setPosition(m_positionWarrior);
+			Knight* _newKnightBlack = new Knight(m_positionWarrior, *i_manager.m_mapLayer, std::string("Warrior/black_knight/attack_1.png"));
+			_newKnightBlack->SetTypeObject(CNT_OBJECT_KNIGHT_BLACK);
 			m_vecKnight.push_back(_newKnightBlack);
 			LaunchFillRegion(*m_vecKnight[m_vecKnight.size() - 1], i_manager, CNT_OBJECT_KNIGHT_BLACK);
 
@@ -42,8 +42,8 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerArmy::ADD_KNIGHT_BRONZE:
 		{
-	   		Knight* _newKnightBronze = new Knight(CNT_TYPE_KNIGHT_BRONZE, *i_manager.m_mapLayer);
-			_newKnightBronze->setPosition(m_positionWarrior);
+	   		Knight* _newKnightBronze = new Knight(m_positionWarrior, *i_manager.m_mapLayer, std::string("Warrior/bronze_knight/attack_1.png"));
+			_newKnightBronze->SetTypeObject(CNT_OBJECT_KNIGHT_BRONZE);
 			m_vecKnight.push_back(_newKnightBronze);
 			LaunchFillRegion(*m_vecKnight[m_vecKnight.size() - 1], i_manager, CNT_OBJECT_KNIGHT_BRONZE);
 
@@ -53,8 +53,8 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerArmy::ADD_KNIGHT_SILVER:
 		{
-			Knight* _newKnightSilver = new Knight(CNT_TYPE_KNIGHT_SILVER, *i_manager.m_mapLayer);
-			_newKnightSilver->setPosition(m_positionWarrior);
+			Knight* _newKnightSilver = new Knight(m_positionWarrior,  *i_manager.m_mapLayer, std::string("Warrior/silver_knight/attack_1.png"));
+			_newKnightSilver->SetTypeObject(CNT_OBJECT_KNIGHT_SILVER);
 			m_vecKnight.push_back(_newKnightSilver);
 			LaunchFillRegion(*m_vecKnight[m_vecKnight.size() - 1], i_manager, CNT_OBJECT_KNIGHT_SILVER);
 

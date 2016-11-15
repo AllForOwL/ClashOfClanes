@@ -37,7 +37,7 @@ public:
 	Combatant(){};
 	Combatant(MapLayer& i_parentMapLayer) 
 	{
-		i_parentMapLayer.addChild(this);
+	//	i_parentMapLayer.addChild(this);
 
 		m_health	= CNT_HEALTH_DEFAULT;
 		m_speed		= CNT_DEFAULT_SPEED;
@@ -202,7 +202,6 @@ protected:
 	int					m_actWander;
 	StateCombatant		m_state;
 	int					m_typeObject;
-
 };
 
 #endif

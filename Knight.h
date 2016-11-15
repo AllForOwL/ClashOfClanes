@@ -13,7 +13,7 @@ class Knight : public Warrior
 {
 public:
 	Knight();
-	Knight(std::string i_typeKnight, MapLayer& i_parentMapLayer);
+	Knight(Point i_positionVisible, MapLayer& i_parentMapLayer, std::string i_fileWarrior);
 	Knight(Knight& heroGraphiComponent);
 
 	~Knight();
@@ -25,7 +25,6 @@ public:
 
 private:
 	bool	m_spear;
-	Point	m_locationTouch;
 };
 
 #endif

@@ -11,7 +11,7 @@ EnemyWarrior::EnemyWarrior()
 
 }
 
-EnemyWarrior::EnemyWarrior(std::string i_EnemyWarrior, MapLayer& i_parentMapLayer) : Warrior(i_parentMapLayer)
+EnemyWarrior::EnemyWarrior(std::string i_EnemyWarrior, MapLayer& i_parentMapLayer) : Warrior(Point::ZERO, i_parentMapLayer, "")
 {			
 	if (i_EnemyWarrior == CNT_TYPE_BOWMAN)
 	{

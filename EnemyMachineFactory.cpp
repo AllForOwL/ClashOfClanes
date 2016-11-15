@@ -92,7 +92,7 @@ void EnemyMachineFactory::LoadNameForSprites()
 		case StateFactoryMachine::NOTHING:
 		{
 			m_locationTouch	= i_manager.m_inputComponent->GetLocationTouch();
-			ConvertToOrigin(m_locationTouch);
+			ConvertToOrigin();
 			if (m_rectOriginWithVisible.containsPoint(m_locationTouch))
 			{
 				if (m_vecNameForSprites.empty())
@@ -111,7 +111,7 @@ void EnemyMachineFactory::LoadNameForSprites()
 		case StateFactoryMachine::LISTEN:
 		{
 			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
-			ConvertToOrigin(m_locationTouch);
+			ConvertToOrigin();
 			if (DetermineCommand())
 			{
 				i_manager.m_inputComponent->SetZeroLocation();

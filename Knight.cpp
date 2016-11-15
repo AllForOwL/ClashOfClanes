@@ -13,27 +13,8 @@ Knight::Knight()
 
 } 
 
-Knight::Knight(std::string i_knight, MapLayer& i_parentMapLayer) : Warrior(i_parentMapLayer)
-{			
-	if (i_knight == CNT_TYPE_KNIGHT_BLACK)
-	{
-		this->initWithFile(CNT_PATH_TO_RESOURCES + "Warrior/black_knight/attack_1.png");
-		m_typeObject = CNT_OBJECT_KNIGHT_BLACK;
-	}
-	else if (i_knight == CNT_TYPE_KNIGHT_BRONZE)
-	{
-		this->initWithFile(CNT_PATH_TO_RESOURCES + "Warrior/bronze_knight/attack_1.png");
-		m_typeObject = CNT_OBJECT_KNIGHT_BRONZE;
-	}
-	else if (i_knight == CNT_TYPE_KNIGHT_SILVER)
-	{
-		this->initWithFile(CNT_PATH_TO_RESOURCES + "Warrior/silver_knight/attack_1.png");
-		m_typeObject = CNT_OBJECT_KNIGHT_SILVER;
-	}
-
-	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 10,
-		GameScene::m_visibleSize.height / this->getContentSize().height / 10);
-
+Knight::Knight(Point i_positionVisible, MapLayer& i_parentMapLayer, std::string i_fileWarrior) : Warrior(i_positionVisible, i_parentMapLayer, i_fileWarrior)
+{		
 	m_spear			= true;
 	m_locationTouch = Point::ZERO;
 }
@@ -100,7 +81,7 @@ Knight::Knight(Knight& Knight)
 		case StateCombatant::NOTHING:
 		{
 			m_locationTouch	= i_manager.m_inputComponent->GetLocationTouch();
-			ConvertToOrigin(m_locationTouch);
+			ConvertToOrigin();
 			if (m_rectOriginWithVisible.containsPoint(m_locationTouch))
 			{
 				if (m_vecNameForSprites.empty())
@@ -120,7 +101,7 @@ Knight::Knight(Knight& Knight)
 		case StateCombatant::LISTEN:
 		{
 			m_locationTouch	= i_manager.m_inputComponent->GetLocationTouch();
-			ConvertToOrigin(m_locationTouch);
+			ConvertToOrigin();
 			if (DetermineCommand())
 			{	
 				i_manager.m_inputComponent->SetZeroLocation();
