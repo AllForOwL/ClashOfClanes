@@ -3,10 +3,21 @@
 #include "MapLayer.h"
 #include "ManagerComponent.h"
 #include "HeroInputComponent.h"
+#include "AlgorithmLi.h"
 
 const int INDEX_TASK_GOLD	= 0;
 const int INDEX_TASK_OIL	= 1;
 const int INDEX_TASK_TREE	= 2;
+
+const Point	CNT_POSITION_GOLD	= Point(200, 200);
+const Point CNT_POSITION_OIL	= Point(400, 400);
+const Point CNT_POSITION_TREE	= Point(600, 600);
+
+const	int	CNT_ATTACK	=	0;
+const	int	CNT_RUN		=	1;
+const	int	CNT_WANDER	=	2;
+const	int	CNT_HIDE	=	3;
+
 
 Knight::Knight()
 {
@@ -24,30 +35,120 @@ Knight::Knight(Knight& Knight)
 	
 }
 
+int Knight::GetAct(ManagerComponent&	i_manager)
+{
+	double	_spear	=	0.0;
+	double	_enemy	=	i_manager.m_mapLayer->GetQuentityEnemy(this->getPosition());
+	if (m_spear)
+	{
+		_spear		=	1.0;
+	}
+	int	m_actWander = i_manager.m_AI->FindAct(m_health, _spear, _enemy);
+
+	if (m_actWander == CNT_RUN)
+	{
+		return true;
+	}
+	return false;
+}
+
+void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
+{
+	Point _positionOriginMapLayer = this->getParent()->getPosition();
+	_positionOriginMapLayer.x *= (-1);
+	_positionOriginMapLayer.y *= (-1);
+
+	AlgorithmLi*	_searchWay = new AlgorithmLi(	CNT_OBJECT_KNIGHT_BLACK,
+													_positionOriginMapLayer,
+													this->getPosition(),
+													i_positionTarget,
+													i_manager.m_mapLayer->GetMapCoordinate()
+												);
+
+	if (_searchWay->WayFound())
+	{
+		i_manager.m_inputComponent->SetZeroLocation();
+		i_manager.m_mapLayer->ReleasePositionAfterSearchWay();
+		std::copy(_searchWay->GetFoundWay().begin(), _searchWay->GetFoundWay().end(),
+			std::back_inserter(m_vecWayWalkKnight));
+		m_iterInWayWalk = 0;
+
+		m_state = Combatant::GOES_TO_TARGET;
+	}
+	delete _searchWay;
+}
+
 /*virtual*/ void Knight::Update(ManagerComponent& i_manager)
 {
 	switch (m_state)
 	{
 		case StateCombatant::GOES_TO_TARGET:
 		{
-			
+			this->setPosition(m_vecWayWalkKnight[m_iterInWayWalk]);
+			if (++m_iterInWayWalk == m_vecWayWalkKnight.size())
+			{
+				--m_iterInWayWalk;
+				LoadProperties(this->getPosition());
+				m_state = StateCombatant::GOES_BACK;
+				//m_vecWayWalkKnight.clear();
+			}
+			else
+			{
+			//	m_state	=	StateCombatant::VERIFY_STATUS_POSITION;
+			}
 
+			break;
+		}
+		case StateCombatant::GOES_BACK:
+		{
+			this->setPosition(m_vecWayWalkKnight[m_iterInWayWalk]);
+			if (--m_iterInWayWalk == 0)
+			{
+				LoadProperties(this->getPosition());
+				m_state	=	StateCombatant::NOTHING;
+				m_vecWayWalkKnight.clear();
+			}
+
+			break;											
+		}
+		case StateCombatant::VERIFY_STATUS_POSITION:
+		{
+			int	_statusAct	=	GetAct(i_manager);
+
+			if (_statusAct	=	CNT_ATTACK)
+			{
+				m_state	=	StateCombatant::ACT_ATTACK;
+			}
+			else if (_statusAct = CNT_RUN)
+			{
+				m_state	=	StateCombatant::ACT_RUN;
+			}
+			else if (_statusAct	=	CNT_WANDER)
+			{
+				m_state	=	StateCombatant::GOES_TO_TARGET;
+			}
+			else
+			{
+				m_state	=	StateCombatant::ACT_HIDE;
+			}
 			break;
 		}
 		case StateCombatant::FIND_GOLD:
 		{
-			
+			FindResources(i_manager, CNT_POSITION_GOLD);
 
 			break;
 		}
 		case StateCombatant::FIND_OIL:
 		{
+			FindResources(i_manager, CNT_POSITION_OIL);
 		
 			break;
 		}
 		case StateCombatant::FIND_TREE:
 		{
-		
+			FindResources(i_manager, CNT_POSITION_TREE);
+
 			break;
 		}
 		case StateCombatant::MOVE_FORWARD:
@@ -82,6 +183,21 @@ Knight::Knight(Knight& Knight)
 		{
 			SetStatusPositionForCurrentDirection(i_manager);
 			UpdateDirection(i_manager);
+
+			break;
+		}
+		case StateCombatant::ACT_ATTACK:
+		{
+			
+			break;
+		}
+		case StateCombatant::ACT_RUN:
+		{
+			
+			break;
+		}
+		case StateCombatant::ACT_HIDE:
+		{
 
 			break;
 		}

@@ -429,6 +429,8 @@ AI::~AI()
 				+ each hero responsible zone on map(gold, tree and etc.);
 				+ hero add on mapLayer;
 			When hero goes find gold, tree, oil(LI):
+				+ verify status;
+				- realize all act;
 				- look enemy her need assess the situation(AI);
 			- add act : 
 			{

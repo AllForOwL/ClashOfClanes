@@ -56,7 +56,8 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 			Point _positionOriginMapLayer = this->getParent()->getPosition();
 			_positionOriginMapLayer.x	*=	(-1);
 			_positionOriginMapLayer.y	*=	(-1);
-			AlgorithmLi* _searchWay = new AlgorithmLi(	_positionOriginMapLayer, 
+			AlgorithmLi* _searchWay = new AlgorithmLi(	CNT_POSITION_FREE,
+														_positionOriginMapLayer, 
 														this->getPosition(), 
 														m_positionTarget, 
 														i_manager.m_mapLayer->GetMapCoordinate());
@@ -87,7 +88,7 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 		}
 		case HeroGraphicComponent::NOTHING:
 		{
-			m_rectHero			= this->getBoundingBox();
+			m_rectHero	=	this->getBoundingBox();
 			if (CheckToGoTarget(i_manager))
 			{
 				m_stateHero  = StateHero::SEARCH_WAY;

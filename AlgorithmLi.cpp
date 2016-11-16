@@ -11,8 +11,9 @@ AlgorithmLi::AlgorithmLi(AlgorithmLi& i_AlgorithmLi)
 
 }
 
-AlgorithmLi::AlgorithmLi(Point i_origin, Point i_begin, Point i_end, std::vector<std::vector<int>>& i_field)
+AlgorithmLi::AlgorithmLi(int i_typeObject, Point i_origin, Point i_begin, Point i_end, std::vector<std::vector<int>>& i_field)
 {
+	m_typeObject		= i_typeObject;
 	m_positionOrigin	= i_origin;
 	m_wayFound			= false;
 	SearchWay(i_begin, i_end, i_field);
@@ -71,7 +72,8 @@ void AlgorithmLi::SearchWay(Point i_pointBegin, Point i_pointEnd, std::vector<st
 			return;
 		}
 
-		if (i_field[_current.x][_current.y - 1] == CNT_POSITION_FREE)
+		if (i_field[_current.x][_current.y - 1] == CNT_POSITION_FREE	||	
+			i_field[_current.x][_current.y - 1] == m_typeObject)	
 		{
 			point _tempPoint;
 			_tempPoint.x		= _current.x;
@@ -80,7 +82,8 @@ void AlgorithmLi::SearchWay(Point i_pointBegin, Point i_pointEnd, std::vector<st
 			m_vecPassableElement.push_back(_tempPoint);
 			i_field[_current.x][_current.y - 1] = CNT_POSITION_BUSY_SEARCH_WAY;
 		}
-		if (i_field[_current.x - 1][_current.y] == CNT_POSITION_FREE)
+		if (i_field[_current.x - 1][_current.y] == CNT_POSITION_FREE	||
+			i_field[_current.x - 1][_current.y] == m_typeObject)
 		{
 			point _tempPoint;
 			_tempPoint.x = _current.x - 1;
@@ -89,7 +92,8 @@ void AlgorithmLi::SearchWay(Point i_pointBegin, Point i_pointEnd, std::vector<st
 			m_vecPassableElement.push_back(_tempPoint);
 			i_field[_current.x - 1][_current.y] = CNT_POSITION_BUSY_SEARCH_WAY;
 		}
-		if (i_field[_current.x][_current.y + 1] == CNT_POSITION_FREE)
+		if (i_field[_current.x][_current.y + 1] == CNT_POSITION_FREE	||
+			i_field[_current.x][_current.y + 1] == m_typeObject)
 		{
 			point _tempPoint;
 			_tempPoint.x = _current.x;
@@ -98,7 +102,8 @@ void AlgorithmLi::SearchWay(Point i_pointBegin, Point i_pointEnd, std::vector<st
 			m_vecPassableElement.push_back(_tempPoint);
 			i_field[_current.x][_current.y + 1] = CNT_POSITION_BUSY_SEARCH_WAY;
 		}
-		if (i_field[_current.x + 1][_current.y] == CNT_POSITION_FREE)
+		if (i_field[_current.x + 1][_current.y] == CNT_POSITION_FREE	||
+			i_field[_current.x + 1][_current.y] == m_typeObject)
 		{
 			point _tempPoint;
 			_tempPoint.x = _current.x + 1;

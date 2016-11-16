@@ -23,6 +23,8 @@ public:
 	enum StateCombatant
 	{
 		GOES_TO_TARGET,
+		GOES_BACK,
+		VERIFY_STATUS_POSITION,
 		FIND_GOLD,
 		FIND_OIL,
 		FIND_TREE,
@@ -31,6 +33,9 @@ public:
 		MOVE_RIGHT,
 		MOVE_LEFT,
 		FIND_ACT,
+		ACT_ATTACK,
+		ACT_RUN,
+		ACT_HIDE,
 		NOTHING,
 		LISTEN
 	};
@@ -86,24 +91,24 @@ public:
 		}
 		else if (m_direction[INDEX_DIRECTION_SOUTH])
 		{
-			m_position.forward = Point(this->getPositionX(), this->getPositionY() - 1);
-			m_position.back = Point(this->getPositionX(), this->getPositionY() + 1);
-			m_position.right = Point(this->getPositionX() - 1, this->getPositionY());
-			m_position.left = Point(this->getPositionX() + 1, this->getPositionY());
+			m_position.forward	= Point(this->getPositionX(), this->getPositionY() - 1);
+			m_position.back		= Point(this->getPositionX(), this->getPositionY() + 1);
+			m_position.right	= Point(this->getPositionX() - 1, this->getPositionY());
+			m_position.left		= Point(this->getPositionX() + 1, this->getPositionY());
 		}
 		else if (m_direction[INDEX_DIRECTION_WEST])
 		{
-			m_position.forward = Point(this->getPositionX() - 1, this->getPositionY());
-			m_position.back = Point(this->getPositionX() + 1, this->getPositionY());
-			m_position.right = Point(this->getPositionX(), this->getPositionY() + 1);
-			m_position.left = Point(this->getPositionX(), this->getPositionY() - 1);
+			m_position.forward	= Point(this->getPositionX() - 1, this->getPositionY());
+			m_position.back		= Point(this->getPositionX() + 1, this->getPositionY());
+			m_position.right	= Point(this->getPositionX(), this->getPositionY() + 1);
+			m_position.left		= Point(this->getPositionX(), this->getPositionY() - 1);
 		}
 		else if (m_direction[INDEX_DIRECTION_NORTH])
 		{
-			m_position.forward = Point(this->getPositionX(), this->getPositionY() + 1);
-			m_position.back = Point(this->getPositionX(), this->getPositionY() - 1);
-			m_position.right = Point(this->getPositionX() + 1, this->getPositionY());
-			m_position.left = Point(this->getPositionX() - 1, this->getPositionY());
+			m_position.forward	= Point(this->getPositionX(), this->getPositionY() + 1);
+			m_position.back		= Point(this->getPositionX(), this->getPositionY() - 1);
+			m_position.right	= Point(this->getPositionX() + 1, this->getPositionY());
+			m_position.left		= Point(this->getPositionX() - 1, this->getPositionY());
 		}
 
 		m_statusPosition.forward	= i_manager.m_mapLayer->StatusCells(m_position.forward, m_typeObject);

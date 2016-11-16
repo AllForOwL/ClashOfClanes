@@ -16,7 +16,7 @@ public:
 	virtual ~GraphicComponent(){};
 
 	virtual void Update(ManagerComponent& i_manager) = 0;
-	
+
 	void ShowMenu()
 	{
 		Point _positionWarriorMenu = Point(m_positionOriginWithVisible.x + (m_rectVisible.size.width / 2),

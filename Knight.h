@@ -21,10 +21,17 @@ public:
 	void LoadNameForSprites();
 	bool DetermineCommand();
 
+	int GetAct(ManagerComponent&	i_manager);
+
+	void FindResources(ManagerComponent& i_manager, Point i_positionTarget);
+
 	virtual void Update(ManagerComponent& i_manager);
 
 private:
+	std::vector<Point>	m_vecWayWalkKnight;
+	int		m_iterInWayWalk;
 	bool	m_spear;
+	Point	m_positionTarget;
 };
 
 #endif
