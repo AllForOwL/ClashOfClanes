@@ -13,7 +13,8 @@ class ManagerArmy;
 class ManagerFactory;
 class ManagerMachine;
 class HeroInputComponent;
-class AI;
+class AIAct;
+class AIDirection;
 
 class ManagerComponent
 {
@@ -31,7 +32,8 @@ public:
 	ManagerFactory*			m_managerFactory;
 	ManagerMachine*			m_managerMachine;
 	HeroInputComponent*		m_inputComponent;
-	AI*						m_AI;
+	AIAct*					m_AIAct;
+	AIDirection*			m_AIDirection;
 };
 
 #endif

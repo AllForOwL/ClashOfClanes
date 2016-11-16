@@ -4,6 +4,8 @@
 #include "ManagerComponent.h"
 #include "HeroInputComponent.h"
 #include "AlgorithmLi.h"
+#include "AIAct.h"
+#include "AIDirection.h"
 
 const int INDEX_TASK_GOLD	= 0;
 const int INDEX_TASK_OIL	= 1;
@@ -17,7 +19,6 @@ const	int	CNT_ATTACK	=	0;
 const	int	CNT_RUN		=	1;
 const	int	CNT_WANDER	=	2;
 const	int	CNT_HIDE	=	3;
-
 
 Knight::Knight()
 {
@@ -43,13 +44,18 @@ int Knight::GetAct(ManagerComponent&	i_manager)
 	{
 		_spear		=	1.0;
 	}
-	int	m_actWander = i_manager.m_AI->FindAct(m_health, _spear, _enemy);
-
-	if (m_actWander == CNT_RUN)
+	double	_health	=	0.0;
+	if (m_health >= 75)
 	{
-		return true;
+		_health	=	2.0;
 	}
-	return false;
+	else if (m_health >= 35)
+	{
+		_health	=	1.0;
+	}
+	int	_actWander = i_manager.m_AIAct->FindAct(_health, _spear, _enemy);
+
+	return _actWander;
 }
 
 void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
@@ -94,7 +100,7 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 			}
 			else
 			{
-			//	m_state	=	StateCombatant::VERIFY_STATUS_POSITION;
+				m_state	=	StateCombatant::VERIFY_STATUS_POSITION;
 			}
 
 			break;
@@ -188,16 +194,19 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 		}
 		case StateCombatant::ACT_ATTACK:
 		{
-			
+			m_state	=	StateCombatant::GOES_TO_TARGET;
+
 			break;
 		}
 		case StateCombatant::ACT_RUN:
 		{
-			
+			m_state	=	StateCombatant::GOES_TO_TARGET;
+
 			break;
 		}
 		case StateCombatant::ACT_HIDE:
 		{
+			m_state	=	StateCombatant::GOES_TO_TARGET;
 
 			break;
 		}
@@ -273,4 +282,54 @@ Knight::~Knight()
 	PhysicsComponent	- виявлє зіткнення героя
 	InputComponent		- приймає діна з клавіатури
 	ManagerComponent	- контейнер для цих компонентів
+*/
+
+
+/*
+	Tasks on 10:11:2016
+		+ good understand algorithm;
+		+ optimize for knight;
+
+	Tasks on 11:11:2016					!-!-!-(Day Enemy!!!!!)-!-!-!
+		+ create factory for enemy(warrior and machine);
+		// create manager factory for enemy????;(not need)
+		+ create enemy;
+		
+		|
+		|			Tasks on 12:11:2016
+  ------|------		step for execute AI in game:
+		|				+ fill region for each objects;
+		|				+ need add AI for act---> Wander <---;
+
+		Tasks on 13:11:2016
+			+ Execute AI;
+
+		Tasks on 14:11:2016
+			+ add AI for all objects;
+
+		Tasks on 15:11:2016
+			- create and realize possibility add for knight tasks ():
+				+ list tasks:
+					- find gold;
+					- find tree;
+					- find oil;
+				- add on map region from recources for execute tasks:
+					+ fill region for each type resources;
+					+ show tasks when click on hero
+					 (!!! add positionWarrior in her constructor;)
+				+ each hero responsible zone on map(gold, tree and etc.);
+				+ hero add on mapLayer;
+				+ knight goes to zone from resources and back;
+			When hero goes find gold, tree, oil(LI):
+				+ verify status;
+				- realize all act;
+				- look enemy her need assess the situation(AI);
+			- add act : 
+			{
+				- attack;
+				- run;
+				- hide;
+				- wander;
+			};
+			- save game  write mapCoordinate in XML (need read about best solution) /;
 */
