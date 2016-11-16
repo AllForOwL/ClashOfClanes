@@ -428,6 +428,7 @@ AI::~AI()
 					 (!!! add positionWarrior in her constructor;)
 				+ each hero responsible zone on map(gold, tree and etc.);
 				+ hero add on mapLayer;
+				+ knight goes to zone from resources and back;
 			When hero goes find gold, tree, oil(LI):
 				+ verify status;
 				- realize all act;

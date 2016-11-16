@@ -104,8 +104,8 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 			this->setPosition(m_vecWayWalkKnight[m_iterInWayWalk]);
 			if (--m_iterInWayWalk == 0)
 			{
-				LoadProperties(this->getPosition());
-				m_state	=	StateCombatant::NOTHING;
+				LoadProperties(this->getPosition() + this->getParent()->getPosition());
+				m_state	=	StateCombatant::LISTEN;
 				m_vecWayWalkKnight.clear();
 			}
 
