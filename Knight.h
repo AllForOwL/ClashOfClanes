@@ -32,6 +32,7 @@ private:
 	int		m_iterInWayWalk;
 	bool	m_spear;
 	Point	m_positionTarget;
+	int		m_iterRunX;
 };
 
 #endif

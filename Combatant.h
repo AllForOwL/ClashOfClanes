@@ -81,6 +81,17 @@ public:
 		this->setPosition(m_position.left);
 	}
 
+	int GetActiveDirection()
+	{
+		for (int i = 0; i < m_direction.size(); i++)
+		{
+			if (m_direction[i])
+			{
+				return i;
+			}
+		}
+	}
+
 	void SetStatusPositionForCurrentDirection(ManagerComponent& i_manager)
 	{
 		if (m_direction[INDEX_DIRECTION_EAST])

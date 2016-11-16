@@ -19,20 +19,22 @@ MapLayer::MapLayer(GameScene& i_parentGameScene)
 	i_parentGameScene.addChild(this);
 	this->initWithTMXFile(CNT_PATH_TO_RESOURCES + "Map/Map.tmx");
 
-	Size _size = Size(this->getMapSize().width * this->getTileSize().width,
+	m_mapSize = Size(this->getMapSize().width * this->getTileSize().width,
 				this->getMapSize().height * this->getTileSize().height);
 
-	m_mapCoordinate.resize(_size.width);
-	for (int i = 0; i < _size.width; i++)
+
+
+	m_mapCoordinate.resize(m_mapSize.width);
+	for (int i = 0; i < m_mapSize.width; i++)
 	{
-		m_mapCoordinate[i].resize(_size.height);
+		m_mapCoordinate[i].resize(m_mapSize.height);
 	}
 
-	for (int i = 0; i < _size.width; i++)
+	for (int i = 0; i < m_mapSize.width; i++)
 	{
-		for (int j = 0; j < _size.height; j++)
+		for (int j = 0; j < m_mapSize.height; j++)
 		{
-			if (i == 0 || i == _size.width - 1 || j == 0 || j == _size.height - 1)
+			if (i == 0 || i == m_mapSize.width - 1 || j == 0 || j == m_mapSize.height - 1)
 			{
 				m_mapCoordinate[i][j] = CNT_POSITION_BUSY_ORDER;
 			}
@@ -122,6 +124,20 @@ void MapLayer::FillRegionFromObject(int i_typeObject, Point i_point, Size i_size
 		for (int j = _positionBegin.y; j > _positionEnd.y; j--)
 		{
 			this->m_mapCoordinate[i][j] = i_typeObject;
+		}
+	}
+}
+
+Point MapLayer::GetPositionShelter()
+{
+	for (int x = 0; x < m_mapSize.width; x++)
+	{
+		for (int y = 0; y < m_mapSize.height; y++)
+		{
+			if (m_mapCoordinate[x][y] == CNT_OBJECT_SHELTER)
+			{
+				return Point(x, y);
+			}
 		}
 	}
 }

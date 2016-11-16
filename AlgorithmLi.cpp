@@ -11,7 +11,11 @@ AlgorithmLi::AlgorithmLi(AlgorithmLi& i_AlgorithmLi)
 
 }
 
-AlgorithmLi::AlgorithmLi(int i_typeObject, Point i_origin, Point i_begin, Point i_end, std::vector<std::vector<int>>& i_field)
+AlgorithmLi::AlgorithmLi(	int i_typeObject, 
+							Point i_origin, 
+							Point i_begin, 
+							Point i_end, 
+							std::vector<std::vector<int>>& i_field)
 {
 	m_typeObject		= i_typeObject;
 	m_positionOrigin	= i_origin;

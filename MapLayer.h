@@ -33,10 +33,12 @@ public:
 	int GetQuentityEnemy(Point i_position);
 	double StatusCells(Point i_position, int i_typeObject);	// STATUS = { FREE = 1.0, BUSY = 0.0 }
 	void FillRegionForResources();
+	Point GetPositionShelter();
 
 private:
 	std::vector<std::vector<int>> m_mapCoordinate;
 	StateMap m_stateMap;
+	Size	m_mapSize;
 };
 
 #endif

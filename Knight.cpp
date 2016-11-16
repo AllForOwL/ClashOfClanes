@@ -15,6 +15,8 @@ const Point	CNT_POSITION_GOLD	= Point(200, 200);
 const Point CNT_POSITION_OIL	= Point(400, 400);
 const Point CNT_POSITION_TREE	= Point(600, 600);
 
+const Point	CNT_POSITION_SHELTER	=	Point(700, 700);
+
 const	int	CNT_ATTACK	=	0;
 const	int	CNT_RUN		=	1;
 const	int	CNT_WANDER	=	2;
@@ -96,7 +98,6 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 				--m_iterInWayWalk;
 				LoadProperties(this->getPosition());
 				m_state = StateCombatant::GOES_BACK;
-				//m_vecWayWalkKnight.clear();
 			}
 			else
 			{
@@ -119,17 +120,17 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 		}
 		case StateCombatant::VERIFY_STATUS_POSITION:
 		{
-			int	_statusAct	=	GetAct(i_manager);
+			int	_statusAct	=	3; //GetAct(i_manager);
 
-			if (_statusAct	=	CNT_ATTACK)
+			if (_statusAct	==	CNT_ATTACK)
 			{
 				m_state	=	StateCombatant::ACT_ATTACK;
 			}
-			else if (_statusAct = CNT_RUN)
+			else if (_statusAct == CNT_RUN)
 			{
 				m_state	=	StateCombatant::ACT_RUN;
 			}
-			else if (_statusAct	=	CNT_WANDER)
+			else if (_statusAct	==	CNT_WANDER)
 			{
 				m_state	=	StateCombatant::GOES_TO_TARGET;
 			}
@@ -194,18 +195,52 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 		}
 		case StateCombatant::ACT_ATTACK:
 		{
+			/*
+				Changes sprites
+			*/
 			m_state	=	StateCombatant::GOES_TO_TARGET;
 
 			break;
 		}
 		case StateCombatant::ACT_RUN:
 		{
-			m_state	=	StateCombatant::GOES_TO_TARGET;
+			MoveBack();
+
+			++m_iterInWayWalk;
+			if (m_iterInWayWalk == 20)
+			{
+				m_state = StateCombatant::FIND_ACT;
+			}
 
 			break;
 		}
 		case StateCombatant::ACT_HIDE:
 		{
+			Point	_positionParent	=	this->getParent()->getPosition();
+			_positionParent.x	*=	(-1);
+			_positionParent.y	*=	(-1);
+
+			Point	_positionShelter = i_manager.m_mapLayer->GetPositionShelter();
+
+			AlgorithmLi* _wayToShelter	=	new AlgorithmLi( CNT_OBJECT_SHELTER,
+															 _positionParent,
+															 this->getPosition(),
+															 CNT_POSITION_SHELTER,
+															 i_manager.m_mapLayer->GetMapCoordinate()
+															);
+
+			if (_wayToShelter->WayFound())
+			{
+				i_manager.m_inputComponent->SetZeroLocation();
+				i_manager.m_mapLayer->ReleasePositionAfterSearchWay();
+				std::copy(_wayToShelter->GetFoundWay().begin(), _wayToShelter->GetFoundWay().end(),
+					std::back_inserter(m_vecWayWalkKnight));
+				m_iterInWayWalk = 0;
+
+				m_state = StateCombatant::GOES_TO_TARGET;
+
+			}
+
 			m_state	=	StateCombatant::GOES_TO_TARGET;
 
 			break;
@@ -322,14 +357,17 @@ Knight::~Knight()
 				+ knight goes to zone from resources and back;
 			When hero goes find gold, tree, oil(LI):
 				+ verify status;
-				- realize all act;
-				- look enemy her need assess the situation(AI);
-			- add act : 
+				+ realize all act(for attack need sprite);
+				+ look enemy her need assess the situation(AI);
+			+ add act : 
 			{
 				- attack;
 				- run;
 				- hide;
 				- wander;
 			};
-			- save game  write mapCoordinate in XML (need read about best solution) /;
+
+		Tasks on 16:11:2016
+			- refactoring ALL CODE!!!!!
+			- save game, write mapCoordinate in XML (need read about best solution);
 */
