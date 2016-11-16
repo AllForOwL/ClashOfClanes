@@ -1,10 +1,6 @@
 #include "AIDirection.h"
 
-const int CNT_INPUT_NEURONS_WANDER	=	4;
-const int CNT_HIDDEN_NEURONS_WANDER	=	3;
-const int CNT_OUTPUT_NEURONS_WANDER	=	4;
-
-const AIDirection::ELEMENT AIDirection::m_samples[CNT_MAX_SAMPLES] =
+const AIDirection::ELEMENT_WANDER AIDirection::m_samples[CNT_MAX_SAMPLES_WANDER] =
 {
 	{ 1.0, 0.0, 0.0, 0.0, { 1.0, 0.0, 0.0, 0.0 } },
 	{ 0.0, 1.0, 0.0, 0.0, { 0.0, 1.0, 0.0, 0.0 } },
@@ -18,7 +14,7 @@ const AIDirection::ELEMENT AIDirection::m_samples[CNT_MAX_SAMPLES] =
 };
 
 
-const std::vector<std::string> AI::m_act	= { "Forward", "Back", "Right", "Left" };
+const std::vector<std::string> AIDirection::m_actWander	= { "Forward", "Back", "Right", "Left" };
 
 AIDirection::AIDirection() : AI(CNT_INPUT_NEURONS_WANDER, 
 								CNT_HIDDEN_NEURONS_WANDER,
@@ -44,7 +40,7 @@ AIDirection::AIDirection(AIDirection& i_AIDirection) : AI(	CNT_INPUT_NEURONS_WAN
 
 	while (true)
 	{
-		if (++_samples == CNT_MAX_SAMPLES)
+		if (++_samples == CNT_MAX_SAMPLES_WANDER)
 		{
 			_samples = 0;
 		}
@@ -77,7 +73,7 @@ AIDirection::AIDirection(AIDirection& i_AIDirection) : AI(	CNT_INPUT_NEURONS_WAN
 	}
 
 	int _quentityMatches = 0;
-	for (int i = 0; i < CNT_MAX_SAMPLES; i++)
+	for (int i = 0; i < CNT_MAX_SAMPLES_WANDER; i++)
 	{
 		m_vectorInputs[0] = m_samples[i].m_positionTop;
 		m_vectorInputs[1] = m_samples[i].m_positionRight;
@@ -112,4 +108,13 @@ AIDirection::AIDirection(AIDirection& i_AIDirection) : AI(	CNT_INPUT_NEURONS_WAN
 
 	_numberAct = Action(m_valueFunctionInLayerOutput);
 
+}
+
+int AIDirection::FindAct(double i_forward, double i_back, double i_right, double i_left)
+{
+	m_vectorInputs[0] = i_forward; m_vectorInputs[1] = i_back; m_vectorInputs[2] = i_right; m_vectorInputs[3] = i_left;
+	FeedForward();
+	int _numberAct = Action(m_valueFunctionInLayerOutput);
+
+	return _numberAct;
 }

@@ -8,6 +8,7 @@
 #include "GraphicComponent.h"
 #include "ManagerComponent.h"
 #include "AI.h"
+#include "AIDirection.h"
 
 USING_NS_CC;
 
@@ -119,7 +120,7 @@ public:
 
 	void UpdateDirection(ManagerComponent& i_manager)
 	{
-		m_actWander = i_manager.m_AI->FindActWander(m_statusPosition.forward, m_statusPosition.back,
+		m_actWander = i_manager.m_AIDirection->FindAct(m_statusPosition.forward, m_statusPosition.back,
 			m_statusPosition.right, m_statusPosition.left);
 
 		if (m_actWander == CNT_DIRECTION_RIGHT)

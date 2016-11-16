@@ -161,7 +161,7 @@ public:
 		return (i_value * (1.0 - i_value));
 	}
 
-	virtual ~AI();
+	virtual ~AI(){};
 
 protected:
 	std::vector<std::vector<double>>	m_weightInputHidden;
@@ -175,8 +175,6 @@ protected:
 
 	std::vector<double>	m_valueErrorLayerHidden;
 	std::vector<double>	m_valueErrorLayerOutput;
-
-	static const std::vector<std::string>	m_act;
 
 	int	m_inputNeurons;
 	int m_hiddenNeurons;

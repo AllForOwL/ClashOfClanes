@@ -1,9 +1,5 @@
 #include "AIAct.h"
 
-const int CNT_INPUT_HEURONS		= 3;
-const int CNT_HIDDEN_NEURONS	= 3;
-const int CNT_OUTPUT_NEURONS	= 4;	
-
 const AIAct::ELEMENT AIAct::m_samples[CNT_MAX_SAMPLES] =
 {
 	{ 2.0, 1.0, 1.0, { 1.0, 0.0, 0.0, 0.0 } },
@@ -24,7 +20,7 @@ const AIAct::ELEMENT AIAct::m_samples[CNT_MAX_SAMPLES] =
 	{ 0.0, 0.0, 2.0, { 0.0, 1.0, 0.0, 0.0 } },
 };
 
-const std::vector<std::string> AI::m_act	= { "Attack", "Run", "Wander", "Hide" };
+const std::vector<std::string> AIAct::m_act	= { "Attack", "Run", "Wander", "Hide" };
 
 AIAct::AIAct() : AI(CNT_INPUT_HEURONS,
 					CNT_HIDDEN_NEURONS,
@@ -125,4 +121,13 @@ AIAct::AIAct(AIAct& i_AIAct) : AI(	CNT_INPUT_HEURONS,
 	m_vectorInputs[0] = 0.0; m_vectorInputs[1] = 1.0; m_vectorInputs[2] = 0.0;
 	FeedForward();
 	_numberAct = Action(m_valueFunctionInLayerOutput);
+}
+
+int AIAct::FindAct(double i_health, double i_spear, double i_enemy)
+{
+	m_vectorInputs[0] = i_health; m_vectorInputs[1] = i_spear; m_vectorInputs[2] = i_enemy;
+	FeedForward();
+	int _numberAct = Action(m_valueFunctionInLayerOutput);
+
+	return _numberAct;
 }

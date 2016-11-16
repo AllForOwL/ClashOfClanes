@@ -4,6 +4,11 @@
 #include "cocos2d.h"
 #include "AI.h"
 
+const int CNT_INPUT_HEURONS = 3;
+const int CNT_HIDDEN_NEURONS = 3;
+const int CNT_OUTPUT_NEURONS = 4;
+
+
 const int CNT_MAX_SAMPLES	= 16;
 
 USING_NS_CC;
@@ -15,9 +20,11 @@ public:
 	AIAct();
 	AIAct(AIAct& i_AIAct);
 
-	~AIAct();
+	~AIAct(){};
 
 	virtual void Train();
+
+	int FindAct(double i_health, double i_spear, double i_enemy);
 
 private:
 
@@ -30,6 +37,7 @@ private:
 	} ELEMENT;
 
 	static const ELEMENT	m_samples[CNT_MAX_SAMPLES];
+	static const std::vector<std::string>	m_act;
 };
 
 #endif
