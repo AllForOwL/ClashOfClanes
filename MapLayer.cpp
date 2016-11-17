@@ -3,6 +3,7 @@
 #include "GameScene.h"
 #include "ManagerComponent.h"
 #include "HeroGraphicComponent.h"
+#include <fstream>
 
 const int CNT_SPEED_MAP = 1;
 
@@ -12,6 +13,17 @@ const int CNT_ZONE_HEIGHT_RESOURCES = 100;
 MapLayer::MapLayer()
 {
 	this->initWithTMXFile(CNT_PATH_TO_RESOURCES + "Map/Map.tmx");
+	AddObjectFromFile();
+}
+
+void MapLayer::AddObjectFromFile()
+{
+	std::ifstream	_readFromFile;
+	_readFromFile.open("Map/Map.xml");
+
+	_readFromFile.seekg(0, std::ios_base::beg);
+	// here add code for read from file
+	_readFromFile.close();
 }
 
 MapLayer::MapLayer(GameScene& i_parentGameScene)
@@ -21,8 +33,6 @@ MapLayer::MapLayer(GameScene& i_parentGameScene)
 
 	m_mapSize = Size(this->getMapSize().width * this->getTileSize().width,
 				this->getMapSize().height * this->getTileSize().height);
-
-
 
 	m_mapCoordinate.resize(m_mapSize.width);
 	for (int i = 0; i < m_mapSize.width; i++)
@@ -42,6 +52,7 @@ MapLayer::MapLayer(GameScene& i_parentGameScene)
 	}
 
 	FillRegionForResources();
+	AddObjectFromFile();
 }
 
 void MapLayer::Update(ManagerComponent& i_manager)
@@ -118,6 +129,7 @@ void MapLayer::FillRegionFromObject(int i_typeObject, Point i_point, Size i_size
 
 	_positionBegin	+= _thisPosition;
 	_positionEnd	+= _thisPosition;
+	WriteObjectToFile(i_typeObject, _positionBegin, i_size);
 
 	for (int i = _positionBegin.x; i < _positionEnd.x; i++)
 	{
@@ -226,7 +238,22 @@ int MapLayer::GetQuentityEnemy(Point i_position)
 	return _quentityEnemy;
 }
 
+void MapLayer::WriteObjectToFile(int i_typeObject, Point i_point, Size i_size)
+{
+	std::ofstream	_fileForWrite;
+	_fileForWrite.open(CNT_PATH_TO_RESOURCES + "/Map/Map.xml", std::ios_base::app);
+
+	_fileForWrite	<< "<"	<< i_typeObject	
+							<< " size width = "		<< i_size.width
+							<< " height = "			<< i_size.height
+							<< " position x = "		<< i_point.x
+							<< " y = "				<< i_point.y
+					<< ">"	<< std::endl;
+
+	_fileForWrite.close();
+}
+
 MapLayer::~MapLayer()
 {
-
+	CCLOG("DESTRUCTOR MAPLAYER");
 }

@@ -57,5 +57,6 @@ void GameScene::update(float dt)
 
 GameScene::~GameScene()
 {
+	delete m_manager;
 	CCLOG("destructor gamescene");
 }

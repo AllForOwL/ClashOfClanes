@@ -25,17 +25,28 @@ public:
 	MapLayer(GameScene& i_parentGameScene);
 	~MapLayer();
 
-	void Update(ManagerComponent& i_manager);
-	void FillRegionFromObject(int i_typeObject, Point i_point, Size i_size);
-	void ReleasePositionAfterSearchWay();
-	void SetState(StateMap& i_statemap);
 	std::vector<std::vector<int>>& GetMapCoordinate();
-	int GetQuentityEnemy(Point i_position);
-	double StatusCells(Point i_position, int i_typeObject);	// STATUS = { FREE = 1.0, BUSY = 0.0 }
-	void FillRegionForResources();
-	Point GetPositionShelter();
+	void Update							(ManagerComponent& i_manager);
+	void FillRegionFromObject			(int i_typeObject, Point i_point, Size i_size);
+	void ReleasePositionAfterSearchWay	();
+	void SetState						(StateMap& i_statemap);
+	int GetQuentityEnemy				(Point i_position);
+	double StatusCells					(Point i_position, int i_typeObject);	// STATUS = { FREE = 1.0, BUSY = 0.0 }
+	void FillRegionForResources			();
+	Point GetPositionShelter			();
+	void WriteObjectToFile(int i_typeObject, Point i_point, Size i_size);
+	
+	void AddObjectFromFile();
 
 private:
+	
+	struct ObjectInFile
+	{
+		int		typeObject;
+		Size	size;
+		Point	position;
+	};
+
 	std::vector<std::vector<int>> m_mapCoordinate;
 	StateMap m_stateMap;
 	Size	m_mapSize;

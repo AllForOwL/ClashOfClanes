@@ -101,7 +101,7 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 			}
 			else
 			{
-				m_state	=	StateCombatant::VERIFY_STATUS_POSITION;
+				//m_state	=	StateCombatant::VERIFY_STATUS_POSITION;
 			}
 
 			break;
@@ -369,5 +369,5 @@ Knight::~Knight()
 
 		Tasks on 16:11:2016
 			- refactoring ALL CODE!!!!!
-			- save game, write mapCoordinate in XML (need read about best solution);
+			- save game, write mapCoordinate in txt!!!
 */

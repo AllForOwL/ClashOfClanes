@@ -37,5 +37,12 @@ void ManagerComponent::Update(GameScene& i_gameScene)
 
 ManagerComponent::~ManagerComponent()
 {
+	delete m_hero;
+	delete m_inputComponent;
+	delete m_mapLayer;
+	delete m_managerMachine;
+	delete m_managerFactory;
+	delete m_AIAct;
 
+	CCLOG("DESTRUCTOR managercomponent");
 }
