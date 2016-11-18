@@ -4,6 +4,8 @@
 #include "ManagerComponent.h"
 #include "HeroGraphicComponent.h"
 #include <fstream>
+#include <string>
+#include <regex>
 
 const int CNT_SPEED_MAP = 1;
 
@@ -18,11 +20,45 @@ MapLayer::MapLayer()
 
 void MapLayer::AddObjectFromFile()
 {
-	std::ifstream	_readFromFile;
-	_readFromFile.open("Map/Map.xml");
+	std::ifstream _readFromFile;
+	_readFromFile.open(CNT_PATH_TO_RESOURCES + "Map/Map.xml");
 
-	_readFromFile.seekg(0, std::ios_base::beg);
-	// here add code for read from file
+	char* _linePropertiesObject = new char[200];
+
+	while (!_readFromFile.eof())
+	{
+		_readFromFile.getline(_linePropertiesObject, 200);
+		int _index = 1;
+		std::vector<int> _vecPropertiesObject;
+		std::string _intermediateString;
+
+		char _value = _linePropertiesObject[_index];
+		do
+		{
+			if ((int)_value >= 48 && (int)_value <= 57)
+			{
+				_intermediateString = _value;
+				_value = _linePropertiesObject[++_index];
+				while (_value != ' ')
+				{
+					_intermediateString += _value;
+					_value = _linePropertiesObject[++_index];
+				}
+				_vecPropertiesObject.push_back(std::stoi(_intermediateString));
+			}
+			_value = _linePropertiesObject[++_index];
+		} while (_value != '>');
+
+		ObjectInFile _object;
+		_object.typeObject = _vecPropertiesObject[0];
+		Size _size = Size(_vecPropertiesObject[1], _vecPropertiesObject[2]);
+		_object.size = _size;;
+		Point _point = Point(_vecPropertiesObject[3], _vecPropertiesObject[4]);
+		_object.position = _point;
+
+		m_vecObject.push_back(_object);
+	}
+
 	_readFromFile.close();
 }
 
@@ -244,11 +280,11 @@ void MapLayer::WriteObjectToFile(int i_typeObject, Point i_point, Size i_size)
 	_fileForWrite.open(CNT_PATH_TO_RESOURCES + "/Map/Map.xml", std::ios_base::app);
 
 	_fileForWrite	<< "<"	<< i_typeObject	
-							<< " size width = "		<< i_size.width
-							<< " height = "			<< i_size.height
-							<< " position x = "		<< i_point.x
-							<< " y = "				<< i_point.y
-					<< ">"	<< std::endl;
+					<< " "	<< (int)i_size.width
+					<< " "	<< (int)i_size.height
+					<< " "	<< (int)i_point.x
+					<< " "  << (int)i_point.y
+					<< " >" << std::endl;
 
 	_fileForWrite.close();
 }

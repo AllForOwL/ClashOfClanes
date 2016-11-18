@@ -319,7 +319,6 @@ Knight::~Knight()
 	ManagerComponent	- контейнер для цих компонентів
 */
 
-
 /*
 	Tasks on 10:11:2016
 		+ good understand algorithm;
@@ -367,7 +366,8 @@ Knight::~Knight()
 				- wander;
 			};
 
-		Tasks on 16:11:2016
+		Tasks on 18:11:2016
+			- write sniffer!!!;
 			- refactoring ALL CODE!!!!!
-			- save game, write mapCoordinate in txt!!!
+			- save game, write mapCoordinate in xml!!!
 */

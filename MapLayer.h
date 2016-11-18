@@ -47,7 +47,8 @@ private:
 		Point	position;
 	};
 
-	std::vector<std::vector<int>> m_mapCoordinate;
+	std::vector<ObjectInFile>		m_vecObject;
+	std::vector<std::vector<int>>	m_mapCoordinate;
 	StateMap m_stateMap;
 	Size	m_mapSize;
 };
