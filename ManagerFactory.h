@@ -50,7 +50,6 @@ private:
 
 	Point m_positionNewFactory;
 	Size  m_sizeNewFactory;
-
 };
 
 #endif

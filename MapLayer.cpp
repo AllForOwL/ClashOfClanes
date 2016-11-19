@@ -50,16 +50,21 @@ void MapLayer::AddObjectFromFile()
 		} while (_value != '>');
 
 		ObjectInFile _object;
-		_object.typeObject = _vecPropertiesObject[0];
-		Size _size = Size(_vecPropertiesObject[1], _vecPropertiesObject[2]);
-		_object.size = _size;;
-		Point _point = Point(_vecPropertiesObject[3], _vecPropertiesObject[4]);
-		_object.position = _point;
+		_object.typeObject	= _vecPropertiesObject[0];
+		Size _size			= Size(_vecPropertiesObject[1], _vecPropertiesObject[2]);
+		_object.size		= _size;;
+		Point _point		= Point(_vecPropertiesObject[3], _vecPropertiesObject[4]);
+		_object.position	= _point;
 
 		m_vecObject.push_back(_object);
 	}
 
 	_readFromFile.close();
+}
+
+std::vector<MapLayer::ObjectInFile>& MapLayer::GetVectorObject()
+{
+	return m_vecObject;
 }
 
 MapLayer::MapLayer(GameScene& i_parentGameScene)
@@ -279,12 +284,12 @@ void MapLayer::WriteObjectToFile(int i_typeObject, Point i_point, Size i_size)
 	std::ofstream	_fileForWrite;
 	_fileForWrite.open(CNT_PATH_TO_RESOURCES + "/Map/Map.xml", std::ios_base::app);
 
-	_fileForWrite	<< "<"	<< i_typeObject	
-					<< " "	<< (int)i_size.width
-					<< " "	<< (int)i_size.height
-					<< " "	<< (int)i_point.x
-					<< " "  << (int)i_point.y
-					<< " >" << std::endl;
+	_fileForWrite	<< "<"				<< i_typeObject	
+					<< " size width = "	<< (int)i_size.width
+					<< " height = "		<< (int)i_size.height
+					<< " position x = "	<< (int)i_point.x
+					<< " y = "			<< (int)i_point.y
+					<< ">" << std::endl;
 
 	_fileForWrite.close();
 }

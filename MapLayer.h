@@ -12,6 +12,13 @@ class MapLayer : public TMXTiledMap
 {
 public:
 
+	struct ObjectInFile
+	{
+		int		typeObject;
+		Size	size;
+		Point	position;
+	};
+
 	enum StateMap
 	{
 		MOVE_UP,
@@ -37,16 +44,9 @@ public:
 	void WriteObjectToFile(int i_typeObject, Point i_point, Size i_size);
 	
 	void AddObjectFromFile();
+	std::vector<ObjectInFile>& GetVectorObject();
 
 private:
-	
-	struct ObjectInFile
-	{
-		int		typeObject;
-		Size	size;
-		Point	position;
-	};
-
 	std::vector<ObjectInFile>		m_vecObject;
 	std::vector<std::vector<int>>	m_mapCoordinate;
 	StateMap m_stateMap;

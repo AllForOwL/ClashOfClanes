@@ -12,7 +12,10 @@ class MapLayer;
 class GraphicComponent : public Sprite
 {
 public:
-	GraphicComponent(){}
+	GraphicComponent()
+	{
+
+	}
 	virtual ~GraphicComponent(){};
 
 	virtual void Update(ManagerComponent& i_manager) = 0;

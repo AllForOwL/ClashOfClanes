@@ -24,6 +24,8 @@ public:
 
 	void Update(GameScene& i_gameScene);
 
+	void AddObjectFromFile(GameScene& i_gameScene);
+
 public:
 	MapLayer*				m_mapLayer;
 	HeroGraphicComponent*	m_hero;
