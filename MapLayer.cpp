@@ -23,9 +23,45 @@ void MapLayer::AddObjectFromFile()
 	std::ifstream _readFromFile;
 	_readFromFile.open(CNT_PATH_TO_RESOURCES + "Map/Map.xml");
 
-	char* _linePropertiesObject = new char[200];
+	int _index = 1;
+	char _value;
+	std::vector<int> _vecPropertiesObject;
+	std::string _intermediateString;
 
-	while (!_readFromFile.eof())
+	while (_readFromFile.get(_value))
+	{
+		_vecPropertiesObject.clear();
+		_intermediateString.clear();
+		do
+		{
+			if ((int)_value >= 48 && (int)_value <= 57)
+			{
+				_intermediateString = _value;
+				_readFromFile.get(_value);
+				while (_value != ' ')
+				{
+					_intermediateString += _value;
+					_readFromFile.get(_value);
+				}
+				_vecPropertiesObject.push_back(std::stoi(_intermediateString));
+			}
+			else
+			{
+				_readFromFile.get(_value);
+			}
+		} 
+		while (_value != '>');
+
+		ObjectInFile _object;
+		_object.typeObject					= _vecPropertiesObject[0];
+		_object.positionVisible				= Point(_vecPropertiesObject[1], _vecPropertiesObject[2]);
+		_object.positionOrigin				= Point(_vecPropertiesObject[3], _vecPropertiesObject[4]);
+		_object.positionVisibleWithOrigin	= Point(_vecPropertiesObject[5], _vecPropertiesObject[6]);
+
+		m_vecObject.push_back(_object);
+	}
+
+	/*while (!_readFromFile.eof())
 	{
 		_readFromFile.getline(_linePropertiesObject, 200);
 		int _index = 1;
@@ -50,14 +86,13 @@ void MapLayer::AddObjectFromFile()
 		} while (_value != '>');
 
 		ObjectInFile _object;
-		_object.typeObject	= _vecPropertiesObject[0];
-		Size _size			= Size(_vecPropertiesObject[1], _vecPropertiesObject[2]);
-		_object.size		= _size;;
-		Point _point		= Point(_vecPropertiesObject[3], _vecPropertiesObject[4]);
-		_object.position	= _point;
+		_object.typeObject					= _vecPropertiesObject[0];
+		_object.positionVisible				= Point(_vecPropertiesObject[1], _vecPropertiesObject[2]);
+		_object.positionOrigin				= Point(_vecPropertiesObject[3], _vecPropertiesObject[4]);
+		_object.positionVisibleWithOrigin	= Point(_vecPropertiesObject[5], _vecPropertiesObject[6]);
 
 		m_vecObject.push_back(_object);
-	}
+	}*/
 
 	_readFromFile.close();
 }
@@ -162,15 +197,21 @@ std::vector<std::vector<int>>& MapLayer::GetMapCoordinate()
 
 void MapLayer::FillRegionFromObject(int i_typeObject, Point i_point, Size i_size)
 {
+	// write in file position visible, origin and visiblewithorigin
+	Point _positionVisible = i_point;	// +
+
 	Point _positionBegin = Point(i_point.x - (i_size.width / 2), i_point.y + (i_size.height / 2));
 	Point _positionEnd	 = Point(i_point.x + (i_size.width / 2), i_point.y - (i_size.height / 2));
-	Point _thisPosition = this->getPosition();
-	_thisPosition.x *= (-1);
-	_thisPosition.y *= (-1);
+	Point _positionOrigin = this->getPosition();	// +
+	_positionOrigin.x *= (-1);
+	_positionOrigin.y *= (-1);
 
-	_positionBegin	+= _thisPosition;
-	_positionEnd	+= _thisPosition;
-	WriteObjectToFile(i_typeObject, _positionBegin, i_size);
+	_positionBegin	+= _positionOrigin;
+	_positionEnd	+= _positionOrigin;
+
+	Point _positionVisibleWithOrigin = _positionVisible + _positionOrigin;	// +
+
+	WriteObjectToFile(i_typeObject, _positionVisible, _positionOrigin, _positionVisibleWithOrigin);
 
 	for (int i = _positionBegin.x; i < _positionEnd.x; i++)
 	{
@@ -279,17 +320,23 @@ int MapLayer::GetQuentityEnemy(Point i_position)
 	return _quentityEnemy;
 }
 
-void MapLayer::WriteObjectToFile(int i_typeObject, Point i_point, Size i_size)
+void MapLayer::WriteObjectToFile(	int i_typeObject, 
+									Point i_positionVisible,
+									Point i_positionOrigin,
+									Point i_positionVisibleWithOrigin
+								)
 {
 	std::ofstream	_fileForWrite;
 	_fileForWrite.open(CNT_PATH_TO_RESOURCES + "/Map/Map.xml", std::ios_base::app);
 
-	_fileForWrite	<< "<"				<< i_typeObject	
-					<< " size width = "	<< (int)i_size.width
-					<< " height = "		<< (int)i_size.height
-					<< " position x = "	<< (int)i_point.x
-					<< " y = "			<< (int)i_point.y
-					<< ">" << std::endl;
+	_fileForWrite	<< "<"									<< i_typeObject	
+					<< " position visible x = "				<< (int)i_positionVisible.x
+					<< " position visible y = "				<< (int)i_positionVisible.y
+					<< " position origin x = "				<< (int)i_positionOrigin.x
+					<< " position origin y = "				<< (int)i_positionOrigin.y
+					<< " position visiblewithorigin x = "	<< (int)i_positionVisibleWithOrigin.x
+					<< " position visiblewithorigin y = "	<< (int)i_positionVisibleWithOrigin.y
+					<< " >" << std::endl;
 
 	_fileForWrite.close();
 }

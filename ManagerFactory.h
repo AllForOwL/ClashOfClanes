@@ -37,6 +37,8 @@ public:
 	void SetPositionBuildFactory(Point i_point);
 	Point GetPositionBuildFactory() const;
 
+	void SetPositionOrigin(Point i_origin);
+
 	void LaunchFillRegion(const Factory& i_factory, ManagerComponent& i_manager, int i_typeFactory);
 
 private:
@@ -50,6 +52,8 @@ private:
 
 	Point m_positionNewFactory;
 	Size  m_sizeNewFactory;
+
+	Point m_positionOrigin;
 };
 
 #endif

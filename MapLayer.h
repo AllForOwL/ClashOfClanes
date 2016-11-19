@@ -15,8 +15,9 @@ public:
 	struct ObjectInFile
 	{
 		int		typeObject;
-		Size	size;
-		Point	position;
+		Point	positionVisible;
+		Point	positionOrigin;
+		Point	positionVisibleWithOrigin;
 	};
 
 	enum StateMap
@@ -41,7 +42,11 @@ public:
 	double StatusCells					(Point i_position, int i_typeObject);	// STATUS = { FREE = 1.0, BUSY = 0.0 }
 	void FillRegionForResources			();
 	Point GetPositionShelter			();
-	void WriteObjectToFile(int i_typeObject, Point i_point, Size i_size);
+	void WriteObjectToFile(	int i_typeObject, 
+							Point i_positonVisible, 
+							Point i_positionOrigin, 
+							Point i_positionVisibleWithOrigin
+						   );
 	
 	void AddObjectFromFile();
 	std::vector<ObjectInFile>& GetVectorObject();

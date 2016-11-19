@@ -36,6 +36,8 @@ public:
 	HeroInputComponent*		m_inputComponent;
 	AIAct*					m_AIAct;
 	AIDirection*			m_AIDirection;
+
+	bool	m_addObjectFromFile;
 };
 
 #endif

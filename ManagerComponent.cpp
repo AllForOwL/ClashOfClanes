@@ -24,6 +24,7 @@ ManagerComponent::ManagerComponent(GameScene& i_gameScene)
 	m_AIAct				= new AIAct();
 	m_AIDirection		= new AIDirection();
 
+	m_addObjectFromFile = true;
 	AddObjectFromFile(i_gameScene);
 }
 
@@ -122,34 +123,39 @@ void ManagerComponent::AddObjectFromFile(GameScene& i_gameScene)
 		if (_stateArmy != StateArmy::NOTHING)
 		{
 			m_managerArmy->SetState(_stateArmy);
-			m_managerArmy->SetPositionForWarrior(_vecObject[i].position);
+			m_managerArmy->SetPositionForWarrior(_vecObject[i].positionVisible);
 			m_managerArmy->Update(i_gameScene, *this);
 		}
 		else if (_stateFactory != StateFactory::NOTHING)
 		{
-			m_managerFactory->SetObjectFromFile();
 			m_managerFactory->SetState(_stateFactory);
-			m_managerFactory->SetPositionBuildFactory(_vecObject[i].position);
+			m_managerFactory->SetPositionBuildFactory(_vecObject[i].positionVisible);
+			m_managerFactory->SetPositionOrigin(_vecObject[i].positionOrigin);
 			m_managerFactory->Update(i_gameScene, *this);
 		}
 		else if (_stateMachine != StateMachine::NOTHING)
 		{
 			m_managerMachine->SetState(_stateMachine);
-			m_managerMachine->SetPositionForMachine(_vecObject[i].position);
+			m_managerMachine->SetPositionForMachine(_vecObject[i].positionVisible);
 			m_managerMachine->Update(i_gameScene, *this);
 		}
 	}
+
+	m_addObjectFromFile = false;
 }
 
 void ManagerComponent::Update(GameScene& i_gameScene)
 {
-	m_hero->Update			(*this);
-	m_inputComponent->Update(*this);
-	m_mapLayer->Update		(*this);
+	if (!m_addObjectFromFile)
+	{
+		m_hero->Update(*this);
+		m_inputComponent->Update(*this);
+		m_mapLayer->Update(*this);
 
-	m_managerArmy->Update	(i_gameScene, *this);
-	m_managerMachine->Update(i_gameScene, *this);
-	m_managerFactory->Update(i_gameScene, *this);
+		m_managerArmy->Update(i_gameScene, *this);
+		m_managerMachine->Update(i_gameScene, *this);
+		m_managerFactory->Update(i_gameScene, *this);
+	}
 }
 
 ManagerComponent::~ManagerComponent()
