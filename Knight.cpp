@@ -367,7 +367,7 @@ Knight::~Knight()
 			};
 
 		Tasks on 20:11:2016
-			- write sniffer!!!;
+			+- write sniffer!!!;
 			- refactoring ALL CODE!!!!!
 			- add object after load game;
 			+ save game, write mapCoordinate in xml!!!

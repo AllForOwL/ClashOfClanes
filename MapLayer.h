@@ -12,13 +12,6 @@ class MapLayer : public TMXTiledMap
 {
 public:
 
-	struct ObjectInFile
-	{
-		int		typeObject;
-		Point	positionVisible;
-		Point	positionOrigin;
-		Point	positionVisibleWithOrigin;
-	};
 
 	enum StateMap
 	{
@@ -35,24 +28,16 @@ public:
 
 	std::vector<std::vector<int>>& GetMapCoordinate();
 	void Update							(ManagerComponent& i_manager);
-	void FillRegionFromObject			(int i_typeObject, Point i_point, Size i_size);
+	void FillRegionFromObject			(ManagerComponent& i_manager, int i_typeObject, Point i_positionObject, Size i_size);
 	void ReleasePositionAfterSearchWay	();
 	void SetState						(StateMap& i_statemap);
 	int GetQuentityEnemy				(Point i_position);
 	double StatusCells					(Point i_position, int i_typeObject);	// STATUS = { FREE = 1.0, BUSY = 0.0 }
 	void FillRegionForResources			();
 	Point GetPositionShelter			();
-	void WriteObjectToFile(	int i_typeObject, 
-							Point i_positonVisible, 
-							Point i_positionOrigin, 
-							Point i_positionVisibleWithOrigin
-						   );
-	
-	void AddObjectFromFile();
-	std::vector<ObjectInFile>& GetVectorObject();
+
 
 private:
-	std::vector<ObjectInFile>		m_vecObject;
 	std::vector<std::vector<int>>	m_mapCoordinate;
 	StateMap m_stateMap;
 	Size	m_mapSize;

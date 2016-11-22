@@ -15,6 +15,7 @@ class ManagerMachine;
 class HeroInputComponent;
 class AIAct;
 class AIDirection;
+class ManagerObjectAndFile;
 
 class ManagerComponent
 {
@@ -36,6 +37,7 @@ public:
 	HeroInputComponent*		m_inputComponent;
 	AIAct*					m_AIAct;
 	AIDirection*			m_AIDirection;
+	ManagerObjectAndFile*	m_managerObjectAndFile;
 
 	bool	m_addObjectFromFile;
 };

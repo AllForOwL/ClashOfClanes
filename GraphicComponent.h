@@ -70,7 +70,6 @@ public:
 
 	void LoadSprites()
 	{
-		float _positionY = GameScene::m_visibleSize.height / 2;
 		for (int i = 0; i < m_vecNameForSprites.size(); i++)
 		{
 			m_vecSprites.push_back(Sprite::create(m_vecNameForSprites[i]));
@@ -120,12 +119,11 @@ public:
 		this->setPosition(m_positionOriginWithVisible);
 	}
 
-	void LoadPropertiesObjectFromFile (Point i_positionVisible, Point i_positionOrigin)
+	void ResetPositionObject(Point i_visible, Point i_origin)
 	{
-		m_positionVisible = i_positionVisible;
+		m_positionVisible = i_visible;
 
-		m_positionOrigin = i_positionOrigin;
-		
+		m_positionOrigin = i_origin;
 		m_locationTouch = Point::ZERO;
 
 		Rect _box = this->getBoundingBox();

@@ -24,7 +24,7 @@ void ManagerFactory::LaunchFillRegion(const Factory& i_factory, ManagerComponent
 	m_positionNewFactory	= i_factory.getPosition();
 	m_sizeNewFactory		= i_factory.getBoundingBox().size;
 
-	i_manager.m_mapLayer->FillRegionFromObject(i_typeFactory, m_positionNewFactory, m_sizeNewFactory);
+	i_manager.m_mapLayer->FillRegionFromObject(i_manager, i_typeFactory, m_positionNewFactory, m_sizeNewFactory);
 	i_manager.m_inputComponent->SetZeroLocation();
 }
 
@@ -39,7 +39,7 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 				WarriorFactory* _warriorFactory = new WarriorFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
 				if (m_positionOrigin != Point::ZERO)
 				{
-					_warriorFactory->LoadPropertiesObjectFromFile(m_positionBuildFactory, m_positionOrigin);
+					_warriorFactory->ResetPositionObject(m_positionBuildFactory, m_positionOrigin);
 					m_positionOrigin = Point::ZERO;
 				}
 				m_vecFactoryWarrior.push_back(_warriorFactory);
@@ -56,7 +56,7 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 				MachineFactory* _machineFactory = new MachineFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
 				if (m_positionOrigin != Point::ZERO)
 				{
-					_machineFactory->LoadPropertiesObjectFromFile(m_positionBuildFactory, m_positionOrigin);
+					_machineFactory->ResetPositionObject(m_positionBuildFactory, m_positionOrigin);
 					m_positionOrigin = Point::ZERO;
 				}
 				m_vecFactoryMachine.push_back(_machineFactory);
@@ -71,7 +71,7 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 			EnemyWarriorFactory* _enemyWarriorFactory = new EnemyWarriorFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
 			if (m_positionOrigin != Point::ZERO)
 			{
-				_enemyWarriorFactory->LoadPropertiesObjectFromFile(m_positionBuildFactory, m_positionOrigin);
+				_enemyWarriorFactory->ResetPositionObject(m_positionBuildFactory, m_positionOrigin);
 				m_positionOrigin = Point::ZERO;
 			}
 			m_vecFactoryEnemyWarrior.push_back(_enemyWarriorFactory);
@@ -86,10 +86,9 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 			EnemyMachineFactory* _enemyMachineFactory = new EnemyMachineFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
 			if (m_positionOrigin != Point::ZERO)
 			{
-				_enemyMachineFactory->LoadPropertiesObjectFromFile(m_positionBuildFactory, m_positionOrigin);
+				_enemyMachineFactory->ResetPositionObject(m_positionBuildFactory, m_positionOrigin);
 				m_positionOrigin = Point::ZERO;
 			}
-
 			m_vecFactoryEnemyMachine.push_back(_enemyMachineFactory);
 			LaunchFillRegion(*m_vecFactoryEnemyMachine[m_vecFactoryEnemyMachine.size() - 1], i_manager, CNT_OBJECT_FACTORY_ENEMY_MACHINE);
 

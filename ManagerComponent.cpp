@@ -8,12 +8,14 @@
 #include "ManagerMachine.h"
 #include "HeroInputComponent.h"
 #include "AIAct.h"
+#include "ManagerObjectAndFile.h"
 #include "AIDirection.h"
 #include "constants.h"
 
 ManagerComponent::ManagerComponent(GameScene& i_gameScene)
 {
 	m_mapLayer		= new MapLayer(i_gameScene);
+	m_managerObjectAndFile = new ManagerObjectAndFile();
 	m_hero			= new HeroGraphicComponent(*m_mapLayer);
 	
 	m_inputComponent = new HeroInputComponent();
@@ -24,6 +26,7 @@ ManagerComponent::ManagerComponent(GameScene& i_gameScene)
 	m_AIAct				= new AIAct();
 	m_AIDirection		= new AIDirection();
 
+	m_managerObjectAndFile->LoadObjectFromFile();
 	m_addObjectFromFile = true;
 	AddObjectFromFile(i_gameScene);
 }
@@ -39,7 +42,7 @@ void ManagerComponent::AddObjectFromFile(GameScene& i_gameScene)
 	StateMachine _stateMachine	= StateMachine::NOTHING;
 	StateFactory _stateFactory	= StateFactory::NOTHING;
 	
-	std::vector<MapLayer::ObjectInFile> _vecObject(m_mapLayer->GetVectorObject());
+	std::vector<ManagerObjectAndFile::ObjectInFile> _vecObject(m_managerObjectAndFile->GetVectorObject());
 
 	for (int i = 0; i < _vecObject.size(); i++)
 	{

@@ -21,7 +21,7 @@ void ManagerArmy::LaunchFillRegion(const Warrior& i_warrior, ManagerComponent& i
 	m_positionNewWarrior	= i_warrior.getPosition();
 	m_sizeNewWarrior		= i_warrior.getBoundingBox().size;
 
-	i_manager.m_mapLayer->FillRegionFromObject(i_typeWarrior, m_positionNewWarrior, m_sizeNewWarrior);
+	i_manager.m_mapLayer->FillRegionFromObject(i_manager, i_typeWarrior, m_positionNewWarrior, m_sizeNewWarrior);
 	i_manager.m_inputComponent->SetZeroLocation();
 }
 
