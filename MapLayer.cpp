@@ -17,7 +17,6 @@ const int CNT_ZONE_HEIGHT_RESOURCES = 100;
 MapLayer::MapLayer()
 {
 	this->initWithTMXFile(CNT_PATH_TO_RESOURCES + "Map/Map.tmx");
-	AddObjectFromFile();
 }
 
 MapLayer::MapLayer(GameScene& i_parentGameScene)
@@ -44,9 +43,6 @@ MapLayer::MapLayer(GameScene& i_parentGameScene)
 			}
 		}
 	}
-
-	FillRegionForResources();
-	AddObjectFromFile();
 }
 
 void MapLayer::Update(ManagerComponent& i_manager)

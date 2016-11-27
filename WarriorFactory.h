@@ -41,7 +41,6 @@ public:
 private:
 	StateFactoryWarrior				m_stateWarrior;
 	ManagerArmy::StateManagerArmy	m_stateTypeAddWarrior;
-
 };
 
 #endif

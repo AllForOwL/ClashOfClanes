@@ -33,7 +33,6 @@ public:
 	void SetState						(StateMap& i_statemap);
 	int GetQuentityEnemy				(Point i_position);
 	double StatusCells					(Point i_position, int i_typeObject);	// STATUS = { FREE = 1.0, BUSY = 0.0 }
-	void FillRegionForResources			();
 	Point GetPositionShelter			();
 
 

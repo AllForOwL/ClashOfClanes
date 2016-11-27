@@ -83,6 +83,7 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 
 		m_state = Combatant::GOES_TO_TARGET;
 	}
+
 	delete _searchWay;
 }
 
@@ -366,9 +367,12 @@ Knight::~Knight()
 				- wander;
 			};
 
-		Tasks on 20:11:2016
+		Tasks on 28:11:2016
 			+- write sniffer!!!;
 			- refactoring ALL CODE!!!!!
-			- add object after load game;
+			- add object after load game:
+				- write new code !!!necessarily!!!;
+				+ solution:
+					___write in file for object visible and origin position;
 			+ save game, write mapCoordinate in xml!!!
 */

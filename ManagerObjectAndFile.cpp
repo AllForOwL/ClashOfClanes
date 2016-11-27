@@ -14,9 +14,13 @@ ManagerObjectAndFile::ManagerObjectAndFile(ManagerObjectAndFile& i_ManagerObject
 
 }
 
+std::vector<ManagerObjectAndFile::ObjectInFile>& ManagerObjectAndFile::GetVectorObject()
+{
+	return m_vecObject;
+}
+
 void ManagerObjectAndFile::ResetCurrentPosition(GraphicComponent& i_component, Point i_visible, Point i_origin)
 {
-	i_component.ResetPositionObject(i_visible, i_origin);
 }
 
 void ManagerObjectAndFile::LoadObjectFromFile()

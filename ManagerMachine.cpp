@@ -21,7 +21,7 @@ void ManagerMachine::LaunchFillRegion(const Machine& i_machine, ManagerComponent
 	m_positionNewMachine	= i_machine.getPosition();
 	m_sizeNewMachine		= i_machine.getBoundingBox().size;
 
-	i_manager.m_mapLayer->FillRegionFromObject(i_typeMachine, m_positionNewMachine, m_sizeNewMachine);
+	i_manager.m_mapLayer->FillRegionFromObject(i_manager, i_typeMachine, m_positionNewMachine, m_sizeNewMachine);
 	i_manager.m_inputComponent->SetZeroLocation();
 }
 

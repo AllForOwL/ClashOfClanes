@@ -37,11 +37,6 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 			if (i_manager.m_hero->CheckProductionFactoryWarrior())
 			{
 				WarriorFactory* _warriorFactory = new WarriorFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
-				if (m_positionOrigin != Point::ZERO)
-				{
-					_warriorFactory->ResetPositionObject(m_positionBuildFactory, m_positionOrigin);
-					m_positionOrigin = Point::ZERO;
-				}
 				m_vecFactoryWarrior.push_back(_warriorFactory);
 				LaunchFillRegion(*m_vecFactoryWarrior[m_vecFactoryWarrior.size() - 1], i_manager,  CNT_OBJECT_FACTORY_WARRIOR);
 			}
@@ -54,11 +49,6 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 			if (i_manager.m_hero->CheckProductionFactoryMachine())
 			{
 				MachineFactory* _machineFactory = new MachineFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
-				if (m_positionOrigin != Point::ZERO)
-				{
-					_machineFactory->ResetPositionObject(m_positionBuildFactory, m_positionOrigin);
-					m_positionOrigin = Point::ZERO;
-				}
 				m_vecFactoryMachine.push_back(_machineFactory);
 				LaunchFillRegion(*m_vecFactoryMachine[m_vecFactoryMachine.size() - 1], i_manager, CNT_OBJECT_FACTORY_MACHINE);
 			}
@@ -69,11 +59,6 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		case ManagerFactory::ADD_FACTORY_ENEMY_WARRIOR:
 		{
 			EnemyWarriorFactory* _enemyWarriorFactory = new EnemyWarriorFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
-			if (m_positionOrigin != Point::ZERO)
-			{
-				_enemyWarriorFactory->ResetPositionObject(m_positionBuildFactory, m_positionOrigin);
-				m_positionOrigin = Point::ZERO;
-			}
 			m_vecFactoryEnemyWarrior.push_back(_enemyWarriorFactory);
 			LaunchFillRegion(*m_vecFactoryEnemyWarrior[m_vecFactoryEnemyWarrior.size() - 1], i_manager, CNT_OBJECT_FACTORY_ENEMY_WARRIOR);
 
@@ -84,11 +69,6 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		case ManagerFactory::ADD_FACTORY_ENEMY_MACHINE:
 		{
 			EnemyMachineFactory* _enemyMachineFactory = new EnemyMachineFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
-			if (m_positionOrigin != Point::ZERO)
-			{
-				_enemyMachineFactory->ResetPositionObject(m_positionBuildFactory, m_positionOrigin);
-				m_positionOrigin = Point::ZERO;
-			}
 			m_vecFactoryEnemyMachine.push_back(_enemyMachineFactory);
 			LaunchFillRegion(*m_vecFactoryEnemyMachine[m_vecFactoryEnemyMachine.size() - 1], i_manager, CNT_OBJECT_FACTORY_ENEMY_MACHINE);
 
@@ -133,11 +113,6 @@ Point ManagerFactory::GetPositionBuildFactory() const
 void ManagerFactory::SetPositionBuildFactory(Point i_point)
 {
 	m_positionBuildFactory = i_point;
-}
-
-void ManagerFactory::SetPositionOrigin(Point i_origin)
-{
-	m_positionOrigin = i_origin;
 }
 
 void ManagerFactory::SetState(StateManagerFactory& i_state)
