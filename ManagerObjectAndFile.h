@@ -15,7 +15,6 @@ public:
 		int		typeObject;
 		Point	positionVisible;
 		Point	positionOrigin;
-		Point	positionVisibleWithOrigin;
 	};
 
 
@@ -27,8 +26,8 @@ public:
 	void LoadObjectFromFile();
 	void WriteObjectInFile(	int i_typeObject, 
 							Point i_positionVisible,
-							Point i_positionOrigin,
-							Point i_positionVisibleWithOrigin);
+							Point i_positionOrigin
+							);
 
 	std::vector<ObjectInFile>& GetVectorObject();
 

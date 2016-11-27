@@ -17,7 +17,10 @@ MachineFactory::MachineFactory()
 
 }
 
-MachineFactory::MachineFactory(Point i_positionVisible, MapLayer& i_mapLayer) : Factory(i_positionVisible, i_mapLayer, "Castle/FactoryMachine.png")
+MachineFactory::MachineFactory(Point i_positionVisible, Point i_positionOrigin, MapLayer& i_mapLayer) : Factory(i_positionVisible,
+																												i_positionOrigin,
+																												i_mapLayer, 
+																												"Castle/FactoryMachine.png")
 {
 	m_stateMachine	= StateFactoryMachine::NOTHING;
 }

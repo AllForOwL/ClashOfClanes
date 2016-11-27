@@ -20,10 +20,11 @@ EnemyWarriorFactory::EnemyWarriorFactory()
 
 }
 
-EnemyWarriorFactory::EnemyWarriorFactory(Point i_positionVisible, MapLayer& i_mapLayer) : Factory(	i_positionVisible, 
-																									i_mapLayer, 
-																									"Home/render6.png"
-																								 )
+EnemyWarriorFactory::EnemyWarriorFactory(Point i_positionVisible, Point i_positionOrigin, MapLayer& i_mapLayer) : Factory(	i_positionVisible,
+																															i_positionOrigin,
+																															i_mapLayer, 
+																															"Home/render6.png"
+																														 )
 {
 	m_stateWarrior	= StateFactoryWarrior::NOTHING;
 }

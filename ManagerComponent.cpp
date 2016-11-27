@@ -27,8 +27,8 @@ ManagerComponent::ManagerComponent(GameScene& i_gameScene)
 	m_AIDirection		= new AIDirection();
 
 	m_managerObjectAndFile->LoadObjectFromFile();
-	m_addObjectFromFile = false;
-	//AddObjectFromFile(i_gameScene);
+	m_addObjectFromFile = true;
+	AddObjectFromFile(i_gameScene);
 }
 
 
@@ -133,6 +133,7 @@ void ManagerComponent::AddObjectFromFile(GameScene& i_gameScene)
 		{
 			m_managerFactory->SetState(_stateFactory);
 			m_managerFactory->SetPositionBuildFactory(_vecObject[i].positionVisible);
+			m_managerFactory->SetPositionOrigin(_vecObject[i].positionOrigin);
 			m_managerFactory->Update(i_gameScene, *this);
 		}
 		else if (_stateMachine != StateMachine::NOTHING)

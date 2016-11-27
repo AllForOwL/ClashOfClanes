@@ -24,7 +24,7 @@ public:
 	};
 
 	EnemyMachineFactory();
-	EnemyMachineFactory(Point i_positionVisible, MapLayer& i_mapLayer);
+	EnemyMachineFactory(Point i_positionVisible, Point i_positionOrigin,MapLayer& i_mapLayer);
 	EnemyMachineFactory(EnemyMachineFactory& i_EnemyMachineFactory);
 
 	~EnemyMachineFactory();

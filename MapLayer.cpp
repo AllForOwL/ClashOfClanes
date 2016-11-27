@@ -121,7 +121,7 @@ void MapLayer::FillRegionFromObject(ManagerComponent& i_manager, int i_typeObjec
 
 	Point _positionVisibleWithOrigin = _positionVisible + _positionOrigin;	// +
 
-	i_manager.m_managerObjectAndFile->WriteObjectInFile(i_typeObject, _positionVisible, _positionOrigin, _positionVisibleWithOrigin);
+	i_manager.m_managerObjectAndFile->WriteObjectInFile(i_typeObject, _positionVisible, _positionOrigin);
 	
 	for (int i = _positionBegin.x; i < _positionEnd.x; i++)
 	{

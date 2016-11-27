@@ -19,7 +19,10 @@ EnemyMachineFactory::EnemyMachineFactory()
 
 }
 
-EnemyMachineFactory::EnemyMachineFactory(Point i_positionVisible, MapLayer& i_mapLayer) : Factory(i_positionVisible, i_mapLayer, "Home/home2.png")
+EnemyMachineFactory::EnemyMachineFactory(Point i_positionVisible, Point i_positionOrigin, MapLayer& i_mapLayer) : Factory(	i_positionVisible, 
+																															i_positionOrigin,
+																															i_mapLayer, 
+																															"Home/home2.png")
 {
 	m_stateMachine	= StateFactoryMachine::NOTHING;
 }

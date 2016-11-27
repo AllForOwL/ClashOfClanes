@@ -14,7 +14,7 @@ class GraphicComponent : public Sprite
 public:
 	GraphicComponent()
 	{
-
+		m_positionOrigin = Point::ZERO;
 	}
 	virtual ~GraphicComponent(){};
 
@@ -89,14 +89,34 @@ public:
 		m_locationTouch += _positionOrigin;
 	}
 
+	bool ZeroPositionOrigin()
+	{
+		if (m_positionOrigin == Point::ZERO)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	void SetPositionOrigin(Point i_positionOrigin)
+	{
+		m_positionOrigin = i_positionOrigin;
+	}
+
 	void LoadProperties(Point i_positionVisible)
 	{
 		m_positionVisible = i_positionVisible;
 
-		m_positionOrigin = this->getParent()->getPosition();
-		m_positionOrigin.x *= (-1);
-		m_positionOrigin.y *= (-1);
-
+		if (ZeroPositionOrigin())
+		{
+			m_positionOrigin = this->getParent()->getPosition();
+			m_positionOrigin.x *= (-1);
+			m_positionOrigin.y *= (-1);
+		}
+		
 		m_locationTouch = Point::ZERO;
 
 		Rect _box = this->getBoundingBox();

@@ -60,7 +60,6 @@ void ManagerObjectAndFile::LoadObjectFromFile()
 		_object.typeObject = _vecPropertiesObject[0];
 		_object.positionVisible = Point(_vecPropertiesObject[1], _vecPropertiesObject[2]);
 		_object.positionOrigin = Point(_vecPropertiesObject[3], _vecPropertiesObject[4]);
-		_object.positionVisibleWithOrigin = Point(_vecPropertiesObject[5], _vecPropertiesObject[6]);
 
 		m_vecObject.push_back(_object);
 		_readFromFile.get();
@@ -74,8 +73,7 @@ void ManagerObjectAndFile::LoadObjectFromFile()
 
 void ManagerObjectAndFile::WriteObjectInFile(	int i_typeObject,
 												Point i_positionVisible,
-												Point i_positionOrigin,
-												Point i_positionVisibleWithOrigin
+												Point i_positionOrigin
 											)
 {
 	std::ofstream	_fileForWrite;
@@ -83,11 +81,9 @@ void ManagerObjectAndFile::WriteObjectInFile(	int i_typeObject,
 
 	_fileForWrite << "<" << i_typeObject
 		<< " position visible x = " << (int)i_positionVisible.x
-		<< " position visible y = " << (int)i_positionVisible.y
-		<< " position origin x = " << (int)i_positionOrigin.x
-		<< " position origin y = " << (int)i_positionOrigin.y
-		<< " position visiblewithorigin x = " << (int)i_positionVisibleWithOrigin.x
-		<< " position visiblewithorigin y = " << (int)i_positionVisibleWithOrigin.y
+		<< " position visible y = "	<< (int)i_positionVisible.y
+		<< " position origin x = "	<< (int)i_positionOrigin.x
+		<< " position origin y = "	<< (int)i_positionOrigin.y
 		<< " >" << std::endl;
 
 	_fileForWrite.close();
