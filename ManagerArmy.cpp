@@ -32,6 +32,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		case ManagerArmy::ADD_KNIGHT_BLACK:
 		{
 			Knight* _newKnightBlack = new Knight(m_positionWarrior, *i_manager.m_mapLayer, std::string("Warrior/black_knight/attack_1.png"));
+			_newKnightBlack->setPosition(m_positionWarrior);
 			_newKnightBlack->SetTypeObject(CNT_OBJECT_KNIGHT_BLACK);
 			m_vecKnight.push_back(_newKnightBlack);
 			LaunchFillRegion(*m_vecKnight[m_vecKnight.size() - 1], i_manager, CNT_OBJECT_KNIGHT_BLACK);

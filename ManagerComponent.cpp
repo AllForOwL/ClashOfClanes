@@ -131,10 +131,12 @@ void ManagerComponent::AddObjectFromFile(GameScene& i_gameScene)
 		}
 		else if (_stateFactory != StateFactory::NOTHING)
 		{
+			//m_managerObjectAndFile->WriteObjectInFile(_vecObject[i].typeObject, _vecObject[i].positionVisible, _vecObject[i].positionOrigin);
+			m_mapLayer->setPosition(_vecObject[i].positionOrigin);
 			m_managerFactory->SetState(_stateFactory);
 			m_managerFactory->SetPositionBuildFactory(_vecObject[i].positionVisible);
-			m_managerFactory->SetPositionOrigin(_vecObject[i].positionOrigin);
 			m_managerFactory->Update(i_gameScene, *this);
+			m_mapLayer->setPosition(Point::ZERO);
 		}
 		else if (_stateMachine != StateMachine::NOTHING)
 		{

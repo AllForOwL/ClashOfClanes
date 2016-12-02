@@ -6,6 +6,7 @@
 USING_NS_CC;
 
 class GraphicComponent;
+class Factory;
 
 class ManagerObjectAndFile
 {

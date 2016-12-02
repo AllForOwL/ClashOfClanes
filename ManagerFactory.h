@@ -37,9 +37,10 @@ public:
 	void SetPositionBuildFactory(Point i_point);
 	Point GetPositionBuildFactory() const;
 
-	void SetPositionOrigin(Point i_positionOrigin);
-
 	void LaunchFillRegion(const Factory& i_factory, ManagerComponent& i_manager, int i_typeFactory);
+
+
+	void AddOnScene(Factory& i_newObject, Point i_position);
 
 private:
 	std::vector<Factory*>	m_vecFactoryMachine;

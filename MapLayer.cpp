@@ -109,19 +109,21 @@ std::vector<std::vector<int>>& MapLayer::GetMapCoordinate()
 	return m_mapCoordinate;
 }
 
+
 void MapLayer::FillRegionFromObject(ManagerComponent& i_manager, int i_typeObject, Point i_positionObject, Size i_size)
 {
-	Point _positionVisible = i_positionObject;	// +
-
 	Point _positionBegin = Point(i_positionObject.x - (i_size.width / 2), i_positionObject.y + (i_size.height / 2));
 	Point _positionEnd	 = Point(i_positionObject.x + (i_size.width / 2), i_positionObject.y - (i_size.height / 2));
-	Point _positionOrigin = this->getPosition();	// +
-	_positionOrigin.x *= (-1);
-	_positionOrigin.y *= (-1);
+	Point _positionOrigin = this->getPosition();
 
-	Point _positionVisibleWithOrigin = _positionVisible + _positionOrigin;	// +
-
-	i_manager.m_managerObjectAndFile->WriteObjectInFile(i_typeObject, _positionVisible, _positionOrigin);
+	if (_positionOrigin.x < 0)
+	{
+		_positionOrigin.x *= (-1);
+	}
+	if (_positionOrigin.y < 0)
+	{
+		_positionOrigin.y *= (-1);
+	}
 	
 	for (int i = _positionBegin.x; i < _positionEnd.x; i++)
 	{

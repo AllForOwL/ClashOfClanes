@@ -20,9 +20,9 @@ public:
 
 	virtual void Update(ManagerComponent& i_manager) = 0;
 
-	void ShowMenu()
+	virtual void ShowMenu()
 	{
-		Point _positionWarriorMenu = Point(m_positionOriginWithVisible.x + (m_rectVisible.size.width / 2),
+		Point _positionWarriorMenu = Point(m_positionOriginWithVisible.x + (m_rectOriginWithVisible.size.width / 2),
 			m_positionOriginWithVisible.y);
 		for (int i = 0; i < m_vecSprites.size(); i++)
 		{
@@ -54,9 +54,9 @@ public:
 		}
 	}
 
-	void LoadPosition()
+	void LoadPosition() 
 	{
-		Point _positionWarrior = Point(m_positionVisible.x, m_positionVisible.y - (m_rectVisible.size.height / 2));
+		Point _positionWarrior = Point(m_positionOriginWithVisible.x, m_positionOriginWithVisible.y - (m_rectOriginWithVisible.size.height / 2));
 		for (int i = 0; i < 5; i++)
 		{
 			for (int j = 0; j < 5; j++)
@@ -80,41 +80,29 @@ public:
 		}
 	}
 
-	void ConvertToOrigin()
+	void ConvertToOrigin(Point& i_locationTouch)
 	{
 		Point _positionOrigin = this->getParent()->getPosition();
 		_positionOrigin.x *= (-1);
 		_positionOrigin.y *= (-1);
 
-		m_locationTouch += _positionOrigin;
+		i_locationTouch += _positionOrigin;
 	}
 
-	bool ZeroPositionOrigin()
-	{
-		if (m_positionOrigin == Point::ZERO)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	void SetPositionOrigin(Point i_positionOrigin)
-	{
-		m_positionOrigin = i_positionOrigin;
-	}
-
-	void LoadProperties(Point i_positionVisible)
+	// add for knight position 
+	void LoadProperties(Point i_positionVisible, Point i_positionOrigin)
 	{
 		m_positionVisible = i_positionVisible;
-
-		if (ZeroPositionOrigin())
+		m_positionOrigin = i_positionOrigin;
+		
+		if (m_positionOrigin.x < 0)
 		{
-			m_positionOrigin = this->getParent()->getPosition();
 			m_positionOrigin.x *= (-1);
+		}
+		if (m_positionOrigin.y < 0)
+		{
 			m_positionOrigin.y *= (-1);
+
 		}
 		
 		m_locationTouch = Point::ZERO;

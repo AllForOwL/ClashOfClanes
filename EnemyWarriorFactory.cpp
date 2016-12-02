@@ -20,11 +20,10 @@ EnemyWarriorFactory::EnemyWarriorFactory()
 
 }
 
-EnemyWarriorFactory::EnemyWarriorFactory(Point i_positionVisible, Point i_positionOrigin, MapLayer& i_mapLayer) : Factory(	i_positionVisible,
-																															i_positionOrigin,
-																															i_mapLayer, 
-																															"Home/render6.png"
-																														 )
+EnemyWarriorFactory::EnemyWarriorFactory(Point i_positionVisible, MapLayer& i_mapLayer) : Factory(	i_positionVisible,
+																									i_mapLayer,
+																									"Home/render6.png"
+																								 )
 {
 	m_stateWarrior	= StateFactoryWarrior::NOTHING;
 }
@@ -96,7 +95,7 @@ void EnemyWarriorFactory::LoadNameForSprites()
 		case StateFactoryWarrior::LISTEN:
 		{
 			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
-			ConvertToOrigin();
+			ConvertToOrigin(m_locationTouch);
 			if (DetermineCommand())
 			{
 				i_manager.m_inputComponent->SetZeroLocation();
@@ -106,7 +105,7 @@ void EnemyWarriorFactory::LoadNameForSprites()
 		case StateFactoryWarrior::NOTHING:
 		{
 			m_locationTouch		= i_manager.m_inputComponent->GetLocationTouch();
-			ConvertToOrigin();
+			ConvertToOrigin(m_locationTouch);
 			if (m_rectOriginWithVisible.containsPoint(m_locationTouch) && m_locationTouch != Point::ZERO)
 			{
 				if (m_vecNameForSprites.empty())

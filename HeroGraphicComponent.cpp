@@ -34,7 +34,7 @@ HeroGraphicComponent::HeroGraphicComponent(MapLayer& i_parentMapLayer)
 	i_parentMapLayer.addChild(this);
 	this->initWithFile(CNT_PATH_TO_RESOURCES + "Hero/Walk_1.png");
 
-	GraphicComponent::LoadProperties(Point(100, 100));
+	GraphicComponent::LoadProperties(Point(100, 100), i_parentMapLayer.getPosition());
 
 	m_coin				= CNT_COINT_IN_BEGIN;
 	m_positionTarget	= Point::ZERO;

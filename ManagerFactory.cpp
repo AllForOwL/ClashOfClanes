@@ -8,10 +8,11 @@
 #include "HeroInputComponent.h"
 #include "EnemyWarriorFactory.h"
 #include "EnemyMachineFactory.h"
+#include "ManagerObjectAndFile.h"
 
 ManagerFactory::ManagerFactory()
 {
-	m_positionOrigin = Point::ZERO;
+	
 }
 
 ManagerFactory::ManagerFactory(ManagerFactory& i_ManagerFactory)
@@ -36,9 +37,10 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		{
 			if (i_manager.m_hero->CheckProductionFactoryWarrior())
 			{
-				WarriorFactory* _warriorFactory = new WarriorFactory(m_positionBuildFactory, m_positionOrigin, *i_manager.m_mapLayer);
+				WarriorFactory* _warriorFactory = new WarriorFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
 				m_vecFactoryWarrior.push_back(_warriorFactory);
 				LaunchFillRegion(*m_vecFactoryWarrior[m_vecFactoryWarrior.size() - 1], i_manager,  CNT_OBJECT_FACTORY_WARRIOR);
+				i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_FACTORY_WARRIOR, m_positionBuildFactory, (i_manager.m_mapLayer->getPosition() * -1));
 			}
 			m_stateManagerFactory = ManagerFactory::NOTHING;
 
@@ -48,7 +50,7 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		{
 			if (i_manager.m_hero->CheckProductionFactoryMachine())
 			{
-				MachineFactory* _machineFactory = new MachineFactory(m_positionBuildFactory, m_positionOrigin, *i_manager.m_mapLayer);
+				MachineFactory* _machineFactory = new MachineFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
 				m_vecFactoryMachine.push_back(_machineFactory);
 				LaunchFillRegion(*m_vecFactoryMachine[m_vecFactoryMachine.size() - 1], i_manager, CNT_OBJECT_FACTORY_MACHINE);
 			}
@@ -58,7 +60,7 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerFactory::ADD_FACTORY_ENEMY_WARRIOR:
 		{
-			EnemyWarriorFactory* _enemyWarriorFactory = new EnemyWarriorFactory(m_positionBuildFactory, m_positionOrigin,*i_manager.m_mapLayer);
+			EnemyWarriorFactory* _enemyWarriorFactory = new EnemyWarriorFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
 			m_vecFactoryEnemyWarrior.push_back(_enemyWarriorFactory);
 			LaunchFillRegion(*m_vecFactoryEnemyWarrior[m_vecFactoryEnemyWarrior.size() - 1], i_manager, CNT_OBJECT_FACTORY_ENEMY_WARRIOR);
 
@@ -68,7 +70,7 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerFactory::ADD_FACTORY_ENEMY_MACHINE:
 		{
-			EnemyMachineFactory* _enemyMachineFactory = new EnemyMachineFactory(m_positionBuildFactory, m_positionOrigin,*i_manager.m_mapLayer);
+			EnemyMachineFactory* _enemyMachineFactory = new EnemyMachineFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
 			m_vecFactoryEnemyMachine.push_back(_enemyMachineFactory);
 			LaunchFillRegion(*m_vecFactoryEnemyMachine[m_vecFactoryEnemyMachine.size() - 1], i_manager, CNT_OBJECT_FACTORY_ENEMY_MACHINE);
 
@@ -113,11 +115,6 @@ Point ManagerFactory::GetPositionBuildFactory() const
 void ManagerFactory::SetPositionBuildFactory(Point i_point)
 {
 	m_positionBuildFactory = i_point;
-}
-
-void ManagerFactory::SetPositionOrigin(Point i_positionOrigin)
-{
-	m_positionOrigin = i_positionOrigin;
 }
 
 void ManagerFactory::SetState(StateManagerFactory& i_state)

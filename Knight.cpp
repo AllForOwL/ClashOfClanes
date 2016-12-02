@@ -97,7 +97,7 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 			if (++m_iterInWayWalk == m_vecWayWalkKnight.size())
 			{
 				--m_iterInWayWalk;
-				LoadProperties(this->getPosition());
+				LoadProperties(this->getPosition(), i_manager.m_mapLayer->getPosition());
 				m_state = StateCombatant::GOES_BACK;
 			}
 			else
@@ -112,7 +112,7 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 			this->setPosition(m_vecWayWalkKnight[m_iterInWayWalk]);
 			if (--m_iterInWayWalk == 0)
 			{
-				LoadProperties(this->getPosition() + this->getParent()->getPosition());
+				LoadProperties(this->getPosition() + this->getParent()->getPosition(), i_manager.m_mapLayer->getPosition());
 				m_state	=	StateCombatant::LISTEN;
 				m_vecWayWalkKnight.clear();
 			}
@@ -249,7 +249,8 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 		case StateCombatant::NOTHING:
 		{
 			m_locationTouch	= i_manager.m_inputComponent->GetLocationTouch();
-			ConvertToOrigin();
+			m_locationTouch += (i_manager.m_mapLayer->getPosition() * -1);
+			ConvertToOrigin(m_locationTouch);
 			if (m_rectOriginWithVisible.containsPoint(m_locationTouch))
 			{
 				if (m_vecNameForSprites.empty())
@@ -269,7 +270,7 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 		case StateCombatant::LISTEN:
 		{
 			m_locationTouch	= i_manager.m_inputComponent->GetLocationTouch();
-			ConvertToOrigin();
+			ConvertToOrigin(m_locationTouch);
 			if (DetermineCommand())
 			{	
 				i_manager.m_inputComponent->SetZeroLocation();

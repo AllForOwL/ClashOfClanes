@@ -22,7 +22,7 @@ public:
 	};
 
 	MachineFactory();
-	MachineFactory(Point i_positionVisible, Point i_positionOrigin, MapLayer& i_mapLayer);
+	MachineFactory(Point i_positionVisible, MapLayer& i_mapLayer);
 	MachineFactory(MachineFactory& i_machineFactory);
 
 	~MachineFactory();

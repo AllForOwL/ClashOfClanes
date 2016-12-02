@@ -17,10 +17,9 @@ MachineFactory::MachineFactory()
 
 }
 
-MachineFactory::MachineFactory(Point i_positionVisible, Point i_positionOrigin, MapLayer& i_mapLayer) : Factory(i_positionVisible,
-																												i_positionOrigin,
-																												i_mapLayer, 
-																												"Castle/FactoryMachine.png")
+MachineFactory::MachineFactory(Point i_positionVisible, MapLayer& i_mapLayer) : Factory(i_positionVisible,
+																						i_mapLayer, 
+																						"Castle/FactoryMachine.png")
 {
 	m_stateMachine	= StateFactoryMachine::NOTHING;
 }
@@ -69,7 +68,7 @@ void MachineFactory::LoadNameForSprites()
 		case StateFactoryMachine::NOTHING:
 		{
 			m_locationTouch		= i_manager.m_inputComponent->GetLocationTouch();
-			ConvertToOrigin();
+			ConvertToOrigin(m_locationTouch);
 			if (m_rectOriginWithVisible.containsPoint(m_locationTouch))
 			{
 				if (m_vecNameForSprites.empty())
@@ -88,7 +87,7 @@ void MachineFactory::LoadNameForSprites()
 		case StateFactoryMachine::LISTEN:
 		{
 			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
-			ConvertToOrigin();
+			ConvertToOrigin(m_locationTouch);
 			if (DetermineCommand())
 			{
 				i_manager.m_inputComponent->SetZeroLocation();

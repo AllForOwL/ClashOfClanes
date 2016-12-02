@@ -12,7 +12,6 @@ class MapLayer : public TMXTiledMap
 {
 public:
 
-
 	enum StateMap
 	{
 		MOVE_UP,

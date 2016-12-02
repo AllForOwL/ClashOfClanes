@@ -25,7 +25,7 @@ public:
 	};
 
 	EnemyWarriorFactory();
-	EnemyWarriorFactory(Point i_positionVisible, Point i_positionOrigin,MapLayer& i_mapLayer);
+	EnemyWarriorFactory(Point i_positionVisible, MapLayer& i_mapLayer);
 	EnemyWarriorFactory(EnemyWarriorFactory& i_EnemyWarriorFactory);
 
 	~EnemyWarriorFactory();

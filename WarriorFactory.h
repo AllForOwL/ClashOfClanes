@@ -24,7 +24,7 @@ public:
 	};
 
 	WarriorFactory();
-	WarriorFactory(Point i_positionVisible, Point i_positionOrigin, MapLayer& i_mapLayer);
+	WarriorFactory(Point i_positionVisible, MapLayer& i_mapLayer);
 	WarriorFactory(WarriorFactory& i_warriorFactory);
 
 	~WarriorFactory();

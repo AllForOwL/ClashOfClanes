@@ -1,5 +1,6 @@
 #include "ManagerObjectAndFile.h"
 #include "GraphicComponent.h"
+#include "MapLayer.h"
 #include "constants.h"
 #include <fstream>
 
@@ -19,8 +20,11 @@ std::vector<ManagerObjectAndFile::ObjectInFile>& ManagerObjectAndFile::GetVector
 	return m_vecObject;
 }
 
+
+
 void ManagerObjectAndFile::ResetCurrentPosition(GraphicComponent& i_component, Point i_visible, Point i_origin)
 {
+
 }
 
 void ManagerObjectAndFile::LoadObjectFromFile()
