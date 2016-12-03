@@ -1,6 +1,11 @@
 #include "ManagerObjectAndFile.h"
 #include "GraphicComponent.h"
 #include "MapLayer.h"
+#include "ManagerArmy.h"
+#include "ManagerMachine.h"
+#include "ManagerFactory.h"
+#include "ManagerComponent.h"
+#include "GameScene.h"
 #include "constants.h"
 #include <fstream>
 
@@ -25,6 +30,128 @@ std::vector<ManagerObjectAndFile::ObjectInFile>& ManagerObjectAndFile::GetVector
 void ManagerObjectAndFile::ResetCurrentPosition(GraphicComponent& i_component, Point i_visible, Point i_origin)
 {
 
+}
+
+void ManagerObjectAndFile::AddObjectFromFile(GameScene& i_gameScene, ManagerComponent& i_manager)
+{
+	using StateArmy		= ManagerArmy::StateManagerArmy;
+	using StateMachine	= ManagerMachine::StateManagerMachine;
+	using StateFactory	= ManagerFactory::StateManagerFactory;
+
+	StateArmy _stateArmy		= StateArmy::NOTHING;
+	StateMachine _stateMachine	= StateMachine::NOTHING;
+	StateFactory _stateFactory	= StateFactory::NOTHING;
+	
+	for (int i = 0; i < m_vecObject.size(); i++)
+	{
+		_stateArmy		= StateArmy::NOTHING;
+		_stateMachine	= StateMachine::NOTHING;
+		_stateFactory	= StateFactory::NOTHING;
+		switch (m_vecObject[i].typeObject)
+		{
+			case CNT_OBJECT_FACTORY_WARRIOR:
+			{
+				_stateFactory = StateFactory::ADD_FACTORY_WARRIOR;
+				break;
+			}
+			case CNT_OBJECT_FACTORY_MACHINE:
+			{
+				_stateFactory = StateFactory::ADD_FACTORY_MACHINE;
+				break;
+			}
+			case CNT_OBJECT_FACTORY_ENEMY_WARRIOR:
+			{
+				_stateFactory = StateFactory::ADD_FACTORY_ENEMY_WARRIOR;
+				break;
+			}
+			case CNT_OBJECT_FACTORY_ENEMY_MACHINE:
+			{
+				_stateFactory = StateFactory::ADD_FACTORY_ENEMY_MACHINE;
+				break;
+			}
+			case CNT_OBJECT_KNIGHT_BLACK:
+			{
+				_stateArmy = StateArmy::ADD_KNIGHT_BLACK;
+				break;
+			}
+			case CNT_OBJECT_KNIGHT_BRONZE:
+			{
+				_stateArmy = StateArmy::ADD_KNIGHT_BRONZE;
+				break;
+			}
+			case CNT_OBJECT_KNIGHT_SILVER:
+			{
+				_stateArmy = StateArmy::ADD_KNIGHT_SILVER;
+				break;
+			}
+			case CNT_OBJECT_ENEMY_BOWMAN:
+			{
+				_stateArmy = StateArmy::ADD_ENEMY_BOWMAN;
+				break;
+			}
+			case CNT_OBJECT_ENEMY_KNIGHT:
+			{
+				_stateArmy = StateArmy::ADD_ENEMY_KNIGHT;
+				break;
+			}
+			case CNT_OBJECT_ENEMY_WIZARD:
+			{
+				_stateArmy = StateArmy::ADD_ENEMY_WIZARD;
+				break;
+			}
+			case CNT_OBJECT_ENEMY_PALADIN:
+			{
+				_stateArmy = StateArmy::ADD_ENEMY_PALADIN;
+				break;
+			}
+			case CNT_OBJECT_ENEMY_OCTOPEDE:
+			{
+				_stateMachine = StateMachine::ADD_ENEMY_OCTOPEDE;
+				break;
+			}
+			case CNT_OBJECT_ENEMY_BRAIN:
+			{
+				_stateMachine = StateMachine::ADD_ENEMY_BRAIN;
+				break;
+			}
+			case CNT_OBJECT_ENEMY_TURTLE:
+			{
+				_stateMachine = StateMachine::ADD_ENEMY_TURTLE;
+				break;
+			}
+		}
+
+		if (_stateArmy != StateArmy::NOTHING)
+		{
+			i_manager.m_mapLayer->setPosition(m_vecObject[i].positionOrigin);
+			i_manager.m_managerArmy->SetState(_stateArmy);
+			i_manager.m_managerArmy->SetPositionForWarrior(m_vecObject[i].positionVisible);
+			i_manager.m_managerArmy->Update(i_gameScene, i_manager);
+			i_manager.m_mapLayer->setPosition(Point::ZERO);
+		}
+		else if (_stateFactory != StateFactory::NOTHING)
+		{
+			i_manager.m_mapLayer->setPosition(m_vecObject[i].positionOrigin);
+			i_manager.m_managerFactory->SetState(_stateFactory);
+			i_manager.m_managerFactory->SetPositionBuildFactory(m_vecObject[i].positionVisible);
+			i_manager.m_managerFactory->Update(i_gameScene, i_manager);
+			i_manager.m_mapLayer->setPosition(Point::ZERO);
+		}
+		else if (_stateMachine != StateMachine::NOTHING)
+		{
+			i_manager.m_mapLayer->setPosition(m_vecObject[i].positionOrigin);
+			i_manager.m_managerMachine->SetState(_stateMachine);
+			i_manager.m_managerMachine->SetPositionForMachine(m_vecObject[i].positionVisible);
+			i_manager.m_managerMachine->Update(i_gameScene, i_manager);
+			i_manager.m_mapLayer->setPosition(Point::ZERO);
+		}
+	}
+}
+
+void ManagerObjectAndFile::AddObjectOnMap(GameScene& i_gameScene, ManagerComponent& i_manager)
+{
+	LoadObjectFromFile();
+	AddObjectFromFile(i_gameScene, i_manager);
 }
 
 void ManagerObjectAndFile::LoadObjectFromFile()

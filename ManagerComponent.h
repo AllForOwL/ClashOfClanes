@@ -25,8 +25,6 @@ public:
 
 	void Update(GameScene& i_gameScene);
 
-	void AddObjectFromFile(GameScene& i_gameScene);
-
 public:
 	MapLayer*				m_mapLayer;
 	HeroGraphicComponent*	m_hero;
@@ -38,8 +36,6 @@ public:
 	AIAct*					m_AIAct;
 	AIDirection*			m_AIDirection;
 	ManagerObjectAndFile*	m_managerObjectAndFile;
-
-	bool	m_addObjectFromFile;
 };
 
 #endif

@@ -7,6 +7,8 @@ USING_NS_CC;
 
 class GraphicComponent;
 class Factory;
+class GameScene;
+class ManagerComponent;
 
 class ManagerObjectAndFile
 {
@@ -24,7 +26,11 @@ public:
 
 	void ResetCurrentPosition(GraphicComponent& i_component, Point i_visible, Point i_origin);
 
+	void AddObjectFromFile(GameScene& i_gameScene, ManagerComponent& i_manager);
 	void LoadObjectFromFile();
+
+	void AddObjectOnMap(GameScene& i_gameScene, ManagerComponent& i_manager);
+
 	void WriteObjectInFile(	int i_typeObject, 
 							Point i_positionVisible,
 							Point i_positionOrigin

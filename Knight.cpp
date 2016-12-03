@@ -15,12 +15,12 @@ const Point	CNT_POSITION_GOLD	= Point(200, 200);
 const Point CNT_POSITION_OIL	= Point(400, 400);
 const Point CNT_POSITION_TREE	= Point(600, 600);
 
-const Point	CNT_POSITION_SHELTER	=	Point(700, 700);
+const Point	CNT_POSITION_SHELTER = Point(700, 700);
 
-const	int	CNT_ATTACK	=	0;
-const	int	CNT_RUN		=	1;
-const	int	CNT_WANDER	=	2;
-const	int	CNT_HIDE	=	3;
+const int CNT_ATTACK	= 0;
+const int CNT_RUN		= 1;
+const int CNT_WANDER	= 2;
+const int CNT_HIDE		= 3;
 
 Knight::Knight()
 {
@@ -376,4 +376,8 @@ Knight::~Knight()
 				+ solution:
 					___write in file for object visible and origin position;
 			+ save game, write mapCoordinate in xml!!!
+
+			Tasks on 03:12:2016
+			 + load object from file;
+			 - refactoring All code;
 */

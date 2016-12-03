@@ -109,7 +109,6 @@ std::vector<std::vector<int>>& MapLayer::GetMapCoordinate()
 	return m_mapCoordinate;
 }
 
-
 void MapLayer::FillRegionFromObject(ManagerComponent& i_manager, int i_typeObject, Point i_positionObject, Size i_size)
 {
 	Point _positionBegin = Point(i_positionObject.x - (i_size.width / 2), i_positionObject.y + (i_size.height / 2));
