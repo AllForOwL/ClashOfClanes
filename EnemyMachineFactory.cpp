@@ -156,7 +156,6 @@ EnemyMachineFactory::~EnemyMachineFactory()
 
 }
 
-
 /*
  Hero has goes on map
 */

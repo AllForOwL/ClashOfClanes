@@ -89,7 +89,6 @@ public:
 		i_locationTouch += _positionOrigin;
 	}
 
-	// add for knight position 
 	virtual void LoadProperties(Point i_positionVisible, Point i_positionOrigin)
 	{
 		m_positionVisible = i_positionVisible;
