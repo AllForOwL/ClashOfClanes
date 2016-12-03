@@ -103,8 +103,8 @@ void EnemyMachineFactory::LoadNameForSprites()
 					LoadSprites();
 				}
 
-				ShowMenu();
 				LoadPosition();
+				ShowMenu();
 				m_stateMachine	= StateFactoryMachine::LISTEN;
 				i_manager.m_inputComponent->SetZeroLocation();
 			}

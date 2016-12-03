@@ -11,28 +11,11 @@ EnemyMachine::EnemyMachine()
 
 }
 
-EnemyMachine::EnemyMachine(std::string i_EnemyMachine, MapLayer& i_parentMapLayer) : Machine(i_parentMapLayer)
+EnemyMachine::EnemyMachine(Point i_positionVisible, MapLayer& i_parentMapLayer, std::string i_fileMachine) : Machine(i_positionVisible,
+																													 i_parentMapLayer,
+																													 i_fileMachine)
 {			
-	if (i_EnemyMachine == CNT_TYPE_OCTOPEDE)
-	{
-		this->initWithFile(CNT_PATH_TO_RESOURCES + "Enemy/Machine/Octopede.png");
-		m_speed			= CNT_SPEED_OCTOPEDE;
-		m_typeObject	= CNT_OBJECT_ENEMY_OCTOPEDE;	
-	}
-	else if (i_EnemyMachine == CNT_TYPE_BRAIN)
-	{
-		this->initWithFile(CNT_PATH_TO_RESOURCES + "Enemy/Machine/Brain.png");
-		m_speed			= CNT_SPEED_BRAIN;
-		m_typeObject	= CNT_OBJECT_ENEMY_BRAIN;
-	}
-	else if (i_EnemyMachine == CNT_TYPE_TURTLE)
-	{
-		this->initWithFile(CNT_PATH_TO_RESOURCES + "Enemy/Machine/Turtle.png");
-		m_typeObject	= CNT_OBJECT_ENEMY_TURTLE;
-	}
 
-	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 13,
-		GameScene::m_visibleSize.height / this->getContentSize().height / 13);
 }
 
 EnemyMachine::EnemyMachine(EnemyMachine& EnemyMachine)

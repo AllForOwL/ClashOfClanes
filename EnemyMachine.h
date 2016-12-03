@@ -13,7 +13,7 @@ class EnemyMachine : public Machine
 {
 public:
 	EnemyMachine();
-	EnemyMachine(std::string i_typeEnemyMachine, MapLayer& i_parentMapLayer);
+	EnemyMachine(Point i_positionVisible, MapLayer& i_parentMapLayer, std::string i_fileMachine);
 	EnemyMachine(EnemyMachine& heroGraphiComponent);
 
 	~EnemyMachine();

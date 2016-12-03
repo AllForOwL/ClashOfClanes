@@ -53,6 +53,7 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 				MachineFactory* _machineFactory = new MachineFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
 				m_vecFactoryMachine.push_back(_machineFactory);
 				LaunchFillRegion(*m_vecFactoryMachine[m_vecFactoryMachine.size() - 1], i_manager, CNT_OBJECT_FACTORY_MACHINE);
+				i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_FACTORY_MACHINE, m_positionBuildFactory, (i_manager.m_mapLayer->getPosition() * -1));
 			}
 			m_stateManagerFactory = ManagerFactory::NOTHING;
 
@@ -63,6 +64,7 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 			EnemyWarriorFactory* _enemyWarriorFactory = new EnemyWarriorFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
 			m_vecFactoryEnemyWarrior.push_back(_enemyWarriorFactory);
 			LaunchFillRegion(*m_vecFactoryEnemyWarrior[m_vecFactoryEnemyWarrior.size() - 1], i_manager, CNT_OBJECT_FACTORY_ENEMY_WARRIOR);
+			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_FACTORY_ENEMY_WARRIOR, m_positionBuildFactory, (i_manager.m_mapLayer->getPosition() * -1));
 
 			m_stateManagerFactory = ManagerFactory::NOTHING;
 
@@ -73,6 +75,7 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 			EnemyMachineFactory* _enemyMachineFactory = new EnemyMachineFactory(m_positionBuildFactory, *i_manager.m_mapLayer);
 			m_vecFactoryEnemyMachine.push_back(_enemyMachineFactory);
 			LaunchFillRegion(*m_vecFactoryEnemyMachine[m_vecFactoryEnemyMachine.size() - 1], i_manager, CNT_OBJECT_FACTORY_ENEMY_MACHINE);
+			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_FACTORY_ENEMY_MACHINE, m_positionBuildFactory, (i_manager.m_mapLayer->getPosition() * -1));
 
 			m_stateManagerFactory = ManagerFactory::NOTHING;
 
@@ -126,3 +129,8 @@ ManagerFactory::~ManagerFactory()
 {
 
 }
+
+/*	Tasks on 03:12:2016
+	- add load from file all classes;
+	- refactoring code;
+*/

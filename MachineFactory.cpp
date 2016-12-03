@@ -47,7 +47,7 @@ void MachineFactory::LoadNameForSprites()
 		{
 			if (i_manager.m_hero->CheckProductionTank())
 			{
-				m_timeForComplete	= CNT_TIME_FOR_COMPLETE_TANK;
+				m_timeForComplete			= CNT_TIME_FOR_COMPLETE_TANK;
 				m_startSecond				= GraphicComponent::GetTime();
 				m_stateMachine				= StateFactoryMachine::WORKING;
 				m_stateManagerMachine		= ManagerMachine::StateManagerMachine::ADD_TANK;

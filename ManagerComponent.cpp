@@ -125,13 +125,14 @@ void ManagerComponent::AddObjectFromFile(GameScene& i_gameScene)
 
 		if (_stateArmy != StateArmy::NOTHING)
 		{
+			m_mapLayer->setPosition(_vecObject[i].positionOrigin);
 			m_managerArmy->SetState(_stateArmy);
 			m_managerArmy->SetPositionForWarrior(_vecObject[i].positionVisible);
 			m_managerArmy->Update(i_gameScene, *this);
+			m_mapLayer->setPosition(Point::ZERO);
 		}
 		else if (_stateFactory != StateFactory::NOTHING)
 		{
-			//m_managerObjectAndFile->WriteObjectInFile(_vecObject[i].typeObject, _vecObject[i].positionVisible, _vecObject[i].positionOrigin);
 			m_mapLayer->setPosition(_vecObject[i].positionOrigin);
 			m_managerFactory->SetState(_stateFactory);
 			m_managerFactory->SetPositionBuildFactory(_vecObject[i].positionVisible);
@@ -140,9 +141,11 @@ void ManagerComponent::AddObjectFromFile(GameScene& i_gameScene)
 		}
 		else if (_stateMachine != StateMachine::NOTHING)
 		{
+			m_mapLayer->setPosition(_vecObject[i].positionOrigin);
 			m_managerMachine->SetState(_stateMachine);
 			m_managerMachine->SetPositionForMachine(_vecObject[i].positionVisible);
 			m_managerMachine->Update(i_gameScene, *this);
+			m_mapLayer->setPosition(Point::ZERO);
 		}
 	}
 

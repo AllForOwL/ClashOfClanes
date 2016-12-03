@@ -13,7 +13,7 @@ class HeroMachine : public Machine
 {
 public:
 	HeroMachine();
-	HeroMachine(std::string i_typeHeroMachine, MapLayer& i_parentMapLayer);
+	HeroMachine(Point i_positionVisible, MapLayer& i_parentMapLayer, std::string i_fileMachine);
 	HeroMachine(HeroMachine& i_heroMachine);
 
 	~HeroMachine();

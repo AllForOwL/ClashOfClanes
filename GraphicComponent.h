@@ -90,7 +90,7 @@ public:
 	}
 
 	// add for knight position 
-	void LoadProperties(Point i_positionVisible, Point i_positionOrigin)
+	virtual void LoadProperties(Point i_positionVisible, Point i_positionOrigin)
 	{
 		m_positionVisible = i_positionVisible;
 		m_positionOrigin = i_positionOrigin;

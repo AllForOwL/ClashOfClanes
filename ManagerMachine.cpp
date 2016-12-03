@@ -5,6 +5,7 @@
 #include "EnemyMachine.h"
 #include "HeroMachine.h"
 #include "HeroInputComponent.h"
+#include "ManagerObjectAndFile.h"
 
 ManagerMachine::ManagerMachine()
 {
@@ -31,10 +32,10 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 	{
 		case ManagerMachine::ADD_TANK:
 		{
-			Machine* _newMachine = new HeroMachine(CNT_TYPE_TANK, *i_manager.m_mapLayer);
-			_newMachine->setPosition(m_pointBuildMachine);
+			Machine* _newMachine = new HeroMachine(m_pointBuildMachine, *i_manager.m_mapLayer, std::string("Machine/Tank_1.png"));
 			m_vecMachineTank.push_back(_newMachine);
 			LaunchFillRegion(*_newMachine, i_manager, CNT_OBJECT_TANK);
+			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_TANK, m_pointBuildMachine, (i_manager.m_mapLayer->getPosition() * -1));
 
 			m_stateManagerMachine = StateManagerMachine::NOTHING;
 
@@ -42,10 +43,10 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerMachine::ADD_ENEMY_OCTOPEDE:
 		{
-			Machine* _newOctopede = new EnemyMachine(CNT_TYPE_OCTOPEDE, *i_manager.m_mapLayer);
-			_newOctopede->setPosition(m_pointBuildMachine);
+			Machine* _newOctopede = new EnemyMachine(m_pointBuildMachine, *i_manager.m_mapLayer, std::string("Enemy/Machine/Octopede.png"));
 			m_vecEnemyMachine.push_back(_newOctopede);
 			LaunchFillRegion(*_newOctopede, i_manager, CNT_OBJECT_ENEMY_OCTOPEDE);
+			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_ENEMY_OCTOPEDE, m_pointBuildMachine, (i_manager.m_mapLayer->getPosition() * -1));
 
 			m_stateManagerMachine = StateManagerMachine::NOTHING;
 
@@ -53,10 +54,10 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerMachine::ADD_ENEMY_BRAIN:
 		{
-			Machine* _newBrain = new EnemyMachine(CNT_TYPE_BRAIN, *i_manager.m_mapLayer);
-			_newBrain->setPosition(m_pointBuildMachine);
+			Machine* _newBrain = new EnemyMachine(m_pointBuildMachine, *i_manager.m_mapLayer, std::string("Ememy/Machine/Brain.png"));
 			m_vecEnemyMachine.push_back(_newBrain);
 			LaunchFillRegion(*_newBrain, i_manager, CNT_OBJECT_ENEMY_BRAIN);
+			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_ENEMY_BRAIN, m_pointBuildMachine, (i_manager.m_mapLayer->getPosition() * -1));
 
 			m_stateManagerMachine = StateManagerMachine::NOTHING;
 
@@ -64,10 +65,10 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerMachine::ADD_ENEMY_TURTLE:
 		{
-			Machine* _newTurtle = new EnemyMachine(CNT_TYPE_TURTLE, *i_manager.m_mapLayer);
-			_newTurtle->setPosition(m_pointBuildMachine);
+			Machine* _newTurtle = new EnemyMachine(m_pointBuildMachine, *i_manager.m_mapLayer, std::string("Enemy/Machine/Turtle.png"));
 			m_vecEnemyMachine.push_back(_newTurtle);
 			LaunchFillRegion(*_newTurtle, i_manager, CNT_OBJECT_ENEMY_TURTLE);
+			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_ENEMY_TURTLE, m_pointBuildMachine, (i_manager.m_mapLayer->getPosition() * -1));
 
 			m_stateManagerMachine = StateManagerMachine::NOTHING;
 

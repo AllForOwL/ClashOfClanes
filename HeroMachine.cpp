@@ -11,16 +11,11 @@ HeroMachine::HeroMachine()
 
 }
 
-HeroMachine::HeroMachine(std::string i_typeHeroMachine, MapLayer& i_parentMapLayer) : Machine(i_parentMapLayer)
+HeroMachine::HeroMachine(Point i_positionVisible, MapLayer& i_parentMapLayer, std::string i_fileMachine) : Machine(i_positionVisible,
+																													i_parentMapLayer,
+																													i_fileMachine)
 {			
-	if (i_typeHeroMachine == CNT_TYPE_TANK)
-	{
-		this->initWithFile(CNT_PATH_TO_RESOURCES + "Machine/Tank_1.png");
-		m_typeObject = CNT_OBJECT_TANK;
-	}
 
-	this->setScale(GameScene::m_visibleSize.width / this->getContentSize().width / 13,
-		GameScene::m_visibleSize.height / this->getContentSize().height / 13);
 }
 
 HeroMachine::HeroMachine(HeroMachine& i_heroMachine)
