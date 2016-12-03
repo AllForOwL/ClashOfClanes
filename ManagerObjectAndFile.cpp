@@ -9,6 +9,8 @@
 #include "constants.h"
 #include <fstream>
 
+const int ASCII_CODE_0 = 48;
+const int ASCII_CODE_9 = 57;
 
 ManagerObjectAndFile::ManagerObjectAndFile()
 {
@@ -16,18 +18,6 @@ ManagerObjectAndFile::ManagerObjectAndFile()
 }
 
 ManagerObjectAndFile::ManagerObjectAndFile(ManagerObjectAndFile& i_ManagerObjectAndFile)
-{
-
-}
-
-std::vector<ManagerObjectAndFile::ObjectInFile>& ManagerObjectAndFile::GetVectorObject()
-{
-	return m_vecObject;
-}
-
-
-
-void ManagerObjectAndFile::ResetCurrentPosition(GraphicComponent& i_component, Point i_visible, Point i_origin)
 {
 
 }
@@ -123,27 +113,27 @@ void ManagerObjectAndFile::AddObjectFromFile(GameScene& i_gameScene, ManagerComp
 
 		if (_stateArmy != StateArmy::NOTHING)
 		{
-			i_manager.m_mapLayer->setPosition(m_vecObject[i].positionOrigin);
-			i_manager.m_managerArmy->SetState(_stateArmy);
-			i_manager.m_managerArmy->SetPositionForWarrior(m_vecObject[i].positionVisible);
-			i_manager.m_managerArmy->Update(i_gameScene, i_manager);
-			i_manager.m_mapLayer->setPosition(Point::ZERO);
+			i_manager.m_mapLayer->setPosition				(m_vecObject[i].positionOrigin);
+			i_manager.m_managerArmy->SetState				(_stateArmy);
+			i_manager.m_managerArmy->SetPositionForWarrior	(m_vecObject[i].positionVisible);
+			i_manager.m_managerArmy->Update					(i_gameScene, i_manager);
+			i_manager.m_mapLayer->setPosition				(Point::ZERO);
 		}
 		else if (_stateFactory != StateFactory::NOTHING)
 		{
-			i_manager.m_mapLayer->setPosition(m_vecObject[i].positionOrigin);
-			i_manager.m_managerFactory->SetState(_stateFactory);
-			i_manager.m_managerFactory->SetPositionBuildFactory(m_vecObject[i].positionVisible);
-			i_manager.m_managerFactory->Update(i_gameScene, i_manager);
-			i_manager.m_mapLayer->setPosition(Point::ZERO);
+			i_manager.m_mapLayer->setPosition					(m_vecObject[i].positionOrigin);
+			i_manager.m_managerFactory->SetState				(_stateFactory);
+			i_manager.m_managerFactory->SetPositionBuildFactory	(m_vecObject[i].positionVisible);
+			i_manager.m_managerFactory->Update					(i_gameScene, i_manager);
+			i_manager.m_mapLayer->setPosition					(Point::ZERO);
 		}
 		else if (_stateMachine != StateMachine::NOTHING)
 		{
-			i_manager.m_mapLayer->setPosition(m_vecObject[i].positionOrigin);
-			i_manager.m_managerMachine->SetState(_stateMachine);
-			i_manager.m_managerMachine->SetPositionForMachine(m_vecObject[i].positionVisible);
-			i_manager.m_managerMachine->Update(i_gameScene, i_manager);
-			i_manager.m_mapLayer->setPosition(Point::ZERO);
+			i_manager.m_mapLayer->setPosition					(m_vecObject[i].positionOrigin);
+			i_manager.m_managerMachine->SetState				(_stateMachine);
+			i_manager.m_managerMachine->SetPositionForMachine	(m_vecObject[i].positionVisible);
+			i_manager.m_managerMachine->Update					(i_gameScene, i_manager);
+			i_manager.m_mapLayer->setPosition					(Point::ZERO);
 		}
 	}
 }
@@ -170,7 +160,7 @@ void ManagerObjectAndFile::LoadObjectFromFile()
 		_intermediateString.clear();
 		do
 		{
-			if ((int)_value >= 48 && (int)_value <= 57)
+			if ((int)_value >= ASCII_CODE_0 && (int)_value <= ASCII_CODE_9)
 			{
 				_intermediateString = _value;
 				_readFromFile.get(_value);
@@ -198,6 +188,7 @@ void ManagerObjectAndFile::LoadObjectFromFile()
 
 	_readFromFile.close();
 
+	// clear file from objects;
 	std::ofstream _clearFile(CNT_PATH_TO_RESOURCES + "Map/Map.xml", std::ios::out | std::ios::trunc);
 	_clearFile.close();
 }

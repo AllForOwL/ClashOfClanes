@@ -40,20 +40,20 @@ Knight::Knight(Knight& Knight)
 
 int Knight::GetAct(ManagerComponent&	i_manager)
 {
-	double	_spear	=	0.0;
-	double	_enemy	=	i_manager.m_mapLayer->GetQuentityEnemy(this->getPosition());
+	double _spear	= 0.0;
+	double	_enemy	= i_manager.m_mapLayer->GetQuentityEnemy(this->getPosition());
 	if (m_spear)
 	{
-		_spear		=	1.0;
+		_spear = 1.0;
 	}
-	double	_health	=	0.0;
+	double _health	=	0.0;
 	if (m_health >= 75)
 	{
-		_health	=	2.0;
+		_health	= 2.0;
 	}
 	else if (m_health >= 35)
 	{
-		_health	=	1.0;
+		_health	= 1.0;
 	}
 	int	_actWander = i_manager.m_AIAct->FindAct(_health, _spear, _enemy);
 
@@ -93,16 +93,13 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 	{
 		case StateCombatant::GOES_TO_TARGET:
 		{
+			// here has been code verify position { m_state = StateCombatant::VERIFY_STATUS_POSITION; }
 			this->setPosition(m_vecWayWalkKnight[m_iterInWayWalk]);
 			if (++m_iterInWayWalk == m_vecWayWalkKnight.size())
 			{
 				--m_iterInWayWalk;
 				LoadProperties(this->getPosition(), i_manager.m_mapLayer->getPosition());
 				m_state = StateCombatant::GOES_BACK;
-			}
-			else
-			{
-				//m_state	=	StateCombatant::VERIFY_STATUS_POSITION;
 			}
 
 			break;
@@ -121,24 +118,25 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 		}
 		case StateCombatant::VERIFY_STATUS_POSITION:
 		{
-			int	_statusAct	=	3; //GetAct(i_manager);
+			int	_statusAct = 3; //GetAct(i_manager);
 
-			if (_statusAct	==	CNT_ATTACK)
+			if (_statusAct == CNT_ATTACK)
 			{
-				m_state	=	StateCombatant::ACT_ATTACK;
+				m_state	= StateCombatant::ACT_ATTACK;
 			}
 			else if (_statusAct == CNT_RUN)
 			{
-				m_state	=	StateCombatant::ACT_RUN;
+				m_state	= StateCombatant::ACT_RUN;
 			}
-			else if (_statusAct	==	CNT_WANDER)
+			else if (_statusAct	== CNT_WANDER)
 			{
-				m_state	=	StateCombatant::GOES_TO_TARGET;
+				m_state	= StateCombatant::GOES_TO_TARGET;
 			}
 			else
 			{
-				m_state	=	StateCombatant::ACT_HIDE;
+				m_state	= StateCombatant::ACT_HIDE;
 			}
+
 			break;
 		}
 		case StateCombatant::FIND_GOLD:
@@ -239,9 +237,7 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 				m_iterInWayWalk = 0;
 
 				m_state = StateCombatant::GOES_TO_TARGET;
-
 			}
-
 			m_state	=	StateCombatant::GOES_TO_TARGET;
 
 			break;
@@ -372,12 +368,13 @@ Knight::~Knight()
 			+- write sniffer!!!;
 			- refactoring ALL CODE!!!!!
 			- add object after load game:
-				- write new code !!!necessarily!!!;
+				+ write new code !!!necessarily!!!;
 				+ solution:
 					___write in file for object visible and origin position;
 			+ save game, write mapCoordinate in xml!!!
 
 			Tasks on 03:12:2016
 			 + load object from file;
-			 - refactoring All code;
+			 + refactoring All code;
+			 - ;
 */

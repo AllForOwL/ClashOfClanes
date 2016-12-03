@@ -18,13 +18,18 @@ public:
 		int		typeObject;
 		Point	positionVisible;
 		Point	positionOrigin;
+
+		ObjectInFile() : typeObject(0), 
+						 positionVisible(Point::ZERO),
+						 positionOrigin(Point::ZERO)
+		{
+
+		}
 	};
 
 
 	ManagerObjectAndFile();
 	ManagerObjectAndFile(ManagerObjectAndFile& i_ManagerObjectAndFile);
-
-	void ResetCurrentPosition(GraphicComponent& i_component, Point i_visible, Point i_origin);
 
 	void AddObjectFromFile(GameScene& i_gameScene, ManagerComponent& i_manager);
 	void LoadObjectFromFile();
@@ -36,13 +41,10 @@ public:
 							Point i_positionOrigin
 							);
 
-	std::vector<ObjectInFile>& GetVectorObject();
-
 	~ManagerObjectAndFile();
 
 private:
 	std::vector<ObjectInFile>		m_vecObject;
-
 };
 
 #endif
