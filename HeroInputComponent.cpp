@@ -52,7 +52,6 @@ HeroInputComponent::HeroInputComponent(HeroInputComponent& i_inputComponent)
 		case StateInput::NOTHING:
 		{
 			
-
 			break;
 		}
 	default:

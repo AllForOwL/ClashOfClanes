@@ -66,12 +66,12 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 	_positionOriginMapLayer.x *= (-1);
 	_positionOriginMapLayer.y *= (-1);
 
-	AlgorithmLi*	_searchWay = new AlgorithmLi(	CNT_OBJECT_KNIGHT_BLACK,
-													_positionOriginMapLayer,
-													this->getPosition(),
-													i_positionTarget,
-													i_manager.m_mapLayer->GetMapCoordinate()
-												);
+	AlgorithmLi* _searchWay = new AlgorithmLi( CNT_OBJECT_KNIGHT_BLACK,
+												_positionOriginMapLayer,
+												this->getPosition(),
+												i_positionTarget,
+												i_manager.m_mapLayer->GetMapCoordinate()
+											 );
 
 	if (_searchWay->WayFound())
 	{
@@ -221,12 +221,12 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 
 			Point	_positionShelter = i_manager.m_mapLayer->GetPositionShelter();
 
-			AlgorithmLi* _wayToShelter	=	new AlgorithmLi( CNT_OBJECT_SHELTER,
-															 _positionParent,
-															 this->getPosition(),
-															 CNT_POSITION_SHELTER,
-															 i_manager.m_mapLayer->GetMapCoordinate()
-															);
+			AlgorithmLi* _wayToShelter = new AlgorithmLi( CNT_OBJECT_SHELTER,
+														  _positionParent,
+														  this->getPosition(),
+														  CNT_POSITION_SHELTER,
+														  i_manager.m_mapLayer->GetMapCoordinate()
+														 );
 
 			if (_wayToShelter->WayFound())
 			{
@@ -376,5 +376,7 @@ Knight::~Knight()
 			Tasks on 03:12:2016
 			 + load object from file;
 			 + refactoring All code;
+			 
+			 Tasks on 04:12:2016
 			 - ;
 */

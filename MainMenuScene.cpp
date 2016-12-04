@@ -16,7 +16,7 @@ Scene *MainMenuScene::createScene()
 
 bool MainMenuScene::init()
 {
-	if (!Layer::init())	// if layer not create exit from function
+	if (!Layer::init())	
 	{
 		return false;
 	}

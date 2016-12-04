@@ -39,8 +39,11 @@ public:
 
 	void LaunchFillRegion(const Factory& i_factory, ManagerComponent& i_manager, int i_typeFactory);
 
-
 	void AddOnScene(Factory& i_newObject, Point i_position);
+
+	void CreateFactory(ManagerComponent& i_manager, int i_typeFactory);
+	void CreateFactoryEnemy(ManagerComponent& i_manager, int i_typeFactory);
+	void UpdateAllFactory(ManagerComponent& i_manager);
 
 private:
 	std::vector<Factory*>	m_vecFactoryMachine;

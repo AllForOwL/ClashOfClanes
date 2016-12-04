@@ -15,17 +15,14 @@
 ManagerComponent::ManagerComponent(GameScene& i_gameScene)
 {
 	m_mapLayer				= new MapLayer(i_gameScene);
-	
 	m_managerObjectAndFile	= new ManagerObjectAndFile();
 	m_hero					= new HeroGraphicComponent(*m_mapLayer);
-	
-	m_inputComponent = new HeroInputComponent();
-
-	m_managerArmy		= new ManagerArmy();
-	m_managerMachine	= new ManagerMachine();
-	m_managerFactory	= new ManagerFactory();
-	m_AIAct				= new AIAct();
-	m_AIDirection		= new AIDirection();
+	m_inputComponent		= new HeroInputComponent();
+	m_managerArmy			= new ManagerArmy();
+	m_managerMachine		= new ManagerMachine();
+	m_managerFactory		= new ManagerFactory();
+	m_AIAct					= new AIAct();
+	m_AIDirection			= new AIDirection();
 
 	m_managerObjectAndFile->AddObjectOnMap(i_gameScene, *this);
 }

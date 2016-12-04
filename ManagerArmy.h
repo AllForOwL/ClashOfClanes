@@ -41,6 +41,11 @@ public:
 
 	void LaunchFillRegion(const Warrior& i_warrior, ManagerComponent& i_manager, int i_typeWarrior);
 
+	void CreateWarrior(ManagerComponent& i_manager, int i_typeObject, std::string i_nameFile);
+	void CreateWarriorEnemy(ManagerComponent& i_manager, std::string i_typeEnemy);
+
+	void UpdateAllWarrior(ManagerComponent& i_manager);
+
 private:
 	std::vector<Warrior*>	m_vecKnight;
 	std::vector<Warrior*>	m_vecEnemy;

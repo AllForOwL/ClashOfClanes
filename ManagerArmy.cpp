@@ -26,30 +26,52 @@ void ManagerArmy::LaunchFillRegion(const Warrior& i_warrior, ManagerComponent& i
 	i_manager.m_inputComponent->SetZeroLocation();
 }
 
+void ManagerArmy::CreateWarrior(ManagerComponent& i_manager, int i_typeObject, std::string i_nameFile)
+{
+	Knight* _newKnightBlack = new Knight(m_positionWarrior, *i_manager.m_mapLayer, i_nameFile);
+	_newKnightBlack->setPosition(m_positionWarrior);
+	_newKnightBlack->SetTypeObject(CNT_OBJECT_KNIGHT_BLACK);
+	m_vecKnight.push_back(_newKnightBlack);
+	LaunchFillRegion(*m_vecKnight[m_vecKnight.size() - 1], i_manager, CNT_OBJECT_KNIGHT_BLACK);
+	i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_KNIGHT_BLACK, m_positionWarrior, (i_manager.m_mapLayer->getPosition() * -1));
+}
+
+void ManagerArmy::CreateWarriorEnemy(ManagerComponent& i_manager, std::string i_typeEnemy)
+{
+	EnemyWarrior* _newEnemyBowman = new EnemyWarrior(i_typeEnemy, *i_manager.m_mapLayer);
+	_newEnemyBowman->setPosition(m_positionWarrior);
+	m_vecEnemy.push_back(_newEnemyBowman);
+	LaunchFillRegion(*m_vecEnemy[m_vecEnemy.size() - 1], i_manager, CNT_OBJECT_ENEMY_BOWMAN);
+	i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_ENEMY_BOWMAN, m_positionWarrior, (i_manager.m_mapLayer->getPosition() * -1));
+}
+
+void ManagerArmy::UpdateAllWarrior(ManagerComponent& i_manager)
+{
+	for (int i = 0; i < m_vecEnemy.size(); i++)
+	{
+		m_vecEnemy[i]->Update(i_manager);
+	}
+	for (int i = 0; i < m_vecKnight.size(); i++)
+	{
+		m_vecKnight[i]->Update(i_manager);
+	}
+}
+
 void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 {
 	switch (m_stateManagerArmy)
 	{
 		case ManagerArmy::ADD_KNIGHT_BLACK:
 		{
-			Knight* _newKnightBlack = new Knight(m_positionWarrior, *i_manager.m_mapLayer, std::string("Warrior/black_knight/attack_1.png"));
-			_newKnightBlack->setPosition(m_positionWarrior);
-			_newKnightBlack->SetTypeObject(CNT_OBJECT_KNIGHT_BLACK);
-			m_vecKnight.push_back(_newKnightBlack);
-			LaunchFillRegion(*m_vecKnight[m_vecKnight.size() - 1], i_manager, CNT_OBJECT_KNIGHT_BLACK);
-			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_FACTORY_WARRIOR, m_positionWarrior, (i_manager.m_mapLayer->getPosition() * -1));
-
+			CreateWarrior(i_manager, CNT_OBJECT_KNIGHT_BLACK, CNT_PATH_TO_RESOURCES + "Warrior/black_knight/attack_1.png");
+	
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
 			break;
 		}
 		case ManagerArmy::ADD_KNIGHT_BRONZE:
 		{
-	   		Knight* _newKnightBronze = new Knight(m_positionWarrior, *i_manager.m_mapLayer, std::string("Warrior/bronze_knight/attack_1.png"));
-			_newKnightBronze->SetTypeObject(CNT_OBJECT_KNIGHT_BRONZE);
-			m_vecKnight.push_back(_newKnightBronze);
-			LaunchFillRegion(*m_vecKnight[m_vecKnight.size() - 1], i_manager, CNT_OBJECT_KNIGHT_BRONZE);
-			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_KNIGHT_BRONZE, m_positionWarrior, (i_manager.m_mapLayer->getPosition() * -1));
+	   		CreateWarrior(i_manager, CNT_OBJECT_KNIGHT_BRONZE, CNT_PATH_TO_RESOURCES + "Warrior/bronze_knigt/attack_1.png");
 
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
@@ -57,11 +79,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerArmy::ADD_KNIGHT_SILVER:
 		{
-			Knight* _newKnightSilver = new Knight(m_positionWarrior,  *i_manager.m_mapLayer, std::string("Warrior/silver_knight/attack_1.png"));
-			_newKnightSilver->SetTypeObject(CNT_OBJECT_KNIGHT_SILVER);
-			m_vecKnight.push_back(_newKnightSilver);
-			LaunchFillRegion(*m_vecKnight[m_vecKnight.size() - 1], i_manager, CNT_OBJECT_KNIGHT_SILVER);
-			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_KNIGHT_SILVER, m_positionWarrior, (i_manager.m_mapLayer->getPosition() * -1));
+			CreateWarrior(i_manager, CNT_OBJECT_KNIGHT_SILVER, CNT_PATH_TO_RESOURCES + "Warrior/silver_knight/attack_1.png");
 
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
@@ -69,11 +87,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerArmy::ADD_ENEMY_BOWMAN:
 		{
-			EnemyWarrior* _newEnemyBowman = new EnemyWarrior(CNT_TYPE_BOWMAN, *i_manager.m_mapLayer);
-			_newEnemyBowman->setPosition(m_positionWarrior);
-			m_vecEnemy.push_back(_newEnemyBowman);
-			LaunchFillRegion(*m_vecEnemy[m_vecEnemy.size() - 1], i_manager, CNT_OBJECT_ENEMY_BOWMAN);
-			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_ENEMY_BOWMAN, m_positionWarrior, (i_manager.m_mapLayer->getPosition() * -1));
+			CreateWarriorEnemy(i_manager, CNT_TYPE_BOWMAN); 
 
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
@@ -81,11 +95,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerArmy::ADD_ENEMY_KNIGHT:
 		{
-			EnemyWarrior* _newEnemyBowman = new EnemyWarrior(CNT_TYPE_ENEMY_KNIGHT, *i_manager.m_mapLayer);
-			_newEnemyBowman->setPosition(m_positionWarrior);
-			m_vecEnemy.push_back(_newEnemyBowman);
-			LaunchFillRegion(*m_vecEnemy[m_vecEnemy.size() - 1], i_manager, CNT_OBJECT_ENEMY_KNIGHT);
-			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_ENEMY_KNIGHT, m_positionWarrior, (i_manager.m_mapLayer->getPosition() * -1));
+			CreateWarriorEnemy(i_manager, CNT_TYPE_ENEMY_KNIGHT);
 
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
@@ -93,11 +103,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerArmy::ADD_ENEMY_WIZARD:
 		{
-			EnemyWarrior* _newEnemyBowman = new EnemyWarrior(CNT_TYPE_WIZARD, *i_manager.m_mapLayer);
-			_newEnemyBowman->setPosition(m_positionWarrior);
-			m_vecEnemy.push_back(_newEnemyBowman);
-			LaunchFillRegion(*m_vecEnemy[m_vecEnemy.size() - 1], i_manager, CNT_OBJECT_ENEMY_WIZARD);
-			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_ENEMY_WIZARD, m_positionWarrior, (i_manager.m_mapLayer->getPosition() * -1));
+			CreateWarriorEnemy(i_manager, CNT_TYPE_WIZARD);
 
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
@@ -105,11 +111,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerArmy::ADD_ENEMY_PALADIN:
 		{
-			EnemyWarrior* _newEnemyBowman = new EnemyWarrior(CNT_TYPE_PALADIN, *i_manager.m_mapLayer);
-			_newEnemyBowman->setPosition(m_positionWarrior);
-			m_vecEnemy.push_back(_newEnemyBowman);
-			LaunchFillRegion(*m_vecEnemy[m_vecEnemy.size() - 1], i_manager, CNT_OBJECT_ENEMY_PALADIN);
-			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_ENEMY_PALADIN, m_positionWarrior, (i_manager.m_mapLayer->getPosition() * -1));
+			CreateWarriorEnemy(i_manager, CNT_TYPE_PALADIN);
 
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
@@ -117,21 +119,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerArmy::NOTHING:
 		{				
-			if (m_vecKnight.size())
-			{
-				for (int i = 0; i < m_vecKnight.size(); i++)
-				{
-					m_vecKnight[i]->Update(i_manager);
-				}
-			}
-
-			if (m_vecEnemy.size())
-			{
-				for (int i = 0; i < m_vecEnemy.size(); i++)
-				{
-					m_vecEnemy[i]->Update(i_manager);
-				}
-			}
+			UpdateAllWarrior(i_manager);
 
 			break;
 		}
