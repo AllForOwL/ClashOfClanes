@@ -9,6 +9,7 @@ USING_NS_CC;
 
 class MapLayer;
 
+
 class WarriorFactory : public Factory
 {
 public:
@@ -34,6 +35,11 @@ public:
 	StateFactoryWarrior& GetStateWarrior();
 
 	void SetState(StateFactoryWarrior& i_stateWarrior);
+
+	void StartProduction(int i_timeForComplete,  ManagerArmy::StateManagerArmy i_state);
+	void FinishProduction(ManagerComponent& i_manager);
+
+	void LoadProperties(ManagerComponent& i_manager);
 
 	void LoadNameForSprites();
 	bool DetermineCommand();

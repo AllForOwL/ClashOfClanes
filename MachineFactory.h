@@ -36,6 +36,8 @@ public:
 
 	bool DetermineCommand();
 
+	void LoadProperties(ManagerComponent& i_manager);
+
 private:
 	ManagerMachine::StateManagerMachine m_stateManagerMachine;
 	StateFactoryMachine					m_stateMachine;

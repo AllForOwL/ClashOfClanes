@@ -26,16 +26,42 @@ void ManagerMachine::LaunchFillRegion(const Machine& i_machine, ManagerComponent
 	i_manager.m_inputComponent->SetZeroLocation();
 }
 
+void ManagerMachine::CreateMachine(ManagerComponent& i_manager)
+{
+	Machine* _newMachine = new HeroMachine(m_pointBuildMachine, *i_manager.m_mapLayer, std::string("Machine/Tank_1.png"));
+	m_vecMachineTank.push_back(_newMachine);
+	LaunchFillRegion(*_newMachine, i_manager, CNT_OBJECT_TANK);
+	i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_TANK, m_pointBuildMachine, (i_manager.m_mapLayer->getPosition() * -1));
+}
+
+void ManagerMachine::CreateMachineEnemy(ManagerComponent& i_manager, int i_typeObject, std::string i_nameFile)
+{
+	Machine* _newOctopede = new EnemyMachine(m_pointBuildMachine, *i_manager.m_mapLayer, i_nameFile);
+	m_vecEnemyMachine.push_back(_newOctopede);
+	LaunchFillRegion(*_newOctopede, i_manager, i_typeObject);
+	i_manager.m_managerObjectAndFile->WriteObjectInFile(i_typeObject, m_pointBuildMachine, (i_manager.m_mapLayer->getPosition() * -1));
+}
+
+void ManagerMachine::UpdateAllMachine(ManagerComponent& i_manager)
+{
+	for (int i = 0; i < m_vecEnemyMachine.size(); i++)
+	{
+		m_vecEnemyMachine[i]->Update(i_manager);
+	}
+
+	for (int i = 0; i < m_vecMachineTank.size(); i++)
+	{
+		m_vecMachineTank[i]->Update(i_manager);
+	}
+}
+
 void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 {
 	switch (m_stateManagerMachine)
 	{
 		case ManagerMachine::ADD_TANK:
 		{
-			Machine* _newMachine = new HeroMachine(m_pointBuildMachine, *i_manager.m_mapLayer, std::string("Machine/Tank_1.png"));
-			m_vecMachineTank.push_back(_newMachine);
-			LaunchFillRegion(*_newMachine, i_manager, CNT_OBJECT_TANK);
-			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_TANK, m_pointBuildMachine, (i_manager.m_mapLayer->getPosition() * -1));
+			CreateMachine(i_manager);
 
 			m_stateManagerMachine = StateManagerMachine::NOTHING;
 
@@ -43,10 +69,7 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerMachine::ADD_ENEMY_OCTOPEDE:
 		{
-			Machine* _newOctopede = new EnemyMachine(m_pointBuildMachine, *i_manager.m_mapLayer, std::string("Enemy/Machine/Octopede.png"));
-			m_vecEnemyMachine.push_back(_newOctopede);
-			LaunchFillRegion(*_newOctopede, i_manager, CNT_OBJECT_ENEMY_OCTOPEDE);
-			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_ENEMY_OCTOPEDE, m_pointBuildMachine, (i_manager.m_mapLayer->getPosition() * -1));
+			CreateMachineEnemy(i_manager, CNT_OBJECT_ENEMY_OCTOPEDE, CNT_PATH_TO_RESOURCES + "Enemy/Machine/Octopede.png");
 
 			m_stateManagerMachine = StateManagerMachine::NOTHING;
 
@@ -54,10 +77,7 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerMachine::ADD_ENEMY_BRAIN:
 		{
-			Machine* _newBrain = new EnemyMachine(m_pointBuildMachine, *i_manager.m_mapLayer, std::string("Ememy/Machine/Brain.png"));
-			m_vecEnemyMachine.push_back(_newBrain);
-			LaunchFillRegion(*_newBrain, i_manager, CNT_OBJECT_ENEMY_BRAIN);
-			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_ENEMY_BRAIN, m_pointBuildMachine, (i_manager.m_mapLayer->getPosition() * -1));
+			CreateMachineEnemy(i_manager, CNT_OBJECT_ENEMY_BRAIN, CNT_PATH_TO_RESOURCES + "Enemy/Machine/Brain.png");
 
 			m_stateManagerMachine = StateManagerMachine::NOTHING;
 
@@ -65,10 +85,7 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerMachine::ADD_ENEMY_TURTLE:
 		{
-			Machine* _newTurtle = new EnemyMachine(m_pointBuildMachine, *i_manager.m_mapLayer, std::string("Enemy/Machine/Turtle.png"));
-			m_vecEnemyMachine.push_back(_newTurtle);
-			LaunchFillRegion(*_newTurtle, i_manager, CNT_OBJECT_ENEMY_TURTLE);
-			i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_ENEMY_TURTLE, m_pointBuildMachine, (i_manager.m_mapLayer->getPosition() * -1));
+			CreateMachineEnemy(i_manager, CNT_OBJECT_ENEMY_TURTLE, CNT_PATH_TO_RESOURCES + "Enemy/Machine/Turtle.png");
 
 			m_stateManagerMachine = StateManagerMachine::NOTHING;
 
@@ -76,21 +93,7 @@ void ManagerMachine::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerMachine::NOTHING:
 		{
-			if (m_vecMachineTank.size())
-			{
-				for (int i = 0; i < m_vecMachineTank.size(); i++)
-				{
-					m_vecMachineTank[i]->Update(i_manager);
-				}
-			}
-
-			if (m_vecEnemyMachine.size())
-			{
-				for (int i = 0; i < m_vecEnemyMachine.size(); i++)
-				{
-					m_vecEnemyMachine[i]->Update(i_manager);
-				}
-			}
+			UpdateAllMachine(i_manager);
 
 			break;
 		}

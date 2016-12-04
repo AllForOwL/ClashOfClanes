@@ -39,6 +39,20 @@ void MachineFactory::LoadNameForSprites()
 	m_vecNameForSprites.push_back(CNT_PATH_TO_RESOURCES + "Machine/Tank_1.png");
 }
 
+void MachineFactory::LoadProperties(ManagerComponent& i_manager)
+{
+	if (m_vecNameForSprites.empty())
+	{
+		LoadNameForSprites();
+		LoadSprites();
+	}
+
+	ShowMenu();
+	LoadPosition();
+	m_stateMachine = StateFactoryMachine::LISTEN;
+	i_manager.m_inputComponent->SetZeroLocation();
+}
+
 /*virtual*/ void MachineFactory::Update(ManagerComponent& i_manager)
 {
 	switch (m_stateMachine)
@@ -71,16 +85,7 @@ void MachineFactory::LoadNameForSprites()
 			ConvertToOrigin(m_locationTouch);
 			if (m_rectOriginWithVisible.containsPoint(m_locationTouch))
 			{
-				if (m_vecNameForSprites.empty())
-				{
-					LoadNameForSprites();
-					LoadSprites();
-				}
-
-				ShowMenu();
-				LoadPosition();
-				m_stateMachine	= StateFactoryMachine::LISTEN;
-				i_manager.m_inputComponent->SetZeroLocation();
+				LoadProperties(i_manager);
 			}
 			break;
 		}

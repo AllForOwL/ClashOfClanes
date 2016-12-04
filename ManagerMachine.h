@@ -29,6 +29,10 @@ public:
 
 	void Update(GameScene& i_gameScene, ManagerComponent& i_manager);
 
+	void CreateMachine(ManagerComponent& i_manager);
+	void CreateMachineEnemy(ManagerComponent& i_manager, int i_typeObject, std::string i_nameFile);
+	void UpdateAllMachine(ManagerComponent& i_manager);
+
 	void SetState(StateManagerMachine& i_state);
 	void SetPositionForMachine(Point i_pointBuildMachine);
 

@@ -37,6 +37,37 @@ void WarriorFactory::LoadNameForSprites()
 	m_vecNameForSprites.push_back(CNT_PATH_TO_RESOURCES + "Warrior/silver_knight/attack_1.png");
 }
 
+void WarriorFactory::StartProduction(int i_timeForComplete, ManagerArmy::StateManagerArmy i_state)
+{
+	m_timeForComplete			= i_timeForComplete;
+	m_startSecond				= GraphicComponent::GetTime();
+	m_stateTypeAddWarrior		= i_state;
+
+	m_stateWarrior				= StateFactoryWarrior::WORKING;
+}
+
+void WarriorFactory::FinishProduction(ManagerComponent& i_manager)
+{
+	m_stateWarrior = StateFactoryWarrior::LISTEN;
+	i_manager.m_managerArmy->SetState(m_stateTypeAddWarrior);
+	i_manager.m_managerArmy->SetPositionForWarrior(m_vecPosition[m_numberComplete]);
+	++m_numberComplete;
+}
+
+void WarriorFactory::LoadProperties(ManagerComponent& i_manager)
+{
+	if (m_vecNameForSprites.empty())
+	{
+		LoadNameForSprites();
+		LoadSprites();
+	}
+
+	LoadPosition();
+	ShowMenu();
+	m_stateWarrior = StateFactoryWarrior::LISTEN;
+	i_manager.m_inputComponent->SetZeroLocation();
+}
+
 /*virtual*/ void WarriorFactory::Update(ManagerComponent& i_manager)
 {
 	switch (m_stateWarrior)
@@ -45,10 +76,7 @@ void WarriorFactory::LoadNameForSprites()
 		{
 			if (i_manager.m_hero->CheckProductionKnightBlack())
 			{
-				m_timeForComplete			= CNT_TIME_FOR_COMPLETE_KNIGHT_BLACK;
-				m_startSecond				= GraphicComponent::GetTime();
-				m_stateWarrior				= StateFactoryWarrior::WORKING;
-				m_stateTypeAddWarrior		= ManagerArmy::StateManagerArmy::ADD_KNIGHT_BLACK;
+				StartProduction(CNT_TIME_FOR_COMPLETE_KNIGHT_BLACK, ManagerArmy::StateManagerArmy::ADD_KNIGHT_BLACK);
 			}
 
 			break;
@@ -57,10 +85,7 @@ void WarriorFactory::LoadNameForSprites()
 		{
 			if (i_manager.m_hero->CheckProductionKnightBronze())
 			{
-				m_timeForComplete			= CNT_TIME_FOR_COMPLETE_KNIGHT_BRONZE;
-				m_startSecond				= GraphicComponent::GetTime();
-				m_stateWarrior				= StateFactoryWarrior::WORKING;
-				m_stateTypeAddWarrior		= ManagerArmy::StateManagerArmy::ADD_KNIGHT_BRONZE;
+				StartProduction(CNT_TIME_FOR_COMPLETE_KNIGHT_BRONZE, ManagerArmy::StateManagerArmy::ADD_KNIGHT_BRONZE);
 			}
 
 			break;
@@ -69,10 +94,7 @@ void WarriorFactory::LoadNameForSprites()
 		{
 			if (i_manager.m_hero->CheckProductionKnightSilver())
 			{
-				m_timeForComplete			= CNT_TIME_FOR_COMPLETE_KNIGHT_SILVER;
-				m_startSecond				= GraphicComponent::GetTime();
-				m_stateWarrior				= StateFactoryWarrior::WORKING;
-				m_stateTypeAddWarrior		= ManagerArmy::StateManagerArmy::ADD_KNIGHT_SILVER;
+				StartProduction(CNT_TIME_FOR_COMPLETE_KNIGHT_SILVER, ManagerArmy::StateManagerArmy::ADD_KNIGHT_SILVER);
 			}
 			break;
 		}
@@ -80,10 +102,7 @@ void WarriorFactory::LoadNameForSprites()
 		{
 			if (isComplete())
 			{
-				m_stateWarrior = StateFactoryWarrior::LISTEN;
-				i_manager.m_managerArmy->SetState(m_stateTypeAddWarrior);
-				i_manager.m_managerArmy->SetPositionForWarrior(m_vecPosition[m_numberComplete]);
-				++m_numberComplete;
+				FinishProduction(i_manager);
 			}
 			break;
 		}
@@ -103,16 +122,7 @@ void WarriorFactory::LoadNameForSprites()
 			ConvertToOrigin(m_locationTouch);
 			if (m_rectOriginWithVisible.containsPoint(m_locationTouch) && m_locationTouch != Point::ZERO)
 			{
-				if (m_vecNameForSprites.empty())
-				{
-					LoadNameForSprites();
-					LoadSprites();
-				}
-
-				LoadPosition();
-				ShowMenu();
-				m_stateWarrior = StateFactoryWarrior::LISTEN;
-				i_manager.m_inputComponent->SetZeroLocation();
+				LoadProperties(i_manager);
 			}	
 			break;
 		}
