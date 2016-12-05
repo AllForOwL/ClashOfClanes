@@ -6,14 +6,11 @@
 #include "AlgorithmLi.h"
 #include "AIAct.h"
 #include "AIDirection.h"
+#include "HeroGraphicComponent.h"
 
 const int INDEX_TASK_GOLD	= 0;
 const int INDEX_TASK_OIL	= 1;
 const int INDEX_TASK_TREE	= 2;
-
-const Point	CNT_POSITION_GOLD	= Point(200, 200);
-const Point CNT_POSITION_OIL	= Point(400, 400);
-const Point CNT_POSITION_TREE	= Point(600, 600);
 
 const Point	CNT_POSITION_SHELTER = Point(700, 700);
 
@@ -21,6 +18,10 @@ const int CNT_ATTACK	= 0;
 const int CNT_RUN		= 1;
 const int CNT_WANDER	= 2;
 const int CNT_HIDE		= 3;
+
+const Point CNT_POSITION_GOLD	= Point(200, 200);
+const Point CNT_POSITION_OIL	= Point(400, 400);
+const Point CNT_POSITION_TREE	= Point(600, 600);
 
 Knight::Knight()
 {
@@ -148,7 +149,7 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 		case StateCombatant::FIND_OIL:
 		{
 			FindResources(i_manager, CNT_POSITION_OIL);
-		
+	
 			break;
 		}
 		case StateCombatant::FIND_TREE:

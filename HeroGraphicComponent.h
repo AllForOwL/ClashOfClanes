@@ -11,11 +11,13 @@ class GameScene;
 class HeroGraphicComponent : public GraphicComponent
 {
 public:
-
 	enum StateHero
 	{
 		SEARCH_WAY,
 		WALK,
+		SEARCH_WAY_TO_RESOURCES,
+		GO_TO_RESOURCES,
+		COME_AGAIN,
 		NOTHING,
 		LISTEN
 	};
@@ -30,6 +32,8 @@ public:
 
 	virtual void ShowMenu();
 
+	bool RunSearchWay(ManagerComponent& i_manager);
+
 	bool TouchOnHero(ManagerComponent& i_manager);
 
 	bool GoToTouchMouse(ManagerComponent& i_manager);
@@ -42,6 +46,8 @@ public:
 	void MoveLeft();
 
 	void ReloadPosition();
+
+	bool DetermineCommand();
 
 	bool CheckProductionKnightBlack();
 	bool CheckProductionKnightBronze();
