@@ -88,24 +88,104 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 		}
 		case HeroGraphicComponent::NOTHING:
 		{
-			m_rectHero	=	this->getBoundingBox();
-			if (CheckToGoTarget(i_manager))
+			if (TouchOnHero(i_manager))
 			{
-				m_stateHero  = StateHero::SEARCH_WAY;
+				if (!GoToTouchMouse(i_manager))
+				{
+					NeedShowMenu(i_manager);
+				}
+				m_stateHero = HeroGraphicComponent::LISTEN;
 			}
+
 			break; 
 		}
+		case HeroGraphicComponent::LISTEN:
+		{
+			
+			break;
+		}
+
 	default:
 		break;
 	}
 }
 
-bool HeroGraphicComponent::CheckToGoTarget(ManagerComponent& i_manager)
+bool HeroGraphicComponent::TouchOnHero(ManagerComponent& i_manager)
+{
+	Point _currentLocationTouch		= i_manager.m_inputComponent->GetLocationTouch();
+	Point _previousLocationTouch	= i_manager.m_inputComponent->GetPreviousLocationTouch();
+	Point _positionMap				= i_manager.m_mapLayer->getPosition();
+	if (_positionMap.x < 0)
+	{
+		_positionMap.x *= -1;
+	}
+	if (_positionMap.y < 0)
+	{
+		_positionMap.y *= -1;
+	}
+	m_rectHero = this->getBoundingBox();
+	_currentLocationTouch	+= _positionMap;
+	_previousLocationTouch	+= _positionMap;
+	if (m_rectHero.containsPoint(_currentLocationTouch) || m_rectHero.containsPoint(_previousLocationTouch))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void HeroGraphicComponent::LoadNameSprites()
+{
+	m_vecNameForSprites.push_back(CNT_PATH_TO_RESOURCES + "Item/TasksHero/Gold.png");
+	m_vecNameForSprites.push_back(CNT_PATH_TO_RESOURCES + "Item/TasksHero/Oil.png");
+}
+
+void HeroGraphicComponent::NeedShowMenu(ManagerComponent& i_manager)
+{
+	if (m_vecNameForSprites.empty())
+	{
+		LoadNameSprites();
+	}
+	LoadSprites();
+	ShowMenu();
+}
+
+bool HeroGraphicComponent::GoToTouchMouse(ManagerComponent& i_manager)
 {
 	Vec2 _previousLocationTouch = i_manager.m_inputComponent->GetPreviousLocationTouch();
-	Vec2 _currentLocationTouch	= i_manager.m_inputComponent->GetLocationTouch();
+	Vec2 _currentLocationTouch = i_manager.m_inputComponent->GetLocationTouch();
 
-	if (m_rectHero.containsPoint(_previousLocationTouch))
+	if (m_rectHero.containsPoint(_previousLocationTouch) && !m_rectHero.containsPoint(_currentLocationTouch))
+	{
+		Point _origin = this->getParent()->getPosition();
+		_origin.x *= (-1);
+		_origin.y *= (-1);
+		_previousLocationTouch.x += _origin.x;
+		_previousLocationTouch.y += _origin.y;
+		if (m_rectHero.containsPoint(_previousLocationTouch))
+		{
+			m_positionTarget = _currentLocationTouch;
+			m_positionTarget += _origin;
+			return true;
+		}
+
+		m_positionTarget = _currentLocationTouch;
+	}
+	else
+	{
+		m_positionTarget = _currentLocationTouch;
+		return false;
+	}
+}
+
+bool HeroGraphicComponent::CheckToGoTarget(ManagerComponent& i_manager)
+{
+	Point _previousLocationTouch = i_manager.m_inputComponent->GetPreviousLocationTouch();
+	Point _currentLocationTouch	= i_manager.m_inputComponent->GetLocationTouch();
+
+	if (m_rectHero.containsPoint(_previousLocationTouch) && !m_rectHero.containsPoint(_currentLocationTouch))
 	{
 		m_positionTarget = _currentLocationTouch;
 		return true;
