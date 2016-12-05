@@ -18,6 +18,13 @@ const int CNT_COINT_IN_BEGIN = 10000;
 
 const int CNT_LENGTH_HERO_FROM_ORDER = 100;
 
+const int INDEX_FIND_GOLD	= 0;
+const int INDEX_FIND_OIL	= 1;
+
+const Point CNT_POSITION_GOLD	= Point(200, 200);
+const Point CNT_POSITION_OIL	= Point(400, 400);
+const Point CNT_POSITION_TREE	= Point(600, 600);
+
 HeroGraphicComponent::HeroGraphicComponent()
 {
 	this->initWithFile(CNT_PATH_TO_RESOURCES + "Hero/Walk_1.png");
@@ -47,31 +54,45 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 	
 }
 
+bool HeroGraphicComponent::RunSearchWay(ManagerComponent& i_manager)
+{
+	Point _positionOriginMapLayer = this->getParent()->getPosition();
+	_positionOriginMapLayer.x *= (-1);
+	_positionOriginMapLayer.y *= (-1);
+	AlgorithmLi* _searchWay = new AlgorithmLi(CNT_POSITION_FREE,
+											_positionOriginMapLayer,
+											this->getPosition(),
+											m_positionTarget,
+											i_manager.m_mapLayer->GetMapCoordinate());
+	if (_searchWay->WayFound())
+	{
+		i_manager.m_inputComponent->SetZeroLocation();
+		i_manager.m_mapLayer->ReleasePositionAfterSearchWay();
+		std::copy(_searchWay->GetFoundWay().begin(), _searchWay->GetFoundWay().end(),
+			std::back_inserter(m_vecWayWalkHero));
+		m_iterInWayWalk = 0;
+		
+		delete _searchWay;
+
+		return true;
+	}
+	return false;
+}
+
 /*virtual*/ void HeroGraphicComponent::Update(ManagerComponent& i_manager)
 {
 	switch (m_stateHero)
 	{
 		case HeroGraphicComponent::SEARCH_WAY:
 		{
-			Point _positionOriginMapLayer = this->getParent()->getPosition();
-			_positionOriginMapLayer.x	*=	(-1);
-			_positionOriginMapLayer.y	*=	(-1);
-			AlgorithmLi* _searchWay = new AlgorithmLi(	CNT_POSITION_FREE,
-														_positionOriginMapLayer, 
-														this->getPosition(), 
-														m_positionTarget, 
-														i_manager.m_mapLayer->GetMapCoordinate());
-			if (_searchWay->WayFound())
+			if (RunSearchWay(i_manager))
 			{
-				i_manager.m_inputComponent->SetZeroLocation();
-				i_manager.m_mapLayer->ReleasePositionAfterSearchWay();
-				std::copy(_searchWay->GetFoundWay().begin(), _searchWay->GetFoundWay().end(), 
-							std::back_inserter(m_vecWayWalkHero));
-				m_iterInWayWalk = 0;
-
 				m_stateHero = HeroGraphicComponent::WALK;
 			}
-			delete _searchWay;
+			else
+			{
+				m_stateHero = HeroGraphicComponent::LISTEN;
+			}
 
 			break;
 		}
@@ -84,6 +105,44 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 				m_stateHero = StateHero::NOTHING;
 				m_vecWayWalkHero.clear();
 			}
+			break;
+		}
+		case HeroGraphicComponent::SEARCH_WAY_TO_RESOURCES:
+		{
+			if (RunSearchWay(i_manager))
+			{
+				HideMenu();
+				m_stateHero = HeroGraphicComponent::GO_TO_RESOURCES;
+			}
+			else
+			{
+				m_stateHero = HeroGraphicComponent::LISTEN;
+			}
+
+			break;
+		}
+		case HeroGraphicComponent::GO_TO_RESOURCES:
+		{
+			this->setPosition(m_vecWayWalkHero[m_iterInWayWalk]);
+			if (++m_iterInWayWalk == m_vecWayWalkHero.size())
+			{
+				m_rectHero	=	this->getBoundingBox();
+				m_stateHero = StateHero::COME_AGAIN;
+				--m_iterInWayWalk;
+			}
+
+			break;
+		}
+		case HeroGraphicComponent::COME_AGAIN:
+		{
+			this->setPosition(m_vecWayWalkHero[m_iterInWayWalk]);
+			if (--m_iterInWayWalk == 0)
+			{
+				m_rectHero	= this->getBoundingBox();
+				m_stateHero = StateHero::NOTHING;
+				m_vecWayWalkHero.clear();
+			}
+			
 			break;
 		}
 		case HeroGraphicComponent::NOTHING:
@@ -101,13 +160,35 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 		}
 		case HeroGraphicComponent::LISTEN:
 		{
-				
+			m_locationTouch	= i_manager.m_inputComponent->GetLocationTouch();
+			ConvertToOrigin(m_locationTouch);
+			if (DetermineCommand())
+			{	
+				i_manager.m_inputComponent->SetZeroLocation();
+				m_stateHero = HeroGraphicComponent::SEARCH_WAY_TO_RESOURCES;
+			}				
+
 			break;
 		}
 
 	default:
 		break;
 	}
+}
+
+bool HeroGraphicComponent::DetermineCommand()
+{
+	if (m_rectForSprites[INDEX_FIND_GOLD].containsPoint(m_locationTouch))
+	{
+		m_positionTarget = CNT_POSITION_GOLD;
+		return true;
+	}
+	else if (m_rectForSprites[INDEX_FIND_OIL].containsPoint(m_locationTouch))
+	{
+		m_locationTouch = CNT_POSITION_OIL;
+		return true;
+	}
+	return false;
 }
 
 void HeroGraphicComponent::MoveUp()
@@ -263,6 +344,7 @@ void HeroGraphicComponent::ReloadPosition()
 
 /*virtual*/ void HeroGraphicComponent::ShowMenu()
 {
+	m_rectForSprites.clear();
 	Point _positionWarriorMenu = Point(m_positionVisible.x + (m_rectVisible.size.width / 2),
 		m_positionVisible.y);
 	for (int i = 0; i < m_vecSprites.size(); i++)
