@@ -378,5 +378,5 @@ Knight::~Knight()
 			 + refactoring All code;
 			 
 			 Tasks on 04:12:2016
-			 - ;
+			 + Refactoring;
 */
