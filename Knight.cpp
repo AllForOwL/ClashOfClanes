@@ -380,4 +380,11 @@ Knight::~Knight()
 			Tasks on 03:12:2016
 			 + load object from file;
 			 - refactoring All code;
+
+			 Tasks on 05:12:2016
+			 - mission 1:
+				- find and create factory(for hero);
+					- factory:
+						- gold;
+						- oil;
 */

@@ -16,7 +16,8 @@ public:
 	{
 		SEARCH_WAY,
 		WALK,
-		NOTHING
+		NOTHING,
+		LISTEN
 	};
 
 	HeroGraphicComponent();
@@ -26,6 +27,13 @@ public:
 	~HeroGraphicComponent();
 
 	virtual void Update(ManagerComponent& i_manager);
+
+	bool TouchOnHero(ManagerComponent& i_manager);
+
+	bool GoToTouchMouse(ManagerComponent& i_manager);
+	void NeedShowMenu(ManagerComponent& i_manager);
+	void LoadNameSprites();
+
 
 	bool CheckProductionKnightBlack();
 	bool CheckProductionKnightBronze();
