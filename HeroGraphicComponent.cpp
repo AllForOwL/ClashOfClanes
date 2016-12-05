@@ -101,12 +101,56 @@ HeroGraphicComponent::HeroGraphicComponent(HeroGraphicComponent& heroGraphicComp
 		}
 		case HeroGraphicComponent::LISTEN:
 		{
-			
+				
 			break;
 		}
 
 	default:
 		break;
+	}
+}
+
+void HeroGraphicComponent::MoveUp()
+{
+	setPositionY(getPositionY() - CNT_SPEED_MAP);
+	HideMenu();
+
+	if (m_stateHero == HeroGraphicComponent::LISTEN)
+	{
+		m_stateHero = HeroGraphicComponent::NOTHING;
+	}
+}
+
+void HeroGraphicComponent::MoveDown()
+{
+	setPositionY(getPositionY() + CNT_SPEED_MAP);
+	HideMenu();
+
+	if (m_stateHero == HeroGraphicComponent::LISTEN)
+	{
+		m_stateHero = HeroGraphicComponent::NOTHING;
+	}
+}
+
+void HeroGraphicComponent::MoveRight()
+{
+	setPositionX(getPositionX() - CNT_SPEED_MAP);
+	HideMenu();	
+
+	if (m_stateHero == HeroGraphicComponent::LISTEN)
+	{
+		m_stateHero = HeroGraphicComponent::NOTHING;
+	}
+}
+
+void HeroGraphicComponent::MoveLeft()
+{
+	setPositionX(getPositionX() + CNT_SPEED_MAP);
+	HideMenu();
+
+	if (m_stateHero == HeroGraphicComponent::LISTEN)
+	{
+		m_stateHero = HeroGraphicComponent::NOTHING;
 	}
 }
 
@@ -147,8 +191,9 @@ void HeroGraphicComponent::NeedShowMenu(ManagerComponent& i_manager)
 	if (m_vecNameForSprites.empty())
 	{
 		LoadNameSprites();
+		LoadSprites();
 	}
-	LoadSprites();
+	ReloadPosition();
 	ShowMenu();
 }
 
@@ -177,6 +222,56 @@ bool HeroGraphicComponent::GoToTouchMouse(ManagerComponent& i_manager)
 	{
 		m_positionTarget = _currentLocationTouch;
 		return false;
+	}
+}
+
+void HeroGraphicComponent::ReloadPosition()
+{
+	m_positionVisible = this->getPosition();
+	m_positionOrigin = this->getParent()->getPosition();
+
+	if (m_positionOrigin.x < 0)
+	{
+		m_positionOrigin.x *= (-1);
+	}
+	if (m_positionOrigin.y < 0)
+	{
+		m_positionOrigin.y *= (-1);
+
+	}
+
+	m_locationTouch = Point::ZERO;
+
+	Rect _box = this->getBoundingBox();
+
+	// calculate RectOrigin(system coordinate all MapLayer)
+	m_rectOrigin = Rect(this->getBoundingBox().getMinX() + m_positionOrigin.x, this->getBoundingBox().getMinY() + m_positionOrigin.y,
+		this->getBoundingBox().size.width, this->getBoundingBox().size.height);
+	// calculate RectVisible(system coordinate visible MapLayer)
+	m_rectVisible = Rect(this->getBoundingBox().getMinX() + m_positionVisible.x, this->getBoundingBox().getMinY() + m_positionVisible.y,
+		this->getBoundingBox().size.width, this->getBoundingBox().size.height);
+
+	m_rectOriginWithVisible = Rect(this->getBoundingBox().getMinX() + m_positionOrigin.x + m_positionVisible.x,
+		this->getBoundingBox().getMinY() + m_positionOrigin.y + m_positionVisible.y,
+		this->getBoundingBox().size.width, this->getBoundingBox().size.height
+		);
+
+	m_numberComplete = 0;
+
+	m_positionOriginWithVisible = m_positionOrigin + m_positionVisible;
+}
+
+/*virtual*/ void HeroGraphicComponent::ShowMenu()
+{
+	Point _positionWarriorMenu = Point(m_positionVisible.x + (m_rectVisible.size.width / 2),
+		m_positionVisible.y);
+	for (int i = 0; i < m_vecSprites.size(); i++)
+	{
+		m_vecSprites[i]->setPosition(_positionWarriorMenu);
+		m_vecSprites[i]->setVisible(true);
+		m_rectForSprites.push_back(m_vecSprites[i]->getBoundingBox());
+
+		_positionWarriorMenu.y -= m_vecSprites[i]->getBoundingBox().size.height / 2;
 	}
 }
 

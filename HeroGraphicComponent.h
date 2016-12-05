@@ -28,12 +28,20 @@ public:
 
 	virtual void Update(ManagerComponent& i_manager);
 
+	virtual void ShowMenu();
+
 	bool TouchOnHero(ManagerComponent& i_manager);
 
 	bool GoToTouchMouse(ManagerComponent& i_manager);
 	void NeedShowMenu(ManagerComponent& i_manager);
 	void LoadNameSprites();
 
+	void MoveUp();
+	void MoveDown();
+	void MoveRight();
+	void MoveLeft();
+
+	void ReloadPosition();
 
 	bool CheckProductionKnightBlack();
 	bool CheckProductionKnightBronze();
