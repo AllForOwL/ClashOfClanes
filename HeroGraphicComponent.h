@@ -49,6 +49,8 @@ public:
 
 	bool DetermineCommand();
 
+	void ShowMessage();
+
 	bool CheckProductionKnightBlack();
 	bool CheckProductionKnightBronze();
 	bool CheckProductionKnightSilver();
@@ -70,6 +72,8 @@ private:
 	int					m_iterInWayWalk;
 
 	bool				m_loadProperties;
+
+	std::string m_textMessage;
 };
 
 #endif

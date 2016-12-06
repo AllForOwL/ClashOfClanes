@@ -5,6 +5,13 @@
 #include "ManagerFactory.h"
 #include "MachineFactory.h"
 #include "WarriorFactory.h"
+#include "MessagingSystem.h"
+
+const int INDEX_FACTORY_ENEMY_MACHINE	= 0;
+const int INDEX_FACTORY_MACHINE			= 1;
+const int INDEX_FACTORY_WARRIOR			= 2;
+const int INDEX_FACTORY_ENEMY_WARRIOR	= 3;
+const int INDEX_MESSAGES				= 4;
 
 const int INDEX_FACTORY_ENEMY_MACHINE	= 0;
 const int INDEX_FACTORY_MACHINE			= 1;
@@ -29,21 +36,38 @@ void HUDLayer::LoadSpritesForMenu()
 {
 	std::vector<int> _positionY;
 	_positionY.push_back(0);
+<<<<<<< HEAD
 	_positionY.push_back(50);
 	_positionY.push_back(100);
 	_positionY.push_back(150);
+=======
+	_positionY.push_back(30);
+	_positionY.push_back(60);
+	_positionY.push_back(90);
+	_positionY.push_back(120);
+>>>>>>> refactoring
 	
 	std::vector<std::string> _filename;
 	_filename.push_back(CNT_PATH_TO_RESOURCES + "HUDLayer/Jelly.png");
 	_filename.push_back(CNT_PATH_TO_RESOURCES + "HUDLayer/Coal.png");
 	_filename.push_back(CNT_PATH_TO_RESOURCES + "HUDLayer/Ruby.png");
 	_filename.push_back(CNT_PATH_TO_RESOURCES + "HUDLayer/Ore.png");
+<<<<<<< HEAD
 
 	for (int i = 0; i < 4; i++)
 	{
 		Sprite* _spriteFactory = Sprite::create(_filename[i]);
 		_spriteFactory->setScale(GameScene::m_visibleSize.width / _spriteFactory->getContentSize().width / 8,
 			GameScene::m_visibleSize.height / _spriteFactory->getContentSize().height / 8);
+=======
+	_filename.push_back(CNT_PATH_TO_RESOURCES + "HUDLayer/Message.png");
+
+	for (int i = 0; i < _filename.size(); i++)
+	{
+		Sprite* _spriteFactory = Sprite::create(_filename[i]);
+		_spriteFactory->setScale(GameScene::m_visibleSize.width / _spriteFactory->getContentSize().width / 13,
+			GameScene::m_visibleSize.height / _spriteFactory->getContentSize().height / 13);
+>>>>>>> refactoring
 		_spriteFactory->setPosition(GameScene::m_visibleSize.width - _spriteFactory->getBoundingBox().size.width, 
 			GameScene::m_visibleSize.height / 2 - _positionY[i]);
 		m_vecRectMachine.push_back(_spriteFactory->getBoundingBox());
@@ -85,7 +109,21 @@ bool HUDLayer::DetermineCommandForManagerFactory()
 		m_command = Command::CREATE_FACTORY_ENEMY_MACHINE;
 		return true;
 	}
+	else if (m_vecRectMachine[INDEX_MESSAGES].containsPoint(m_locationTouch))
+	{
+		m_command = Command::OPEN_MESSAGES;
+		return true;
+	}
 	return false;
+}
+
+void HUDLayer::OpenMessages()
+{
+	auto _messagingSystem = MessagingSystem::createScene();
+
+	srand(time(NULL));
+	auto reScene = TransitionFade::create(2.0f, _messagingSystem, Color3B(rand() % 255 + 0, rand() % 255 + 0, rand() % 255 + 0));
+	Director::getInstance()->pushScene(_messagingSystem);
 }
 
 void HUDLayer::ExecuteCommandForManagerFactory(ManagerComponent& i_manager)
@@ -130,6 +168,12 @@ void HUDLayer::ExecuteCommandForManagerFactory(ManagerComponent& i_manager)
 
 			m_command = Command::NOTHING;
 			
+			break;
+		}
+		case Command::OPEN_MESSAGES:
+		{
+			OpenMessages();
+
 			break;
 		}
 	default:

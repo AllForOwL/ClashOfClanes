@@ -17,6 +17,7 @@ public:
 		CREATE_FACTORY_WARRIOR,
 		CREATE_FACTORY_ENEMY_WARRIOR,
 		CREATE_FACTORY_ENEMY_MACHINE,
+		OPEN_MESSAGES,
 		NOTHING
 	};
 
@@ -32,6 +33,8 @@ public:
 	void ExecuteCommandForManagerFactory(ManagerComponent& i_manager);
 
 	void LoadSpritesForMenu();
+
+	void OpenMessages();
 
 private:
 	Command	m_command;
