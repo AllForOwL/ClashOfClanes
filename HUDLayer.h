@@ -17,6 +17,7 @@ public:
 		CREATE_FACTORY_WARRIOR,
 		CREATE_FACTORY_ENEMY_WARRIOR,
 		CREATE_FACTORY_ENEMY_MACHINE,
+		OPEN_MESSAGES,
 		NOTHING
 	};
 
@@ -33,13 +34,12 @@ public:
 
 	void LoadSpritesForMenu();
 
+	void OpenMessages();
+
 private:
 	Command	m_command;
 	Vec2	m_locationTouch;
-	Rect	m_rectFactoryMachine;
-	Rect	m_rectFactoryWarrior;
-	Rect	m_rectFactoryEnemyWarrior;
-	Rect	m_rectFactoryEnemyMachine;
+	std::vector<Rect> m_vecRectMachine;
 
 };
 

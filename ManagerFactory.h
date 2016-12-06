@@ -30,6 +30,8 @@ public:
 	ManagerFactory(ManagerFactory& i_managerFactory);
 
 	~ManagerFactory();
+	
+	void UpdateAllFactory(ManagerComponent& i_manager);
 
 	void Update(GameScene& i_gameScene, ManagerComponent& i_manager);
 

@@ -29,6 +29,40 @@ void ManagerFactory::LaunchFillRegion(const Factory& i_factory, ManagerComponent
 	i_manager.m_inputComponent->SetZeroLocation();
 }
 
+void ManagerFactory::UpdateAllFactory(ManagerComponent& i_manager)
+{
+	//auto action2	= cocos2d::ScaleBy::create(2, 1.3);
+	//auto action3	= cocos2d::ScaleTo::create(2, 1.3);
+	
+	for (int i = 0; i < m_vecFactoryMachine.size(); i++)
+	{
+		m_vecFactoryMachine[i]->Update(i_manager);
+		//m_vecFactoryMachine[i]->runAction(action2);
+		//m_vecFactoryMachine[i]->runAction(action3);
+	}
+
+	for (int i = 0; i < m_vecFactoryWarrior.size(); i++)
+	{
+		m_vecFactoryWarrior[i]->Update(i_manager);
+		/*m_vecFactoryWarrior[i]->runAction(action2);
+		m_vecFactoryWarrior[i]->runAction(action3);*/
+	}
+
+	for (int i = 0; i < m_vecFactoryEnemyWarrior.size(); i++)
+	{
+		m_vecFactoryEnemyWarrior[i]->Update(i_manager);
+		/*m_vecFactoryEnemyWarrior[i]->runAction(action2);
+		m_vecFactoryEnemyWarrior[i]->runAction(action3);*/
+	}
+
+	for (int i = 0; i < m_vecFactoryEnemyMachine.size(); i++)
+	{
+		m_vecFactoryEnemyMachine[i]->Update(i_manager);
+		/*m_vecFactoryEnemyMachine[i]->runAction(action2);
+		m_vecFactoryEnemyMachine[i]->runAction(action3);*/
+	}
+}
+
 void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 {
 	switch (m_stateManagerFactory)
@@ -83,25 +117,7 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerFactory::NOTHING:
 		{
-			for (int i = 0; i < m_vecFactoryMachine.size(); i++)
-			{
-				m_vecFactoryMachine[i]->Update(i_manager);
-			}
-
-			for (int i = 0; i < m_vecFactoryWarrior.size(); i++)
-			{
-				m_vecFactoryWarrior[i]->Update(i_manager);
-			}
-
-			for (int i = 0; i < m_vecFactoryEnemyWarrior.size(); i++)
-			{
-				m_vecFactoryEnemyWarrior[i]->Update(i_manager);
-			}
-
-			for (int i = 0; i < m_vecFactoryEnemyMachine.size(); i++)
-			{
-				m_vecFactoryEnemyMachine[i]->Update(i_manager);
-			}
+			UpdateAllFactory(i_manager);
 
 			break;
 		}
