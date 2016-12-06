@@ -49,7 +49,7 @@ public:
 
 	bool DetermineCommand();
 
-	void ShowMessage();
+	void AddMessage(ManagerComponent& i_manager);
 
 	bool CheckProductionKnightBlack();
 	bool CheckProductionKnightBronze();

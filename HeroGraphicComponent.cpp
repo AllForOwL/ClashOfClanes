@@ -5,6 +5,7 @@
 #include "HeroInputComponent.h"
 #include "AlgorithmLi.h"
 #include "MapLayer.h"
+#include "MessagingSystem.h"
 
 const int CNT_COIN_FOR_START_KNIGHT_BLACK	= 50;
 const int CNT_COIN_FOR_START_KNIGHT_BRONZE	= 50;
@@ -143,7 +144,7 @@ bool HeroGraphicComponent::RunSearchWay(ManagerComponent& i_manager)
 				m_rectHero	= this->getBoundingBox();
 				m_stateHero = StateHero::LISTEN;
 				m_vecWayWalkHero.clear();
-				ShowMessage();
+				AddMessage(i_manager);
 			}
 			
 			break;
@@ -180,8 +181,10 @@ bool HeroGraphicComponent::RunSearchWay(ManagerComponent& i_manager)
 	}
 }
 
-void HeroGraphicComponent::ShowMessage()
+void HeroGraphicComponent::AddMessage(ManagerComponent& i_manager)
 {
+	i_manager.m_messagingSystem->AddMesssage(m_textMessage);
+	m_textMessage.clear();
 }
 
 bool HeroGraphicComponent::DetermineCommand()
