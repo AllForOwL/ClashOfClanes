@@ -9,6 +9,7 @@
 #include "HeroInputComponent.h"
 #include "AIAct.h"
 #include "ManagerObjectAndFile.h"
+#include "MessagingSystem.h"
 #include "AIDirection.h"
 #include "constants.h"
 
@@ -21,6 +22,7 @@ ManagerComponent::ManagerComponent(GameScene& i_gameScene)
 	
 	m_inputComponent = new HeroInputComponent();
 
+	m_messagingSystem	= new MessagingSystem();
 	m_managerArmy		= new ManagerArmy();
 	m_managerMachine	= new ManagerMachine();
 	m_managerFactory	= new ManagerFactory();

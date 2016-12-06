@@ -16,6 +16,7 @@ class HeroInputComponent;
 class AIAct;
 class AIDirection;
 class ManagerObjectAndFile;
+class MessagingSystem;
 
 class ManagerComponent
 {
@@ -36,6 +37,7 @@ public:
 	AIAct*					m_AIAct;
 	AIDirection*			m_AIDirection;
 	ManagerObjectAndFile*	m_managerObjectAndFile;
+	MessagingSystem*		m_messagingSystem;
 };
 
 #endif

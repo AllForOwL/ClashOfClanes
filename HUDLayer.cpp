@@ -5,7 +5,7 @@
 #include "ManagerFactory.h"
 #include "MachineFactory.h"
 #include "WarriorFactory.h"
-#include "MessagingSystem.h"
+#include "MessagingScene.h"
 
 const int INDEX_FACTORY_ENEMY_MACHINE	= 0;
 const int INDEX_FACTORY_MACHINE			= 1;
@@ -99,11 +99,11 @@ bool HUDLayer::DetermineCommandForManagerFactory()
 
 void HUDLayer::OpenMessages()
 {
-	auto _messagingSystem = MessagingSystem::createScene();
+	auto _messagingScene = MessagingScene::createScene();
 
 	srand(time(NULL));
-	auto reScene = TransitionFade::create(2.0f, _messagingSystem, Color3B(rand() % 255 + 0, rand() % 255 + 0, rand() % 255 + 0));
-	Director::getInstance()->pushScene(_messagingSystem);
+	auto reScene = TransitionFade::create(2.0f, _messagingScene, Color3B(rand() % 255 + 0, rand() % 255 + 0, rand() % 255 + 0));
+	Director::getInstance()->pushScene(_messagingScene);
 }
 
 void HUDLayer::ExecuteCommandForManagerFactory(ManagerComponent& i_manager)
