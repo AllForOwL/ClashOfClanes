@@ -33,14 +33,19 @@ public:
 	void ExecuteCommandForManagerFactory(ManagerComponent& i_manager);
 
 	void LoadSpritesForMenu();
+	void LoadSpritesCombatantBar();
 
 	void OpenMessages();
+
+	void UpdateQuentityCombatant(ManagerComponent& i_manager);
 
 private:
 	Command	m_command;
 	Vec2	m_locationTouch;
 	std::vector<Rect> m_vecRectMachine;
 
+	std::vector<Label*> m_vecLabelCombatant;
+	std::vector<int>	m_vecQuentityCombatant;
 };
 
 #endif // __HUD_LAYER_H__

@@ -27,6 +27,8 @@ public:
 
 	~ManagerMachine();
 
+	int GetQuentityTank() const;
+
 	void Update(GameScene& i_gameScene, ManagerComponent& i_manager);
 
 	void CreateMachine(ManagerComponent& i_manager);

@@ -29,6 +29,11 @@ public:
 		m_typeObject	= i_typeObject;
 	}
 
+	int GetTypeObject() const
+	{
+		return m_typeObject;
+	}
+
 	virtual void ShowMenu()
 	{
 		Point _positionWarriorMenu = Point(m_positionVisible.x + (m_rectVisible.size.width / 2),

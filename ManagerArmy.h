@@ -46,6 +46,11 @@ public:
 
 	void UpdateAllWarrior(ManagerComponent& i_manager);
 
+	int GetQuentityKnightBlack() const;
+	int GetQuentityKnightBronze() const;
+	int GetQuentityKnightSilver() const;
+
+
 private:
 	std::vector<Warrior*>	m_vecKnight;
 	std::vector<Warrior*>	m_vecEnemy;

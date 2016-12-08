@@ -29,6 +29,7 @@ void ManagerMachine::LaunchFillRegion(const Machine& i_machine, ManagerComponent
 void ManagerMachine::CreateMachine(ManagerComponent& i_manager)
 {
 	Machine* _newMachine = new HeroMachine(m_pointBuildMachine, *i_manager.m_mapLayer, std::string("Machine/Tank_1.png"));
+	_newMachine->SetObjectType(CNT_OBJECT_TANK);
 	m_vecMachineTank.push_back(_newMachine);
 	LaunchFillRegion(*_newMachine, i_manager, CNT_OBJECT_TANK);
 	i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_TANK, m_pointBuildMachine, (i_manager.m_mapLayer->getPosition() * -1));
@@ -40,6 +41,11 @@ void ManagerMachine::CreateMachineEnemy(ManagerComponent& i_manager, int i_typeO
 	m_vecEnemyMachine.push_back(_newOctopede);
 	LaunchFillRegion(*_newOctopede, i_manager, i_typeObject);
 	i_manager.m_managerObjectAndFile->WriteObjectInFile(i_typeObject, m_pointBuildMachine, (i_manager.m_mapLayer->getPosition() * -1));
+}
+
+int ManagerMachine::GetQuentityTank() const
+{
+	return m_vecMachineTank.size();
 }
 
 void ManagerMachine::UpdateAllMachine(ManagerComponent& i_manager)

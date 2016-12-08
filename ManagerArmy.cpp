@@ -28,12 +28,12 @@ void ManagerArmy::LaunchFillRegion(const Warrior& i_warrior, ManagerComponent& i
 
 void ManagerArmy::CreateWarrior(ManagerComponent& i_manager, int i_typeObject, std::string i_nameFile)
 {
-	Knight* _newKnightBlack = new Knight(m_positionWarrior, *i_manager.m_mapLayer, i_nameFile);
-	_newKnightBlack->setPosition(m_positionWarrior);
-	_newKnightBlack->SetTypeObject(CNT_OBJECT_KNIGHT_BLACK);
-	m_vecKnight.push_back(_newKnightBlack);
-	LaunchFillRegion(*m_vecKnight[m_vecKnight.size() - 1], i_manager, CNT_OBJECT_KNIGHT_BLACK);
-	i_manager.m_managerObjectAndFile->WriteObjectInFile(CNT_OBJECT_KNIGHT_BLACK, m_positionWarrior, (i_manager.m_mapLayer->getPosition() * -1));
+	Knight* _newKnight = new Knight(m_positionWarrior, *i_manager.m_mapLayer, i_nameFile);
+	_newKnight->setPosition(m_positionWarrior);
+	_newKnight->SetTypeObject(i_typeObject);
+	m_vecKnight.push_back(_newKnight);
+	LaunchFillRegion(*m_vecKnight[m_vecKnight.size() - 1], i_manager, i_typeObject);
+	i_manager.m_managerObjectAndFile->WriteObjectInFile(i_typeObject, m_positionWarrior, (i_manager.m_mapLayer->getPosition() * -1));
 }
 
 void ManagerArmy::CreateWarriorEnemy(ManagerComponent& i_manager, std::string i_typeEnemy)
@@ -57,13 +57,52 @@ void ManagerArmy::UpdateAllWarrior(ManagerComponent& i_manager)
 	}
 }
 
+int ManagerArmy::GetQuentityKnightBlack() const
+{
+	int _quentityKnightBlack = 0;
+	for (int i = 0; i < m_vecKnight.size(); i++)
+	{
+		if (m_vecKnight[i]->GetTypeObject() == CNT_OBJECT_KNIGHT_BLACK)
+		{
+			++_quentityKnightBlack;
+		}
+	}
+	return _quentityKnightBlack;
+}
+
+int ManagerArmy::GetQuentityKnightBronze() const
+{
+	int _quentityKnightBronze = 0;
+	for (int i = 0; i < m_vecKnight.size(); i++)
+	{
+		if (m_vecKnight[i]->GetTypeObject() == CNT_OBJECT_KNIGHT_BRONZE)
+		{
+			++_quentityKnightBronze;
+		}
+	}
+	return _quentityKnightBronze;
+}
+
+int ManagerArmy::GetQuentityKnightSilver() const
+{
+	int _quentityKnightSilver = 0;
+	for (int i = 0; i < m_vecKnight.size(); i++)
+	{
+		if (m_vecKnight[i]->GetTypeObject() == CNT_OBJECT_KNIGHT_SILVER)
+		{
+			++_quentityKnightSilver;
+		}
+	}
+	return _quentityKnightSilver;
+}
+
 void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 {
 	switch (m_stateManagerArmy)
 	{
 		case ManagerArmy::ADD_KNIGHT_BLACK:
 		{
-			CreateWarrior(i_manager, CNT_OBJECT_KNIGHT_BLACK, CNT_PATH_TO_RESOURCES + "Warrior/black_knight/attack_1.png");
+			CreateWarrior(i_manager, CNT_OBJECT_KNIGHT_BLACK, "Warrior/black_knight/attack_1.png");
 	
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
@@ -71,7 +110,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerArmy::ADD_KNIGHT_BRONZE:
 		{
-	   		CreateWarrior(i_manager, CNT_OBJECT_KNIGHT_BRONZE, CNT_PATH_TO_RESOURCES + "Warrior/bronze_knigt/attack_1.png");
+	   		CreateWarrior(i_manager, CNT_OBJECT_KNIGHT_BRONZE, "Warrior/bronze_knight/attack_1.png");
 
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
 
@@ -79,7 +118,7 @@ void ManagerArmy::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		}
 		case ManagerArmy::ADD_KNIGHT_SILVER:
 		{
-			CreateWarrior(i_manager, CNT_OBJECT_KNIGHT_SILVER, CNT_PATH_TO_RESOURCES + "Warrior/silver_knight/attack_1.png");
+			CreateWarrior(i_manager, CNT_OBJECT_KNIGHT_SILVER, "Warrior/silver_knight/attack_1.png");
 
 			m_stateManagerArmy = StateManagerArmy::NOTHING;
 

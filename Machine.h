@@ -24,6 +24,16 @@ public:
 	};
 	~Machine(){};
 
+	void SetObjectType(int i_typeObject)
+	{
+		m_typeObject = i_typeObject;
+	}
+
+	int GetObjectType() const
+	{
+		return m_typeObject;
+	}
+
 	virtual void LoadProperties(Point i_positionVisible, Point i_positionOrigin)
 	{
 		m_positionVisible = i_positionVisible;

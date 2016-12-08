@@ -13,6 +13,8 @@ const int INDEX_FACTORY_WARRIOR			= 2;
 const int INDEX_FACTORY_ENEMY_WARRIOR	= 3;
 const int INDEX_MESSAGES				= 4;
 
+const int QUENTITY_COMBATANT_IN_BAR = 4;
+
 bool HUDLayer::init()
 {
 	if (!Layer::init())	
@@ -23,8 +25,38 @@ bool HUDLayer::init()
 	m_command = Command::NOTHING;
 
 	LoadSpritesForMenu();
+	LoadSpritesCombatantBar();
 
 	return true;
+}
+
+void HUDLayer::LoadSpritesCombatantBar()
+{
+	std::vector<float> _positionX;
+	_positionX.push_back(50.0);
+	_positionX.push_back(100.0);
+	_positionX.push_back(150.0);
+	_positionX.push_back(200.0);
+
+	std::vector<std::string> _vecCombtants;
+	_vecCombtants.push_back(CNT_PATH_TO_RESOURCES + "Warrior/black_knight/attack_1.png");
+	_vecCombtants.push_back(CNT_PATH_TO_RESOURCES + "Warrior/bronze_knight/attack_1.png");
+	_vecCombtants.push_back(CNT_PATH_TO_RESOURCES + "Warrior/silver_knight/attack_1.png");
+	_vecCombtants.push_back(CNT_PATH_TO_RESOURCES + "Machine/Tank_1.png");
+
+	for (int i = 0; i < _vecCombtants.size(); i++)
+	{
+		Sprite* _combatant = Sprite::create(_vecCombtants[i]);
+		_combatant->setScale(GameScene::m_visibleSize.width / _combatant->getContentSize().width / 20,
+			GameScene::m_visibleSize.height / _combatant->getContentSize().height / 20);
+		_combatant->setPosition(_positionX[i], GameScene::m_visibleSize.height - _combatant->getBoundingBox().size.height / 2);
+		this->addChild(_combatant);
+
+		m_vecLabelCombatant.push_back(Label::create("0", "Herbana", 10));
+		m_vecLabelCombatant[i]->setPosition(_combatant->getPositionX() + _combatant->getBoundingBox().size.width + m_vecLabelCombatant[i]->getContentSize().width / 2,
+			GameScene::m_visibleSize.height - _combatant->getBoundingBox().size.height / 2);
+		this->addChild(m_vecLabelCombatant[i]);
+	}
 }
 
 void HUDLayer::LoadSpritesForMenu()
@@ -64,8 +96,35 @@ void HUDLayer::LoadSpritesForMenu()
 	}
 }
 
+void HUDLayer::UpdateQuentityCombatant(ManagerComponent& i_manager)
+{
+	if (m_vecQuentityCombatant.empty())
+	{
+		m_vecQuentityCombatant.push_back(i_manager.m_managerArmy->GetQuentityKnightBlack());
+		m_vecQuentityCombatant.push_back(i_manager.m_managerArmy->GetQuentityKnightBronze());
+		m_vecQuentityCombatant.push_back(i_manager.m_managerArmy->GetQuentityKnightSilver());
+		m_vecQuentityCombatant.push_back(i_manager.m_managerMachine->GetQuentityTank());
+	}
+	else
+	{
+		m_vecQuentityCombatant[0] = i_manager.m_managerArmy->GetQuentityKnightBlack();
+		m_vecQuentityCombatant[1] = i_manager.m_managerArmy->GetQuentityKnightBronze();
+		m_vecQuentityCombatant[2] = i_manager.m_managerArmy->GetQuentityKnightSilver();
+		m_vecQuentityCombatant[3] = i_manager.m_managerMachine->GetQuentityTank();
+	}
+
+	for (int i = 0; i < QUENTITY_COMBATANT_IN_BAR; i++)
+	{
+		m_vecLabelCombatant[i]->setString(std::to_string(m_vecQuentityCombatant[i]));
+	}
+}
+
 void HUDLayer::Update(ManagerComponent& i_manager)
 {
+	// add on screen warrior from machine and their quentity
+
+	UpdateQuentityCombatant(i_manager);
+
 	if ((m_locationTouch = i_manager.m_inputComponent->GetLocationTouch()) != Point::ZERO)
 	{
 		if (DetermineCommandForManagerFactory())
