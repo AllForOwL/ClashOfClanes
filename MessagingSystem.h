@@ -11,9 +11,11 @@ class MessagingSystem
 {
 public:
 	void AddMesssage(std::string i_message);
-	
+
+	static std::vector<std::string> m_vecMessages;
+
 private:
-	std::vector<std::string> m_vecMessages;
+	
 };
 
 #endif

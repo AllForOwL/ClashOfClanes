@@ -1,4 +1,5 @@
 #include "MessagingScene.h"
+#include "MessagingSystem.h"
 #include "GameScene.h"
 #include  "constants.h"
 
@@ -17,17 +18,13 @@ Scene *MessagingScene::createScene()
 
 bool MessagingScene::init()
 {
-	if (!Layer::init())	// if layer not create exit from function
+	if (!Layer::init())
 	{
 		return false;
 	}
 
 	OpenMessagings();
-
-	m_close = Sprite::create(CNT_PATH_TO_RESOURCES + "Item/Message/Close.png",
-		Rect(GameScene::m_visibleSize.width - 40, 20, 40, 20));
-	m_close->setScale(GameScene::m_visibleSize.width / 10, GameScene::m_visibleSize.height / 10);
-	this->addChild(m_close);
+	AddElement();
 
 	auto _touchListener = EventListenerTouchOneByOne::create();
 	_touchListener->onTouchBegan = CC_CALLBACK_2(MessagingScene::onTouchBegan, this);
@@ -36,9 +33,27 @@ bool MessagingScene::init()
 	return true;
 }
 
+void MessagingScene::AddElement()
+{
+	m_close = Sprite::create(CNT_PATH_TO_RESOURCES + "Item/Message/Close.png");
+	m_close->setScale(GameScene::m_visibleSize.width / m_close->getContentSize().width / 6,
+		GameScene::m_visibleSize.height / m_close->getContentSize().height / 6);
+	m_close->setPosition(GameScene::m_visibleSize.width - m_close->getBoundingBox().size.width / 2, 
+		m_close->getBoundingBox().size.height / 2);
+	this->addChild(m_close);
+
+}
+
 void MessagingScene::OpenMessagings()
 {
-
+	int _positionY = GameScene::m_visibleSize.height;
+	for (int i = 0; i < MessagingSystem::m_vecMessages.size(); i++)
+	{
+		Label* _label = Label::create(MessagingSystem::m_vecMessages[i], "Herbana", 12);
+		_positionY -= _label->getContentSize().height / 2;
+		_label->setPosition(GameScene::m_visibleSize.width / 2, _positionY);
+		this->addChild(_label);
+	}
 }
 
 void MessagingScene::CloseCurrentScene()
@@ -48,7 +63,7 @@ void MessagingScene::CloseCurrentScene()
 
 /*virtual*/ bool MessagingScene::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* i_event)
 {
-	if (m_close->getBoundingBox().containsPoint(touch->getLocationInView()))
+	if (m_close->getBoundingBox().containsPoint(touch->getLocation()))
 	{
 		CloseCurrentScene();
 	}

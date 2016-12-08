@@ -17,6 +17,8 @@ public:
 
 	void OpenMessagings();
 
+	void AddElement();
+
 private:
 	cocos2d::Sprite* m_close;
 };
