@@ -11,6 +11,12 @@ class HUDLayer : public cocos2d::Layer
 {
 public:
 
+	enum StateContextMenu
+	{
+		ACTIVE,
+		NOT_ACTIVE
+	};
+
 	enum Command
 	{
 		CREATE_FACTORY_MACHINE,
@@ -32,20 +38,25 @@ public:
 
 	void ExecuteCommandForManagerFactory(ManagerComponent& i_manager);
 
-	void LoadSpritesForMenu();
+	void LoadSpritesForMenu(Point i_locationMenu);
 	void LoadSpritesCombatantBar();
 
 	void OpenMessages();
 
 	void UpdateQuentityCombatant(ManagerComponent& i_manager);
 
+	bool ShowContextMenu(ManagerComponent& i_manager);
+	void HideContextMenu();
+
 private:
-	Command	m_command;
-	Vec2	m_locationTouch;
-	std::vector<Rect> m_vecRectMachine;
+	Command					m_command;
+	Vec2					m_locationTouch;
+	std::vector<Rect>		m_vecRectMachine;
+	std::vector<Sprite*>	m_vecSpriteMachine;
 
 	std::vector<Label*> m_vecLabelCombatant;
 	std::vector<int>	m_vecQuentityCombatant;
+	StateContextMenu	m_stateContextMenu;
 };
 
 #endif // __HUD_LAYER_H__

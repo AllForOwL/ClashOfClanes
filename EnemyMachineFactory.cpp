@@ -42,7 +42,7 @@ void EnemyMachineFactory::LoadNameForSprites()
 	m_vecNameForSprites.push_back(CNT_PATH_TO_RESOURCES + "Enemy/Machine/Brain.png");
 	m_vecNameForSprites.push_back(CNT_PATH_TO_RESOURCES + "Enemy/Machine/Turtle.png");
 }
-
+	
 /*virtual*/ void EnemyMachineFactory::Update(ManagerComponent& i_manager)
 {
 	switch (m_stateMachine)

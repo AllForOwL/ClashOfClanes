@@ -314,7 +314,7 @@ Knight::~Knight()
 
 /*  GraphicComponent	- тільки малює спрайти 
 	PhysicsComponent	- виявлє зіткнення героя
-	InputComponent		- приймає діна з клавіатури
+	InputComponent		- приймає дії з клавіатури
 	ManagerComponent	- контейнер для цих компонентів
 */
 
@@ -376,19 +376,19 @@ Knight::~Knight()
 
 			Tasks on 03:12:2016
 			 + load object from file;
-<<<<<<< HEAD
 			 + refactoring All code;
 			 
 			 Tasks on 04:12:2016
 			 + Refactoring;
-=======
 			 - refactoring All code;
 
 			 Tasks on 05:12:2016
 			 - mission 1:
-				- find and create factory(for hero);
-					- factory:
-						- gold;
-						- oil;
->>>>>>> refactoring
+				+ find and create factory(for hero);
+					+ factory:
+						+ gold;
+						+ oil;
+
+			Tasks on 8:12:2016
+				- when click on field show menu from lists factory;
 */

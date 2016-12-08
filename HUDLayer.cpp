@@ -14,6 +14,7 @@ const int INDEX_FACTORY_ENEMY_WARRIOR	= 3;
 const int INDEX_MESSAGES				= 4;
 
 const int QUENTITY_COMBATANT_IN_BAR = 4;
+const int QUENTITY_ELEMENT_CONTEXT_MENU = 4;
 
 bool HUDLayer::init()
 {
@@ -23,8 +24,8 @@ bool HUDLayer::init()
 	}
 	
 	m_command = Command::NOTHING;
+	m_stateContextMenu = StateContextMenu::NOT_ACTIVE;
 
-	LoadSpritesForMenu();
 	LoadSpritesCombatantBar();
 
 	return true;
@@ -59,9 +60,9 @@ void HUDLayer::LoadSpritesCombatantBar()
 	}
 }
 
-void HUDLayer::LoadSpritesForMenu()
+void HUDLayer::LoadSpritesForMenu(Point i_locationMenu)
 {
-	std::vector<int> _positionY;
+	/*std::vector<int> _positionY;
 	_positionY.push_back(0);
 	_positionY.push_back(30);
 	_positionY.push_back(60);
@@ -93,6 +94,26 @@ void HUDLayer::LoadSpritesForMenu()
 			m_vecRectMachine.push_back(_spriteFactory->getBoundingBox());
 			this->addChild(_spriteFactory);
 		}
+	}*/
+
+	float _locationY = i_locationMenu.y;
+
+	std::vector<std::string> _filename;
+	_filename.push_back(CNT_PATH_TO_RESOURCES + "HUDLayer/Factory/EnemyFactoryMachine.png");
+	_filename.push_back(CNT_PATH_TO_RESOURCES + "HUDLayer/Factory/FactoryMachine.png");
+	_filename.push_back(CNT_PATH_TO_RESOURCES + "HUDLayer/Factory/FactoryWarrior.png");
+	_filename.push_back(CNT_PATH_TO_RESOURCES + "HUDLayer/Factory/EnemyFactoryWarrior.png");
+	
+	for (int i = 0; i < QUENTITY_ELEMENT_CONTEXT_MENU; i++)
+	{
+		Sprite* _factory = Sprite::create(_filename[i]);
+		_factory->setScale(GameScene::m_visibleSize.width / _factory->getContentSize().width / 20,
+			GameScene::m_visibleSize.height / _factory->getContentSize().height / 20);
+		_locationY += _factory->getBoundingBox().size.height;
+		_factory->setPosition(i_locationMenu.x, _locationY);
+		m_vecSpriteMachine.push_back(_factory);
+		m_vecRectMachine.push_back(_factory->getBoundingBox());
+		this->addChild(_factory);
 	}
 }
 
@@ -121,17 +142,80 @@ void HUDLayer::UpdateQuentityCombatant(ManagerComponent& i_manager)
 
 void HUDLayer::Update(ManagerComponent& i_manager)
 {
-	// add on screen warrior from machine and their quentity
-
 	UpdateQuentityCombatant(i_manager);
 
-	if ((m_locationTouch = i_manager.m_inputComponent->GetLocationTouch()) != Point::ZERO)
+	switch (m_stateContextMenu)
 	{
-		if (DetermineCommandForManagerFactory())
+		case StateContextMenu::ACTIVE:
 		{
-			ExecuteCommandForManagerFactory(i_manager);
-			i_manager.m_inputComponent->SetZeroLocation();
+			if ((m_locationTouch = i_manager.m_inputComponent->GetLocationTouch()) != Point::ZERO)
+			{
+				if (DetermineCommandForManagerFactory())
+				{
+					ExecuteCommandForManagerFactory(i_manager);
+					i_manager.m_inputComponent->SetZeroLocation();
+					HideContextMenu();
+					m_stateContextMenu = StateContextMenu::NOT_ACTIVE;
+				}
+			}
+
+			break;
 		}
+		case StateContextMenu::NOT_ACTIVE:
+		{	
+			if ((m_locationTouch = i_manager.m_inputComponent->GetLocationTouch()) != Point::ZERO)
+			{
+				if (ShowContextMenu(i_manager))
+				{
+					i_manager.m_inputComponent->SetZeroLocation();
+					m_stateContextMenu = StateContextMenu::ACTIVE;
+				}
+			}
+
+			break;
+		}
+	}
+}
+
+void HUDLayer::HideContextMenu()
+{
+	for (int i = 0; i < m_vecSpriteMachine.size(); i++)
+	{
+		m_vecSpriteMachine[i]->setVisible(false);
+	}
+}
+
+bool HUDLayer::ShowContextMenu(ManagerComponent& i_manager)
+{
+	Point _prevLocationTouch = i_manager.m_inputComponent->GetPreviousLocationTouch();
+	Point _currLocationTouch = i_manager.m_inputComponent->GetLocationTouch();
+
+	if (((_prevLocationTouch.x - _currLocationTouch.x <= 10 && _prevLocationTouch.x - _currLocationTouch.x >= 0) || (_currLocationTouch.x - _prevLocationTouch.x <= 10 && _currLocationTouch.x - _prevLocationTouch.x >= 0)) &&
+		((_prevLocationTouch.y - _currLocationTouch.y <= 10 && _prevLocationTouch.y - _currLocationTouch.y >= 0) || (_currLocationTouch.y - _prevLocationTouch.y <= 10 && _currLocationTouch.y - _prevLocationTouch.y >= 0))
+		)
+	{
+		if (m_vecSpriteMachine.empty())
+		{
+			LoadSpritesForMenu(_currLocationTouch);
+		}
+		else
+		{
+			float _locationY = _currLocationTouch.y;
+			m_vecRectMachine.clear();
+			for (int i = 0; i < m_vecSpriteMachine.size(); i++)
+			{
+				_locationY += m_vecSpriteMachine[i]->getBoundingBox().size.height;
+				m_vecSpriteMachine[i]->setPosition(_currLocationTouch.x, _locationY);
+				m_vecSpriteMachine[i]->setVisible(true);
+				m_vecRectMachine.push_back(m_vecSpriteMachine[i]->getBoundingBox());
+			}
+		}
+		
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
@@ -157,11 +241,7 @@ bool HUDLayer::DetermineCommandForManagerFactory()
 		m_command = Command::CREATE_FACTORY_ENEMY_MACHINE;
 		return true;
 	}
-	else if (m_vecRectMachine[INDEX_MESSAGES].containsPoint(m_locationTouch))
-	{
-		m_command = Command::OPEN_MESSAGES;
-		return true;
-	}
+
 	return false;
 }
 
