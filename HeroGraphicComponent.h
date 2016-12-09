@@ -45,6 +45,9 @@ public:
 	void MoveRight();
 	void MoveLeft();
 
+	void IncreaseCoin(int i_value);
+	void IncreaseOil(int i_value);
+
 	void ReloadPosition();
 
 	bool DetermineCommand();
@@ -67,6 +70,7 @@ private:
 	std::vector<std::vector<int>> m_mapCoordinate;
 
 	int			m_coin;
+	int			m_oil;
 	StateHero	m_stateHero;
 	Rect		m_rectHero;
 	Vec2		m_positionTarget;

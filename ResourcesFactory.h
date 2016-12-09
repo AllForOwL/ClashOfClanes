@@ -30,19 +30,15 @@ public:
 
 	~ResourcesFactory();
 
+	void SetTypeResources(int i_type);
+
+
 	virtual void Update(ManagerComponent& i_manager);
 
-	StateFactoryResources& GetStateWarrior();
-
-	void SetState(StateFactoryResources& i_stateWarrior);
-
-	void StartProduction(int i_timeForComplete,  ManagerArmy::StateManagerArmy i_state);
-	void FinishProduction(ManagerComponent& i_manager);
-
-	void LoadProperties(ManagerComponent& i_manager);
-
 private:
-	StateFactoryResources			m_stateResources;
+	StateFactoryResources	m_stateResources;
+	int						m_stockGold;
+	int						m_stockOil;
 };
 
 #endif

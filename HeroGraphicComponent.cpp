@@ -358,6 +358,16 @@ void HeroGraphicComponent::ReloadPosition()
 	m_positionOriginWithVisible = m_positionOrigin + m_positionVisible;
 }
 
+void HeroGraphicComponent::IncreaseCoin(int i_value)
+{
+	m_coin += i_value;
+}
+
+void HeroGraphicComponent::IncreaseOil(int i_value)
+{
+	m_oil += i_value;
+}
+
 /*virtual*/ void HeroGraphicComponent::ShowMenu()
 {
 	m_rectForSprites.clear();
