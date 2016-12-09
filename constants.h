@@ -58,3 +58,6 @@
 	const int CNT_RESOURCES_GOLD	= 4000;
 	const int CNT_RESOURCES_TREE	= 4001;
 	const int CNT_RESOURCES_OIL		= 4002;
+
+	const int TYPE_GOLD = 10000;
+	const int TYPE_OIL  = 10001;

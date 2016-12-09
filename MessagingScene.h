@@ -19,8 +19,12 @@ public:
 
 	void AddElement();
 
+	void CallBuildFactory();
+
 private:
 	cocos2d::Sprite* m_close;
+	cocos2d::Label* m_buildFactory;
+	cocos2d::Label* m_message;
 };
 
 #endif

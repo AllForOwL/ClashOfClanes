@@ -23,10 +23,18 @@ bool HUDLayer::init()
 		return false;
 	}
 	
-	m_command = Command::NOTHING;
-	m_stateContextMenu = StateContextMenu::NOT_ACTIVE;
+	m_command			= Command::NOTHING;
+	m_stateContextMenu	= StateContextMenu::NOT_ACTIVE;
 
 	LoadSpritesCombatantBar();
+	
+	m_sprMessage = Sprite::create(CNT_PATH_TO_RESOURCES + "Item/Message/Message.png");
+	m_sprMessage->setScale(GameScene::m_visibleSize.width / m_sprMessage->getContentSize().width / 15,
+		GameScene::m_visibleSize.height / m_sprMessage->getContentSize().height / 15);
+	m_sprMessage->setPosition(GameScene::m_visibleSize.width - m_sprMessage->getBoundingBox().size.width / 2,
+		GameScene::m_visibleSize.height - m_sprMessage->getBoundingBox().size.height / 2);
+	m_rectMessage = m_sprMessage->getBoundingBox();
+	this->addChild(m_sprMessage);
 
 	return true;
 }
@@ -62,40 +70,6 @@ void HUDLayer::LoadSpritesCombatantBar()
 
 void HUDLayer::LoadSpritesForMenu(Point i_locationMenu)
 {
-	/*std::vector<int> _positionY;
-	_positionY.push_back(0);
-	_positionY.push_back(30);
-	_positionY.push_back(60);
-	_positionY.push_back(90);
-	_positionY.push_back(120);
-
-
-	std::vector<std::string> _filename;
-	_filename.push_back(CNT_PATH_TO_RESOURCES + "HUDLayer/Jelly.png");
-	_filename.push_back(CNT_PATH_TO_RESOURCES + "HUDLayer/Coal.png");
-	_filename.push_back(CNT_PATH_TO_RESOURCES + "HUDLayer/Ruby.png");
-	_filename.push_back(CNT_PATH_TO_RESOURCES + "HUDLayer/Ore.png");
-	_filename.push_back(CNT_PATH_TO_RESOURCES + "HUDLayer/Message.png");
-
-	for (int i = 0; i < 4; i++)
-	{
-		Sprite* _spriteFactory = Sprite::create(_filename[i]);
-		_spriteFactory->setScale(GameScene::m_visibleSize.width / _spriteFactory->getContentSize().width / 8,
-			GameScene::m_visibleSize.height / _spriteFactory->getContentSize().height / 8);
-		
-		for (int i = 0; i < _filename.size(); i++)
-		{
-			Sprite* _spriteFactory = Sprite::create(_filename[i]);
-			_spriteFactory->setScale(GameScene::m_visibleSize.width / _spriteFactory->getContentSize().width / 13,
-				GameScene::m_visibleSize.height / _spriteFactory->getContentSize().height / 13);
-
-			_spriteFactory->setPosition(GameScene::m_visibleSize.width - _spriteFactory->getBoundingBox().size.width,
-				GameScene::m_visibleSize.height / 2 - _positionY[i]);
-			m_vecRectMachine.push_back(_spriteFactory->getBoundingBox());
-			this->addChild(_spriteFactory);
-		}
-	}*/
-
 	float _locationY = i_locationMenu.y;
 
 	std::vector<std::string> _filename;
@@ -140,9 +114,20 @@ void HUDLayer::UpdateQuentityCombatant(ManagerComponent& i_manager)
 	}
 }
 
+void HUDLayer::VerifyOpenMessage(ManagerComponent& i_manager)
+{
+	if (m_rectMessage.containsPoint(i_manager.m_inputComponent->GetLocationTouch()))
+	{
+		m_command = Command::OPEN_MESSAGES;
+		ExecuteCommandForManagerFactory(i_manager);
+		i_manager.m_inputComponent->SetZeroLocation();
+	}
+}
+
 void HUDLayer::Update(ManagerComponent& i_manager)
 {
 	UpdateQuentityCombatant(i_manager);
+	VerifyOpenMessage(i_manager);
 
 	switch (m_stateContextMenu)
 	{

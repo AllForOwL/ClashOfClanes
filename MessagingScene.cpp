@@ -49,11 +49,16 @@ void MessagingScene::OpenMessagings()
 	int _positionY = GameScene::m_visibleSize.height;
 	for (int i = 0; i < MessagingSystem::m_vecMessages.size(); i++)
 	{
-		Label* _label = Label::create(MessagingSystem::m_vecMessages[i], "Herbana", 12);
-		_positionY -= _label->getContentSize().height / 2;
-		_label->setPosition(GameScene::m_visibleSize.width / 2, _positionY);
-		this->addChild(_label);
+		m_message = Label::create(MessagingSystem::m_vecMessages[i], "Herbana", 12);
+		_positionY -= m_message->getContentSize().height / 2;
+		m_message->setPosition(GameScene::m_visibleSize.width / 2, _positionY);
+		this->addChild(m_message);
 	}
+
+	m_buildFactory = Label::create("Build", "Herbana", 20);
+	m_buildFactory->setPosition(GameScene::m_visibleSize.width / 2,
+		m_buildFactory->getContentSize().height);
+	this->addChild(m_buildFactory);
 }
 
 void MessagingScene::CloseCurrentScene()
@@ -61,11 +66,29 @@ void MessagingScene::CloseCurrentScene()
 	Director::getInstance()->popScene();
 }
 
+void MessagingScene::CallBuildFactory()
+{
+	if (m_message->getString()[0] == 'G')
+	{
+		MessagingSystem::g_typeFactory = TYPE_GOLD;
+	}
+	else if (m_message->getString()[0] == 'O')
+	{
+		MessagingSystem::g_typeFactory = TYPE_OIL;
+	}
+
+	CloseCurrentScene();
+}
+
 /*virtual*/ bool MessagingScene::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* i_event)
 {
 	if (m_close->getBoundingBox().containsPoint(touch->getLocation()))
 	{
 		CloseCurrentScene();
+	}
+	else if (m_buildFactory->getBoundingBox().containsPoint(touch->getLocation()))
+	{
+		CallBuildFactory();
 	}
 
 	return true;

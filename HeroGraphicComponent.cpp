@@ -22,9 +22,9 @@ const int CNT_LENGTH_HERO_FROM_ORDER = 100;
 const int INDEX_FIND_GOLD	= 0;
 const int INDEX_FIND_OIL	= 1;
 
-const Point CNT_POSITION_GOLD	= Point(100, 100);
-const Point CNT_POSITION_OIL	= Point(400, 400);
-const Point CNT_POSITION_TREE	= Point(600, 600);
+const Point CNT_POSITION_GOLD	= Point(800, 800);
+const Point CNT_POSITION_OIL	= Point(600, 600);
+const Point CNT_POSITION_TREE	= Point(700, 700);
 
 const Point POSITION_BEGIN_HERO = Point(100, 100);
 
@@ -192,13 +192,13 @@ bool HeroGraphicComponent::DetermineCommand()
 	if (m_rectForSprites[INDEX_FIND_GOLD].containsPoint(m_locationTouch))
 	{
 		m_positionTarget	= CNT_POSITION_GOLD;
-		m_textMessage		= "Need: \n  - 5 bronze warrior \n";
+		m_textMessage		= "Gold: \t\t\t Need: \n  - 5 bronze warrior \n";
 		return true;
 	}
 	else if (m_rectForSprites[INDEX_FIND_OIL].containsPoint(m_locationTouch))
 	{
 		m_locationTouch = CNT_POSITION_OIL;
-		m_textMessage	= "Need: \n		- 3 bronze warrior \n";
+		m_textMessage	= "Oil: \t\t\t Need: \n		- 3 bronze warrior \n";
 		return true;
 	}
 	return false;

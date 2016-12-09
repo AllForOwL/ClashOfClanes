@@ -45,6 +45,8 @@ public:
 
 	void UpdateQuentityCombatant(ManagerComponent& i_manager);
 
+	void VerifyOpenMessage(ManagerComponent& i_manager);
+
 	bool ShowContextMenu(ManagerComponent& i_manager);
 	void HideContextMenu();
 
@@ -57,6 +59,10 @@ private:
 	std::vector<Label*> m_vecLabelCombatant;
 	std::vector<int>	m_vecQuentityCombatant;
 	StateContextMenu	m_stateContextMenu;
+
+	Sprite*	m_sprMessage;
+	Rect	m_rectMessage;
+
 };
 
 #endif // __HUD_LAYER_H__
