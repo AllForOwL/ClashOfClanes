@@ -32,7 +32,6 @@ public:
 
 	void SetTypeResources(int i_type);
 
-
 	virtual void Update(ManagerComponent& i_manager);
 
 private:

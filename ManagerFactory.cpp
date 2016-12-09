@@ -72,6 +72,7 @@ void ManagerFactory::CreateFactoryResources(ManagerComponent& i_manager, int i_t
 	if (i_typeFactory == TYPE_GOLD)
 	{
 		ResourcesFactory* _resourcesFactory = new ResourcesFactory(m_positionBuildFactory, *i_manager.m_mapLayer, std::string("Factory/FactoryGold.png"));
+		_resourcesFactory->SetTypeResources(TYPE_GOLD);
 		m_vecFactoryResources.push_back(_resourcesFactory);
 		LaunchFillRegion(*m_vecFactoryResources[m_vecFactoryResources.size() - 1], i_manager, TYPE_GOLD);
 		i_manager.m_managerObjectAndFile->WriteObjectInFile(TYPE_GOLD, m_positionBuildFactory, (i_manager.m_mapLayer->getPosition() * -1));
@@ -79,6 +80,7 @@ void ManagerFactory::CreateFactoryResources(ManagerComponent& i_manager, int i_t
 	else if (i_typeFactory == TYPE_OIL)
 	{
 		ResourcesFactory* _resourcesFactory = new ResourcesFactory(m_positionBuildFactory, *i_manager.m_mapLayer, std::string("Factory/FactoryOil.png"));
+		_resourcesFactory->SetTypeResources(TYPE_OIL);
 		m_vecFactoryResources.push_back(_resourcesFactory);
 		LaunchFillRegion(*m_vecFactoryResources[m_vecFactoryResources.size() - 1], i_manager, TYPE_OIL);
 		i_manager.m_managerObjectAndFile->WriteObjectInFile(TYPE_OIL, m_positionBuildFactory, (i_manager.m_mapLayer->getPosition() * -1));
@@ -96,6 +98,12 @@ void ManagerFactory::UpdateAllFactory(ManagerComponent& i_manager)
 	{
 		m_vecFactoryMachine[i]->Update(i_manager);
 	}
+
+	for (int i = 0; i < m_vecFactoryResources.size(); i++)
+	{
+		m_vecFactoryResources[i]->Update(i_manager);
+	}
+
 }
 
 void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)

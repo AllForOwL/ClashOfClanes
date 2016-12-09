@@ -36,7 +36,7 @@ void MessagingSystem::Update(ManagerComponent& i_manager)
 			ManagerFactory::StateManagerFactory _newStateFactory = ManagerFactory::StateManagerFactory::ADD_FACTORY_GOLD;
 			i_manager.m_managerFactory->SetState(_newStateFactory);
 			i_manager.m_managerFactory->SetPositionBuildFactory(CNT_POSITION_GOLD);
-			i_manager.m_mapLayer->setPosition(CNT_POSITION_GOLD);
+			i_manager.m_mapLayer->setPosition(CNT_POSITION_GOLD * (-1));
 
 			m_stateMessage = StateMessage::NOTHING;
 
@@ -47,7 +47,7 @@ void MessagingSystem::Update(ManagerComponent& i_manager)
 			ManagerFactory::StateManagerFactory _newStateFactory = ManagerFactory::StateManagerFactory::ADD_FACTORY_OIL;														
 			i_manager.m_managerFactory->SetState(_newStateFactory);
 			i_manager.m_managerFactory->SetPositionBuildFactory(CNT_POSITION_OIL);
-			i_manager.m_mapLayer->setPosition(CNT_POSITION_OIL);
+			i_manager.m_mapLayer->setPosition(CNT_POSITION_OIL * (-1));
 
 			m_stateMessage = StateMessage::NOTHING;
 
@@ -78,7 +78,7 @@ void MessagingSystem::VerifyGoBuildFactory()
 	}
 }
 
-void MessagingSystem::SetState(StateMessage i_state)
+void MessagingSystem::SetState(StateMessage i_state)      
 {
 	m_stateMessage = i_state;
 }

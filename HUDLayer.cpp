@@ -6,14 +6,14 @@
 #include "MachineFactory.h"
 #include "WarriorFactory.h"
 #include "MessagingScene.h"
+#include "HeroGraphicComponent.h"
 
 const int INDEX_FACTORY_ENEMY_MACHINE	= 0;
 const int INDEX_FACTORY_MACHINE			= 1;
 const int INDEX_FACTORY_WARRIOR			= 2;
 const int INDEX_FACTORY_ENEMY_WARRIOR	= 3;
-const int INDEX_MESSAGES				= 4;
 
-const int QUENTITY_COMBATANT_IN_BAR = 4;
+const int QUENTITY_COMBATANT_IN_BAR = 6;
 const int QUENTITY_ELEMENT_CONTEXT_MENU = 4;
 
 bool HUDLayer::init()
@@ -46,12 +46,16 @@ void HUDLayer::LoadSpritesCombatantBar()
 	_positionX.push_back(100.0);
 	_positionX.push_back(150.0);
 	_positionX.push_back(200.0);
+	_positionX.push_back(250.0);
+	_positionX.push_back(300.0);
 
 	std::vector<std::string> _vecCombtants;
 	_vecCombtants.push_back(CNT_PATH_TO_RESOURCES + "Warrior/black_knight/attack_1.png");
 	_vecCombtants.push_back(CNT_PATH_TO_RESOURCES + "Warrior/bronze_knight/attack_1.png");
 	_vecCombtants.push_back(CNT_PATH_TO_RESOURCES + "Warrior/silver_knight/attack_1.png");
 	_vecCombtants.push_back(CNT_PATH_TO_RESOURCES + "Machine/Tank_1.png");
+	_vecCombtants.push_back(CNT_PATH_TO_RESOURCES + "HUDLayer/Gold.png");
+	_vecCombtants.push_back(CNT_PATH_TO_RESOURCES + "HUDLayer/Oil.png");
 
 	for (int i = 0; i < _vecCombtants.size(); i++)
 	{
@@ -99,6 +103,8 @@ void HUDLayer::UpdateQuentityCombatant(ManagerComponent& i_manager)
 		m_vecQuentityCombatant.push_back(i_manager.m_managerArmy->GetQuentityKnightBronze());
 		m_vecQuentityCombatant.push_back(i_manager.m_managerArmy->GetQuentityKnightSilver());
 		m_vecQuentityCombatant.push_back(i_manager.m_managerMachine->GetQuentityTank());
+		m_vecQuentityCombatant.push_back(i_manager.m_hero->GetCoin());
+		m_vecQuentityCombatant.push_back(i_manager.m_hero->GetOil());
 	}
 	else
 	{
@@ -106,6 +112,8 @@ void HUDLayer::UpdateQuentityCombatant(ManagerComponent& i_manager)
 		m_vecQuentityCombatant[1] = i_manager.m_managerArmy->GetQuentityKnightBronze();
 		m_vecQuentityCombatant[2] = i_manager.m_managerArmy->GetQuentityKnightSilver();
 		m_vecQuentityCombatant[3] = i_manager.m_managerMachine->GetQuentityTank();
+		m_vecQuentityCombatant[4] = i_manager.m_hero->GetCoin();
+		m_vecQuentityCombatant[5] = i_manager.m_hero->GetOil();
 	}
 
 	for (int i = 0; i < QUENTITY_COMBATANT_IN_BAR; i++)

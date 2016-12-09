@@ -11,6 +11,7 @@
 #include "ManagerObjectAndFile.h"
 #include "MessagingSystem.h"
 #include "AIDirection.h"
+#include "ManagerFactoryResources.h"
 #include "constants.h"
 
 ManagerComponent::ManagerComponent(GameScene& i_gameScene)
@@ -32,6 +33,7 @@ ManagerComponent::ManagerComponent(GameScene& i_gameScene)
 	m_managerArmy		= new ManagerArmy();
 	m_managerMachine	= new ManagerMachine();
 	m_managerFactory	= new ManagerFactory();
+	m_managerFactoryResources = new ManagerFactoryResources();
 	m_AIAct				= new AIAct();
 	m_AIDirection		= new AIDirection();
 
@@ -44,6 +46,7 @@ void ManagerComponent::Update(GameScene& i_gameScene)
 	m_inputComponent->Update(*this);
 	m_mapLayer->Update		(*this);
 
+	m_managerFactoryResources->Update(*this);
 	m_managerArmy->Update	(i_gameScene, *this);
 	m_managerMachine->Update(i_gameScene, *this);
 	m_managerFactory->Update(i_gameScene, *this);

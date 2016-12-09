@@ -32,6 +32,9 @@ public:
 
 	virtual void ShowMenu();
 
+	int GetCoin() const;
+	int GetOil() const;
+
 	bool RunSearchWay(ManagerComponent& i_manager);
 
 	bool TouchOnHero(ManagerComponent& i_manager);

@@ -19,6 +19,7 @@ const int CNT_COIN_FOR_START_FACTORY_GOLD	= 1000;
 const int CNT_COIN_FOR_START_FACTORY_OIL	= 800;
 
 const int CNT_COINT_IN_BEGIN = 10000;
+const int CNT_OIL_IN_BEGIN	 = 10000;
 
 const int CNT_LENGTH_HERO_FROM_ORDER = 100;
 
@@ -50,6 +51,7 @@ HeroGraphicComponent::HeroGraphicComponent(MapLayer& i_parentMapLayer)
 	GraphicComponent::LoadProperties(POSITION_BEGIN_HERO, i_parentMapLayer.getPosition());
 
 	m_coin				= CNT_COINT_IN_BEGIN;
+	m_oil				= CNT_OIL_IN_BEGIN;
 	m_positionTarget	= Point::ZERO;
 	m_stateHero			= StateHero::NOTHING;
 	m_loadProperties	= true;
@@ -366,6 +368,16 @@ void HeroGraphicComponent::IncreaseCoin(int i_value)
 void HeroGraphicComponent::IncreaseOil(int i_value)
 {
 	m_oil += i_value;
+}
+
+int HeroGraphicComponent::GetCoin() const
+{
+	return m_coin;
+}
+
+int HeroGraphicComponent::GetOil() const
+{
+	return m_oil;
 }
 
 /*virtual*/ void HeroGraphicComponent::ShowMenu()

@@ -44,7 +44,7 @@ public:
 
 	bool isComplete()
 	{
-		if ((int)std::chrono::duration<double>(GraphicComponent::GetTime() - m_startSecond).count() == m_timeForComplete)
+		if ((int)std::chrono::duration<double>(GraphicComponent::GetTime() - m_startSecond).count() >= m_timeForComplete)
 		{
 			return true;
 		}
