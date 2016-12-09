@@ -11,7 +11,7 @@ std::vector<std::string>MessagingSystem::m_vecMessages;
 int MessagingSystem::g_typeFactory;
 
 
-const Point CNT_POSITION_GOLD	= Point(800, 800);
+const Point CNT_POSITION_GOLD	= Point(200, 200);
 const Point CNT_POSITION_OIL	= Point(600, 600);
 const Point CNT_POSITION_TREE	= Point(700, 700);
 

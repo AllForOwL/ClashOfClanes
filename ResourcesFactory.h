@@ -18,7 +18,8 @@ public:
 	{
 		START_GOLD,
 		START_OIL,
-		WORKING,
+		WORKING_GOLD,
+		WORKING_OIL,
 		LISTEN,
 		NOTHING
 	};
@@ -39,9 +40,6 @@ public:
 	void FinishProduction(ManagerComponent& i_manager);
 
 	void LoadProperties(ManagerComponent& i_manager);
-
-	void LoadNameForSprites();
-	bool DetermineCommand();
 
 private:
 	StateFactoryResources			m_stateResources;

@@ -15,6 +15,9 @@ const int CNT_COIN_FOR_START_CAR	= 70;
 const int CNT_COIN_FOR_START_FACTORY_MACHINE	= 300;
 const int CNT_COIN_FOR_START_FACTORY_WARRIOR	= 250;
 
+const int CNT_COIN_FOR_START_FACTORY_GOLD	= 1000;
+const int CNT_COIN_FOR_START_FACTORY_OIL	= 800;
+
 const int CNT_COINT_IN_BEGIN = 10000;
 
 const int CNT_LENGTH_HERO_FROM_ORDER = 100;
@@ -22,7 +25,7 @@ const int CNT_LENGTH_HERO_FROM_ORDER = 100;
 const int INDEX_FIND_GOLD	= 0;
 const int INDEX_FIND_OIL	= 1;
 
-const Point CNT_POSITION_GOLD	= Point(800, 800);
+const Point CNT_POSITION_GOLD	= Point(200, 200);
 const Point CNT_POSITION_OIL	= Point(600, 600);
 const Point CNT_POSITION_TREE	= Point(700, 700);
 
@@ -395,6 +398,32 @@ bool HeroGraphicComponent::CheckToGoTarget(ManagerComponent& i_manager)
 		}
 	}
 	return false;
+}
+
+bool HeroGraphicComponent::CheckProductionFactoryGold()
+{
+	if (m_coin >= CNT_COIN_FOR_START_FACTORY_GOLD)
+	{
+		m_coin -= CNT_COIN_FOR_START_FACTORY_GOLD;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool HeroGraphicComponent::CheckProductionFactoryOil()
+{
+	if (m_coin >= CNT_COIN_FOR_START_FACTORY_OIL)
+	{
+		m_coin -= CNT_COIN_FOR_START_FACTORY_OIL;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 bool HeroGraphicComponent::CheckProductionKnightBlack()

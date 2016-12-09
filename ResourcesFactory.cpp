@@ -20,8 +20,8 @@ ResourcesFactory::ResourcesFactory()
 }
 
 ResourcesFactory::ResourcesFactory(Point i_positionVisible, MapLayer& i_mapLayer, std::string i_filename) : Factory(i_positionVisible, 
-																						i_mapLayer, 
-																						)
+																													i_mapLayer, 
+																													i_filename)
 {
 	m_stateResources	= StateFactoryResources::NOTHING;
 }
@@ -29,137 +29,60 @@ ResourcesFactory::ResourcesFactory(ResourcesFactory& i_ResourcesFactory)
 {
 
 }
-
-void ResourcesFactory::LoadNameForSprites()
-{
-	m_vecNameForSprites.push_back(CNT_PATH_TO_RESOURCES + "Warrior/black_knight/attack_1.png");
-	m_vecNameForSprites.push_back(CNT_PATH_TO_RESOURCES + "Warrior/bronze_knight/attack_1.png");
-	m_vecNameForSprites.push_back(CNT_PATH_TO_RESOURCES + "Warrior/silver_knight/attack_1.png");
-}
-
 void ResourcesFactory::StartProduction(int i_timeForComplete, ManagerArmy::StateManagerArmy i_state)
 {
-	m_timeForComplete			= i_timeForComplete;
-	m_startSecond				= GraphicComponent::GetTime();
-	m_stateTypeAddWarrior		= i_state;
 
-	m_stateWarrior				= StateFactoryWarrior::WORKING;
 }
 
 void ResourcesFactory::FinishProduction(ManagerComponent& i_manager)
 {
-	m_stateWarrior = StateFactoryWarrior::LISTEN;
-	i_manager.m_managerArmy->SetState(m_stateTypeAddWarrior);
-	i_manager.m_managerArmy->SetPositionForWarrior(m_vecPosition[m_numberComplete]);
-	++m_numberComplete;
+
 }
 
 void ResourcesFactory::LoadProperties(ManagerComponent& i_manager)
 {
-	if (m_vecNameForSprites.empty())
-	{
-		LoadNameForSprites();
-		LoadSprites();
-	}
 
-	LoadPosition();
-	ShowMenu();
-	m_stateWarrior = StateFactoryWarrior::LISTEN;
-	i_manager.m_inputComponent->SetZeroLocation();
 }
 
 /*virtual*/ void ResourcesFactory::Update(ManagerComponent& i_manager)
 {
-	switch (m_stateWarrior)
+	switch (m_stateResources)
 	{
-		case StateFactoryWarrior::START_KNIGHT_BLACK:
+		case StateFactoryResources::START_GOLD:
 		{
-			if (i_manager.m_hero->CheckProductionKnightBlack())
-			{
-				StartProduction(CNT_TIME_FOR_COMPLETE_KNIGHT_BLACK, ManagerArmy::StateManagerArmy::ADD_KNIGHT_BLACK);
-			}
+			m_stateResources = StateFactoryResources::WORKING_GOLD;
 
 			break;
 		}
-		case StateFactoryWarrior::START_KNIGHT_BRONZE:
+		case StateFactoryResources::START_OIL:
 		{
-			if (i_manager.m_hero->CheckProductionKnightBronze())
-			{
-				StartProduction(CNT_TIME_FOR_COMPLETE_KNIGHT_BRONZE, ManagerArmy::StateManagerArmy::ADD_KNIGHT_BRONZE);
-			}
+			m_stateResources = StateFactoryResources::WORKING_OIL;
 
 			break;
 		}
-		case StateFactoryWarrior::START_KNIGHT_SILVER:
+		case StateFactoryResources::WORKING_GOLD:
 		{
-			if (i_manager.m_hero->CheckProductionKnightSilver())
-			{
-				StartProduction(CNT_TIME_FOR_COMPLETE_KNIGHT_SILVER, ManagerArmy::StateManagerArmy::ADD_KNIGHT_SILVER);
-			}
+		
 			break;
 		}
-		case StateFactoryWarrior::WORKING:
+		case StateFactoryResources::WORKING_OIL:
 		{
-			if (isComplete())
-			{
-				FinishProduction(i_manager);
-			}
+			
 			break;
 		}
-		case StateFactoryWarrior::LISTEN:
+		case StateFactoryResources::LISTEN:
 		{
-			m_locationTouch = i_manager.m_inputComponent->GetLocationTouch();
-			ConvertToOrigin(m_locationTouch);
-			if (DetermineCommand())
-			{
-				i_manager.m_inputComponent->SetZeroLocation();
-			}
+		
 			break;
 		}
-		case StateFactoryWarrior::NOTHING:
+		case StateFactoryResources::NOTHING:
 		{
-			m_locationTouch		= i_manager.m_inputComponent->GetLocationTouch();
-			ConvertToOrigin(m_locationTouch);
-			if (m_rectOriginWithVisible.containsPoint(m_locationTouch) && m_locationTouch != Point::ZERO)
-			{
-				LoadProperties(i_manager);
-			}	
+		
 			break;
 		}
 	default:
 		break;
 	}
-}
-
-bool ResourcesFactory::DetermineCommand()
-{
-	if (m_rectForSprites[INDEX_KNIGHT_BLACK].containsPoint(m_locationTouch))
-	{
-		m_stateWarrior = StateFactoryWarrior::START_KNIGHT_BLACK;
-		return true;
-	}
-	else if (m_rectForSprites[INDEX_KNIGHT_BRONZE].containsPoint(m_locationTouch))
-	{
-		m_stateWarrior = StateFactoryWarrior::START_KNIGHT_BRONZE;
-		return true;
-	}
-	else if (m_rectForSprites[INDEX_KNIGHT_SILVER].containsPoint(m_locationTouch))
-	{
-		m_stateWarrior = StateFactoryWarrior::START_KNIGHT_SILVER;
-		return true;
-	}
-	return false;
-}
-
-using STATE_FACTORY = ResourcesFactory::StateFactoryWarrior;
-void ResourcesFactory::SetState(STATE_FACTORY& i_stateWarrior)
-{
-	m_stateWarrior = i_stateWarrior;
-}
-
-ResourcesFactory::StateFactoryWarrior& ResourcesFactory::GetStateWarrior()
-{
-	return m_stateWarrior;
 }
 
 ResourcesFactory::~ResourcesFactory()

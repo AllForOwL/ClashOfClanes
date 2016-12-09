@@ -51,6 +51,9 @@ public:
 
 	void AddMessage(ManagerComponent& i_manager);
 
+	bool CheckProductionFactoryGold();
+	bool CheckProductionFactoryOil();
+
 	bool CheckProductionKnightBlack();
 	bool CheckProductionKnightBronze();
 	bool CheckProductionKnightSilver();

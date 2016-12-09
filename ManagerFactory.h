@@ -12,6 +12,7 @@ class WarriorFactory;
 class EnemyWarriorFactory;
 class EnemyMachineFactory;
 class Factory;
+class ResourcesFactory;
 
 class ManagerFactory
 {
@@ -45,14 +46,16 @@ public:
 
 	void AddOnScene(Factory& i_newObject, Point i_position);
 
-	void CreateFactory(ManagerComponent& i_manager, int i_typeFactory);
-	void CreateFactoryEnemy(ManagerComponent& i_manager, int i_typeFactory);
+	void CreateFactory			(ManagerComponent& i_manager, int i_typeFactory);
+	void CreateFactoryEnemy		(ManagerComponent& i_manager, int i_typeFactory);
+	void CreateFactoryResources	(ManagerComponent& i_manager, int i_typeFactory);
 
 private:
 	std::vector<Factory*>	m_vecFactoryMachine;
 	std::vector<Factory*>	m_vecFactoryWarrior;
 	std::vector<Factory*>	m_vecFactoryEnemyWarrior;
 	std::vector<Factory*>	m_vecFactoryEnemyMachine;
+	std::vector<Factory*>	m_vecFactoryResources;
 
 	StateManagerFactory				m_stateManagerFactory;
 	Point							m_positionBuildFactory;

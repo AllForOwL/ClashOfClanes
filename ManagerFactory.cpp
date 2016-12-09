@@ -9,6 +9,7 @@
 #include "EnemyWarriorFactory.h"
 #include "EnemyMachineFactory.h"
 #include "ManagerObjectAndFile.h"
+#include "ResourcesFactory.h"
 
 ManagerFactory::ManagerFactory()
 {
@@ -66,6 +67,24 @@ void ManagerFactory::CreateFactoryEnemy(ManagerComponent& i_manager, int i_typeF
 	}
 }
 
+void ManagerFactory::CreateFactoryResources(ManagerComponent& i_manager, int i_typeFactory)
+{
+	if (i_typeFactory == TYPE_GOLD)
+	{
+		ResourcesFactory* _resourcesFactory = new ResourcesFactory(m_positionBuildFactory, *i_manager.m_mapLayer, std::string("Factory/FactoryGold.png"));
+		m_vecFactoryResources.push_back(_resourcesFactory);
+		LaunchFillRegion(*m_vecFactoryResources[m_vecFactoryResources.size() - 1], i_manager, TYPE_GOLD);
+		i_manager.m_managerObjectAndFile->WriteObjectInFile(TYPE_GOLD, m_positionBuildFactory, (i_manager.m_mapLayer->getPosition() * -1));
+	}
+	else if (i_typeFactory == TYPE_OIL)
+	{
+		ResourcesFactory* _resourcesFactory = new ResourcesFactory(m_positionBuildFactory, *i_manager.m_mapLayer, std::string("Factory/FactoryOil.png"));
+		m_vecFactoryResources.push_back(_resourcesFactory);
+		LaunchFillRegion(*m_vecFactoryResources[m_vecFactoryResources.size() - 1], i_manager, TYPE_OIL);
+		i_manager.m_managerObjectAndFile->WriteObjectInFile(TYPE_OIL, m_positionBuildFactory, (i_manager.m_mapLayer->getPosition() * -1));
+	}
+}
+
 void ManagerFactory::UpdateAllFactory(ManagerComponent& i_manager)
 {
 	for (int i = 0; i < m_vecFactoryWarrior.size(); i++)
@@ -114,6 +133,22 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 		case ManagerFactory::ADD_FACTORY_ENEMY_MACHINE:
 		{
 			CreateFactoryEnemy(i_manager, CNT_OBJECT_FACTORY_ENEMY_MACHINE);
+
+			m_stateManagerFactory = ManagerFactory::NOTHING;
+
+			break;
+		}
+		case ManagerFactory::ADD_FACTORY_GOLD:
+		{
+			CreateFactoryResources(i_manager, TYPE_GOLD);
+			
+			m_stateManagerFactory = ManagerFactory::NOTHING;
+
+			break;
+		}
+		case ManagerFactory::ADD_FACTORY_OIL:
+		{
+			CreateFactoryResources(i_manager, TYPE_OIL);
 
 			m_stateManagerFactory = ManagerFactory::NOTHING;
 
