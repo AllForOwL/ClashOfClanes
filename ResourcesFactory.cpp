@@ -6,8 +6,8 @@
 #include "HeroInputComponent.h"
 #include "MapLayer.h"
 
-const int CNT_TIME_FOR_COMPLETE_GOLD	= 800;
-const int CNT_TIME_FOR_COMPLETE_OIL		= 1000;
+const int CNT_TIME_FOR_COMPLETE_GOLD	= 8000;
+const int CNT_TIME_FOR_COMPLETE_OIL		= 10000;
 
 const int COIN_PRODUCTION_FACTORY = 100;
 const int OIL_PRODUCTION_FACTORY  = 70;

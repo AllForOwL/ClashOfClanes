@@ -43,6 +43,11 @@ public:
 	void NeedShowMenu(ManagerComponent& i_manager);
 	void LoadNameSprites();
 
+	Point GetPositionBuildFactory() const;
+
+	Point GetPositionGold() const;
+	Point GetPositionOil() const;
+
 	void MoveUp();
 	void MoveDown();
 	void MoveRight();

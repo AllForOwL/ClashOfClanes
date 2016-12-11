@@ -19,10 +19,6 @@ const int CNT_RUN		= 1;
 const int CNT_WANDER	= 2;
 const int CNT_HIDE		= 3;
 
-const Point CNT_POSITION_GOLD	= Point(200, 200);
-const Point CNT_POSITION_OIL	= Point(400, 400);
-const Point CNT_POSITION_TREE	= Point(600, 600);
-
 Knight::Knight()
 {
 
@@ -142,20 +138,14 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 		}
 		case StateCombatant::FIND_GOLD:
 		{
-			FindResources(i_manager, CNT_POSITION_GOLD);
+//			FindResources(i_manager, GetPositionGold());
 
 			break;
 		}
 		case StateCombatant::FIND_OIL:
 		{
-			FindResources(i_manager, CNT_POSITION_OIL);
+//			FindResources(i_manager, GetPositionOil());
 	
-			break;
-		}
-		case StateCombatant::FIND_TREE:
-		{
-			FindResources(i_manager, CNT_POSITION_TREE);
-
 			break;
 		}
 		case StateCombatant::MOVE_FORWARD:
@@ -195,9 +185,6 @@ void Knight::FindResources(ManagerComponent& i_manager, Point i_positionTarget)
 		}
 		case StateCombatant::ACT_ATTACK:
 		{
-			/*
-				Changes sprites
-			*/
 			m_state	=	StateCombatant::GOES_TO_TARGET;
 
 			break;
@@ -301,7 +288,7 @@ bool Knight::DetermineCommand()
 	}
 	else if (m_rectForSprites[INDEX_TASK_TREE].containsPoint(m_locationTouch))
 	{
-		m_state = StateCombatant::FIND_TREE;
+//		m_state = StateCombatant::FIND_TREE;
 		return true;
 	}
 	return false;
@@ -395,6 +382,7 @@ Knight::~Knight()
 
 			Tasks on tomorrow(11:12:2016)
 				+ menu has been hide when user do not chooise;
-				- add icon new message(red color);
-				- need think;
+				+ add icon new message(red color);
+				- need think:
+					- add region for resources;
 */

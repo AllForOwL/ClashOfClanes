@@ -26,9 +26,14 @@ const int CNT_LENGTH_HERO_FROM_ORDER = 100;
 const int INDEX_FIND_GOLD	= 0;
 const int INDEX_FIND_OIL	= 1;
 
-const Point CNT_POSITION_GOLD	= Point(200, 200);
-const Point CNT_POSITION_OIL	= Point(600, 600);
-const Point CNT_POSITION_TREE	= Point(700, 700);
+/*
+	2048x2048
+		Resources:
+		 gold:
+			- x: 1000 - 1500, y: 1000 - 1500;
+		oil:
+			- x: 700 - 1000,  y: 700 - 1000;
+*/
 
 const Point POSITION_BEGIN_HERO = Point(100, 100);
 
@@ -186,6 +191,25 @@ bool HeroGraphicComponent::RunSearchWay(ManagerComponent& i_manager)
 	}
 }
 
+Point HeroGraphicComponent::GetPositionGold() const
+{
+	srand(time(NULL));
+	return Point(rand() % TOP_ORDER_GOLD + LOWER_ORDER_GOLD,
+		rand() % TOP_ORDER_GOLD + LOWER_ORDER_GOLD);
+}
+
+Point HeroGraphicComponent::GetPositionOil() const
+{
+	srand(time(NULL));
+	return Point(rand() % TOP_ORDER_OIL + LOWER_ORDER_OIL,
+		rand() % TOP_ORDER_OIL + LOWER_ORDER_OIL);
+}
+
+Point HeroGraphicComponent::GetPositionBuildFactory() const
+{
+	return m_positionTarget;
+}
+
 void HeroGraphicComponent::AddMessage(ManagerComponent& i_manager)
 {
 	i_manager.m_messagingSystem->AddMesssage(m_textMessage);
@@ -196,13 +220,13 @@ bool HeroGraphicComponent::DetermineCommand()
 {
 	if (m_rectForSprites[INDEX_FIND_GOLD].containsPoint(m_locationTouch))
 	{
-		m_positionTarget	= CNT_POSITION_GOLD;
+		m_positionTarget	= GetPositionGold();
 		m_textMessage		= "Gold: \t\t\t Need: \n  - 5 bronze warrior \n";
 		return true;
 	}
 	else if (m_rectForSprites[INDEX_FIND_OIL].containsPoint(m_locationTouch))
 	{
-		m_locationTouch = CNT_POSITION_OIL;
+		m_locationTouch = GetPositionOil();
 		m_textMessage	= "Oil: \t\t\t Need: \n		- 3 bronze warrior \n";
 		return true;
 	}

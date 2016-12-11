@@ -1,6 +1,7 @@
 ﻿#include "MessagingSystem.h"
 #include "ManagerComponent.h"
 #include "ManagerFactory.h"
+#include "HeroGraphicComponent.h"
 #include "MapLayer.h"
 #include "GameScene.h"
 #include "constants.h"
@@ -9,12 +10,6 @@ USING_NS_CC;
 
 std::vector<std::string>MessagingSystem::m_vecMessages;
 int MessagingSystem::g_typeFactory;
-
-
-const Point CNT_POSITION_GOLD	= Point(200, 200);
-const Point CNT_POSITION_OIL	= Point(600, 600);
-const Point CNT_POSITION_TREE	= Point(700, 700);
-
 
 MessagingSystem::MessagingSystem()
 {
@@ -40,9 +35,7 @@ void MessagingSystem::Update(ManagerComponent& i_manager)
 		{
 			ManagerFactory::StateManagerFactory _newStateFactory = ManagerFactory::StateManagerFactory::ADD_FACTORY_GOLD;
 			i_manager.m_managerFactory->SetState(_newStateFactory);
-			i_manager.m_managerFactory->SetPositionBuildFactory(CNT_POSITION_GOLD);
-			i_manager.m_mapLayer->setPosition(CNT_POSITION_GOLD * (-1));
-
+			i_manager.m_managerFactory->SetPositionBuildFactory(i_manager.m_hero->GetPositionBuildFactory());
 			m_stateMessage = StateMessage::NOTHING;
 
 			break;												
@@ -51,8 +44,7 @@ void MessagingSystem::Update(ManagerComponent& i_manager)
 		{
 			ManagerFactory::StateManagerFactory _newStateFactory = ManagerFactory::StateManagerFactory::ADD_FACTORY_OIL;														
 			i_manager.m_managerFactory->SetState(_newStateFactory);
-			i_manager.m_managerFactory->SetPositionBuildFactory(CNT_POSITION_OIL);
-			i_manager.m_mapLayer->setPosition(CNT_POSITION_OIL * (-1));
+			i_manager.m_managerFactory->SetPositionBuildFactory(i_manager.m_hero->GetPositionBuildFactory());
 
 			m_stateMessage = StateMessage::NOTHING;
 
