@@ -13,7 +13,7 @@ const int INDEX_FACTORY_MACHINE			= 1;
 const int INDEX_FACTORY_WARRIOR			= 2;
 const int INDEX_FACTORY_ENEMY_WARRIOR	= 3;
 
-const int QUENTITY_COMBATANT_IN_BAR = 6;
+const int QUENTITY_COMBATANT_IN_BAR		= 6;
 const int QUENTITY_ELEMENT_CONTEXT_MENU = 4;
 
 bool HUDLayer::init()
@@ -25,6 +25,9 @@ bool HUDLayer::init()
 	
 	m_command			= Command::NOTHING;
 	m_stateContextMenu	= StateContextMenu::NOT_ACTIVE;
+
+	m_prevPositionMapLayer = Point::ZERO;
+	m_currPositionMapLayer = Point::ZERO;
 
 	LoadSpritesCombatantBar();
 	
@@ -152,6 +155,22 @@ void HUDLayer::Update(ManagerComponent& i_manager)
 				}
 			}
 
+			if (m_currPositionMapLayer != Point::ZERO)
+			{
+				m_prevPositionMapLayer = m_currPositionMapLayer;
+				m_currPositionMapLayer = i_manager.m_mapLayer->getPosition();
+				if (m_prevPositionMapLayer != m_currPositionMapLayer)
+				{
+					m_prevPositionMapLayer = Point::ZERO;
+					m_currPositionMapLayer = Point::ZERO;
+					HideContextMenu();
+					m_stateContextMenu = StateContextMenu::NOT_ACTIVE;
+				}
+			}
+			else
+			{
+				m_currPositionMapLayer = i_manager.m_mapLayer->getPosition();
+			}
 			break;
 		}
 		case StateContextMenu::NOT_ACTIVE:
@@ -172,9 +191,12 @@ void HUDLayer::Update(ManagerComponent& i_manager)
 
 void HUDLayer::HideContextMenu()
 {
-	for (int i = 0; i < m_vecSpriteMachine.size(); i++)
+	if (!m_vecSpriteMachine.empty() && m_vecSpriteMachine[0]->isVisible())
 	{
-		m_vecSpriteMachine[i]->setVisible(false);
+		for (int i = 0; i < m_vecSpriteMachine.size(); i++)
+		{
+			m_vecSpriteMachine[i]->setVisible(false);
+		}
 	}
 }
 
@@ -306,7 +328,6 @@ HUDLayer::~HUDLayer()
 {
 
 }
-
 /*
 	Tasks on today(01:11:2016)
 	+ Hide menu;

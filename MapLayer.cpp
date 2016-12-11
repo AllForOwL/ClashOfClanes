@@ -58,20 +58,21 @@ void MapLayer::Update(ManagerComponent& i_manager)
 		{
 			setPositionY(getPositionY() - CNT_SPEED_MAP);
 			i_manager.m_hero->MoveDown();
-
+	
 			break;
 		}
 		case StateMap::MOVE_LEFT:
 		{
 			setPositionX(getPositionX() - CNT_SPEED_MAP);
 			i_manager.m_hero->MoveLeft();
-
+			
 			break;
 		}
 		case StateMap::MOVE_RIGHT:
 		{
 			setPositionX(getPositionX() + CNT_SPEED_MAP);			
 			i_manager.m_hero->MoveRight();
+			i_manager.m_hero->HideMenu();
 
 			break;
 		}
@@ -143,6 +144,8 @@ Point MapLayer::GetPositionShelter()
 			}
 		}
 	}
+
+	return Point::ZERO;
 }
 
 void MapLayer::SetState(StateMap& i_statemap)

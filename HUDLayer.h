@@ -63,6 +63,9 @@ private:
 	Sprite*	m_sprMessage;
 	Rect	m_rectMessage;
 
+	Point m_prevPositionMapLayer;
+	Point m_currPositionMapLayer;
+
 };
 
 #endif // __HUD_LAYER_H__

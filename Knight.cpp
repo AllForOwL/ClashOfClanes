@@ -39,7 +39,7 @@ Knight::Knight(Knight& Knight)
 	
 }
 
-int Knight::GetAct(ManagerComponent&	i_manager)
+int Knight::GetAct(ManagerComponent& i_manager)
 {
 	double _spear	= 0.0;
 	double	_enemy	= i_manager.m_mapLayer->GetQuentityEnemy(this->getPosition());
@@ -390,5 +390,11 @@ Knight::~Knight()
 						+ oil;
 
 			Tasks on 8:12:2016
-				- when click on field show menu from lists factory;
+				+ when click on field show menu from lists factory;
+
+
+			Tasks on tomorrow(11:12:2016)
+				- menu has been hide when user do not chooise;
+				- add icon new message(red color);
+				- need think;
 */
