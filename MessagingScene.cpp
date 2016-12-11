@@ -77,6 +77,7 @@ void MessagingScene::CallBuildFactory()
 		MessagingSystem::g_typeFactory = TYPE_OIL;
 	}
 
+	MessagingSystem::m_vecMessages.clear();
 	CloseCurrentScene();
 }
 

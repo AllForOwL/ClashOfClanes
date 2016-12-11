@@ -21,6 +21,8 @@ public:
 	MessagingSystem();
 	MessagingSystem(MessagingSystem& i_messageSystem);
 
+	int GetQuentityMessage() const;
+
 	void AddMesssage(std::string i_message);
 
 	void Update(ManagerComponent& i_manager);

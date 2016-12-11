@@ -44,11 +44,15 @@ public:
 	void OpenMessages();
 
 	void UpdateQuentityCombatant(ManagerComponent& i_manager);
+	void UpdateQuentityMessage(ManagerComponent& i_manager);
 
 	void VerifyOpenMessage(ManagerComponent& i_manager);
 
 	bool ShowContextMenu(ManagerComponent& i_manager);
 	void HideContextMenu();
+
+	void VerifyBuildFactory(ManagerComponent& i_manager);
+	void VerifyHideContextMenu(ManagerComponent& i_manage);
 
 private:
 	Command					m_command;
@@ -62,6 +66,7 @@ private:
 
 	Sprite*	m_sprMessage;
 	Rect	m_rectMessage;
+	Label*	m_lblQuentityNewMessage;
 
 	Point m_prevPositionMapLayer;
 	Point m_currPositionMapLayer;

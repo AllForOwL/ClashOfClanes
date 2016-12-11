@@ -7,6 +7,7 @@
 #include "WarriorFactory.h"
 #include "MessagingScene.h"
 #include "HeroGraphicComponent.h"
+#include "MessagingSystem.h"
 
 const int INDEX_FACTORY_ENEMY_MACHINE	= 0;
 const int INDEX_FACTORY_MACHINE			= 1;
@@ -38,6 +39,13 @@ bool HUDLayer::init()
 		GameScene::m_visibleSize.height - m_sprMessage->getBoundingBox().size.height / 2);
 	m_rectMessage = m_sprMessage->getBoundingBox();
 	this->addChild(m_sprMessage);
+
+	m_lblQuentityNewMessage = Label::create("0", "Herbana", 10);
+	m_lblQuentityNewMessage->setPosition(GameScene::m_visibleSize.width - m_sprMessage->getBoundingBox().size.width,
+		GameScene::m_visibleSize.height - (m_lblQuentityNewMessage->getContentSize().height / 2));
+	m_lblQuentityNewMessage->setColor(Color3B::RED);
+	m_lblQuentityNewMessage->setVisible(false);
+	this->addChild(m_lblQuentityNewMessage);
 
 	return true;
 }
@@ -135,42 +143,68 @@ void HUDLayer::VerifyOpenMessage(ManagerComponent& i_manager)
 	}
 }
 
+void HUDLayer::UpdateQuentityMessage(ManagerComponent& i_manager)
+{
+	int _quentityMessage = i_manager.m_messagingSystem->GetQuentityMessage();
+	if (_quentityMessage)
+	{
+		m_lblQuentityNewMessage->setString(std::to_string(_quentityMessage));
+		m_lblQuentityNewMessage->setVisible(true);
+	}
+	else
+	{
+		m_lblQuentityNewMessage->setVisible(false);
+	}
+}
+
+void HUDLayer::VerifyBuildFactory(ManagerComponent& i_manager)
+{
+	if ((m_locationTouch = i_manager.m_inputComponent->GetLocationTouch()) != Point::ZERO)
+	{
+		if (DetermineCommandForManagerFactory())
+		{
+			ExecuteCommandForManagerFactory(i_manager);
+			i_manager.m_inputComponent->SetZeroLocation();
+			HideContextMenu();
+			m_stateContextMenu = StateContextMenu::NOT_ACTIVE;
+		}
+	}
+}
+
+void HUDLayer::VerifyHideContextMenu(ManagerComponent& i_manager)
+{
+	if (m_currPositionMapLayer != Point::ZERO)
+	{
+		m_prevPositionMapLayer = m_currPositionMapLayer;
+		m_currPositionMapLayer = i_manager.m_mapLayer->getPosition();
+		if (m_prevPositionMapLayer != m_currPositionMapLayer)
+		{
+			m_prevPositionMapLayer = Point::ZERO;
+			m_currPositionMapLayer = Point::ZERO;
+			HideContextMenu();
+			m_stateContextMenu = StateContextMenu::NOT_ACTIVE;
+		}
+	}
+	else
+	{
+		m_currPositionMapLayer = i_manager.m_mapLayer->getPosition();
+	}
+}
+
 void HUDLayer::Update(ManagerComponent& i_manager)
 {
-	UpdateQuentityCombatant(i_manager);
-	VerifyOpenMessage(i_manager);
+	UpdateQuentityCombatant	(i_manager);
+	UpdateQuentityMessage	(i_manager);
+	VerifyOpenMessage		(i_manager);
 
 	switch (m_stateContextMenu)
 	{
 		case StateContextMenu::ACTIVE:
 		{
-			if ((m_locationTouch = i_manager.m_inputComponent->GetLocationTouch()) != Point::ZERO)
-			{
-				if (DetermineCommandForManagerFactory())
-				{
-					ExecuteCommandForManagerFactory(i_manager);
-					i_manager.m_inputComponent->SetZeroLocation();
-					HideContextMenu();
-					m_stateContextMenu = StateContextMenu::NOT_ACTIVE;
-				}
-			}
+			VerifyBuildFactory(i_manager);
+			
+			VerifyHideContextMenu(i_manager);
 
-			if (m_currPositionMapLayer != Point::ZERO)
-			{
-				m_prevPositionMapLayer = m_currPositionMapLayer;
-				m_currPositionMapLayer = i_manager.m_mapLayer->getPosition();
-				if (m_prevPositionMapLayer != m_currPositionMapLayer)
-				{
-					m_prevPositionMapLayer = Point::ZERO;
-					m_currPositionMapLayer = Point::ZERO;
-					HideContextMenu();
-					m_stateContextMenu = StateContextMenu::NOT_ACTIVE;
-				}
-			}
-			else
-			{
-				m_currPositionMapLayer = i_manager.m_mapLayer->getPosition();
-			}
 			break;
 		}
 		case StateContextMenu::NOT_ACTIVE:

@@ -394,7 +394,7 @@ Knight::~Knight()
 
 
 			Tasks on tomorrow(11:12:2016)
-				- menu has been hide when user do not chooise;
+				+ menu has been hide when user do not chooise;
 				- add icon new message(red color);
 				- need think;
 */

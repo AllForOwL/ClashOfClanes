@@ -27,6 +27,11 @@ MessagingSystem::MessagingSystem(MessagingSystem& i_messageSystem)
 
 }
 
+int MessagingSystem::GetQuentityMessage() const
+{
+	return m_vecMessages.size();
+}
+
 void MessagingSystem::Update(ManagerComponent& i_manager)
 {
 	switch (m_stateMessage)
