@@ -6,6 +6,7 @@
 #include "AlgorithmLi.h"
 #include "MapLayer.h"
 #include "MessagingSystem.h"
+#include <ctime>
 
 const int CNT_COIN_FOR_START_KNIGHT_BLACK	= 50;
 const int CNT_COIN_FOR_START_KNIGHT_BRONZE	= 50;
@@ -193,16 +194,22 @@ bool HeroGraphicComponent::RunSearchWay(ManagerComponent& i_manager)
 
 Point HeroGraphicComponent::GetPositionGold() const
 {
-	srand(time(NULL));
-	return Point(rand() % TOP_ORDER_GOLD + LOWER_ORDER_GOLD,
-		rand() % TOP_ORDER_GOLD + LOWER_ORDER_GOLD);
+	std::srand(std::time(NULL));
+
+	int _randX = std::rand() % TOP_ORDER_GOLD_X + LOWER_ORDER_GOLD_X;
+	int _randY = std::rand() % TOP_ORDER_GOLD_Y + LOWER_ORDER_GOLD_Y;
+
+	return Point(_randX, _randY);
 }
 
 Point HeroGraphicComponent::GetPositionOil() const
 {
-	srand(time(NULL));
-	return Point(rand() % TOP_ORDER_OIL + LOWER_ORDER_OIL,
-		rand() % TOP_ORDER_OIL + LOWER_ORDER_OIL);
+	std::srand(std::time(NULL));
+
+	int _randX = std::rand() % TOP_ORDER_OIL_X + LOWER_ORDER_OIL_X;
+	int _randY = std::rand() % TOP_ORDER_OIL_Y + LOWER_ORDER_OIL_Y;
+
+	return Point(_randX, _randY);
 }
 
 Point HeroGraphicComponent::GetPositionBuildFactory() const
@@ -221,13 +228,13 @@ bool HeroGraphicComponent::DetermineCommand()
 	if (m_rectForSprites[INDEX_FIND_GOLD].containsPoint(m_locationTouch))
 	{
 		m_positionTarget	= GetPositionGold();
-		m_textMessage		= "Gold: \t\t\t Need: \n  - 5 bronze warrior \n";
+		m_textMessage		= "Gold: \t\t\t Need: \n  - 500 bronze warrior \n";
 		return true;
 	}
 	else if (m_rectForSprites[INDEX_FIND_OIL].containsPoint(m_locationTouch))
 	{
 		m_locationTouch = GetPositionOil();
-		m_textMessage	= "Oil: \t\t\t Need: \n		- 3 bronze warrior \n";
+		m_textMessage	= "Oil: \t\t\t Need: \n		- 400 bronze warrior \n";
 		return true;
 	}
 	return false;

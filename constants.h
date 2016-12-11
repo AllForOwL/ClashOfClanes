@@ -62,7 +62,12 @@
 	const int TYPE_GOLD = 10000;
 	const int TYPE_OIL  = 10001;
 
-	const int LOWER_ORDER_GOLD	= 1000;
-	const int TOP_ORDER_GOLD	= 1500;
-	const int LOWER_ORDER_OIL	= 700;
-	const int TOP_ORDER_OIL		= 1000;
+	const int LOWER_ORDER_GOLD_X	= 1000;
+	const int TOP_ORDER_GOLD_X		= 1500;
+	const int LOWER_ORDER_OIL_X		= 700;
+	const int TOP_ORDER_OIL_X		= 1000;
+
+	const int LOWER_ORDER_GOLD_Y	= 500;
+	const int TOP_ORDER_GOLD_Y		= 700;
+	const int LOWER_ORDER_OIL_Y		= 400;
+	const int TOP_ORDER_OIL_Y		= 600;
