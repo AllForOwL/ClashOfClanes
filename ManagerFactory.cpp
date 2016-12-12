@@ -173,6 +173,16 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 	}
 }
 
+Size ManagerFactory::GetSizeFactoryMachine() const
+{
+	return m_vecFactoryMachine[0]->getBoundingBox().size;
+}
+
+Size ManagerFactory::GetSizeFactoryWarrior() const
+{
+	return m_vecFactoryWarrior[0]->getBoundingBox().size;
+}
+
 Point ManagerFactory::GetPositionBuildFactory() const
 {
 	return m_positionBuildFactory;

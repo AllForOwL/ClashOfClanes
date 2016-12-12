@@ -8,6 +8,7 @@
 #include "MessagingScene.h"
 #include "HeroGraphicComponent.h"
 #include "MessagingSystem.h"
+#include <ctime>
 
 const int INDEX_FACTORY_ENEMY_MACHINE	= 0;
 const int INDEX_FACTORY_MACHINE			= 1;
@@ -16,6 +17,19 @@ const int INDEX_FACTORY_ENEMY_WARRIOR	= 3;
 
 const int QUENTITY_COMBATANT_IN_BAR		= 6;
 const int QUENTITY_ELEMENT_CONTEXT_MENU = 4;
+
+const int QUENTITY_ZONE = 10;
+
+const int TOP_ORDER_FACTORY_WARRIOR_X	= 1500;
+const int LOWER_ORDER_FACTORY_WARRIOR_X = 1000;
+const int TOP_ORDER_FACTORY_WARRIOR_Y	= 1000;
+const int LOWER_ORDER_FACTORY_WARRIOR_Y = 700;
+
+const int TOP_ORDER_FACTORY_MACHINE_X	= 1500;
+const int LOWER_ORDER_FACTORY_MACHINE_X = 1000;
+const int TOP_ORDER_FACTORY_MACHINE_Y	= 600;
+const int LOWER_ORDER_FACTORY_MACHINE_Y = 400;
+
 
 bool HUDLayer::init()
 {

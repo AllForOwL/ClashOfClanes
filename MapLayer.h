@@ -33,12 +33,15 @@ public:
 	int GetQuentityEnemy				(Point i_position);
 	double StatusCells					(Point i_position, int i_typeObject);	// STATUS = { FREE = 1.0, BUSY = 0.0 }
 	Point GetPositionShelter			();
-
+	void SetZoneForFactory				(ManagerComponent& i_manager);
 
 private:
 	std::vector<std::vector<int>>	m_mapCoordinate;
 	StateMap m_stateMap;
 	Size	m_mapSize;
+
+	std::vector<Rect*>	m_vecZoneFactoryWarrior;
+	std::vector<Rect*>	m_vecZoneFactoryMachine;
 };
 
 #endif

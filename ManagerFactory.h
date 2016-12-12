@@ -46,6 +46,9 @@ public:
 
 	void AddOnScene(Factory& i_newObject, Point i_position);
 
+	Size GetSizeFactoryMachine() const;
+	Size GetSizeFactoryWarrior() const;
+
 	void CreateFactory			(ManagerComponent& i_manager, int i_typeFactory);
 	void CreateFactoryEnemy		(ManagerComponent& i_manager, int i_typeFactory);
 	void CreateFactoryResources	(ManagerComponent& i_manager, int i_typeFactory);

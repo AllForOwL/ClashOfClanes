@@ -5,12 +5,26 @@
 #include "HeroGraphicComponent.h"
 #include "ManagerComponent.h"
 #include "ManagerObjectAndFile.h"
+#include "ManagerFactory.h"
 #include <fstream>
 #include <string>
-#include <regex>
+#include <ctime>
 
 const int CNT_ZONE_WIDTH_RESOURCES	= 100;
 const int CNT_ZONE_HEIGHT_RESOURCES = 100;
+
+const int QUENTITY_ZONE = 7;
+
+const int TOP_ORDER_FACTORY_WARRIOR_X	= 1500;
+const int LOWER_ORDER_FACTORY_WARRIOR_X = 1000;
+const int TOP_ORDER_FACTORY_WARRIOR_Y	= 1000;
+const int LOWER_ORDER_FACTORY_WARRIOR_Y = 700;
+
+const int TOP_ORDER_FACTORY_MACHINE_X	= 1500;
+const int LOWER_ORDER_FACTORY_MACHINE_X = 1000;
+const int TOP_ORDER_FACTORY_MACHINE_Y	= 600;
+const int LOWER_ORDER_FACTORY_MACHINE_Y = 400;
+
 
 MapLayer::MapLayer()
 {
@@ -40,6 +54,42 @@ MapLayer::MapLayer(GameScene& i_parentGameScene)
 				m_mapCoordinate[i][j] = CNT_POSITION_BUSY_ORDER;
 			}
 		}
+	}
+}
+
+void MapLayer::SetZoneForFactory(ManagerComponent& i_manager)
+{
+	Size _sizeFactoryMachine = i_manager.m_managerFactory->GetSizeFactoryMachine();
+	int _positionY = GameScene::m_visibleSize.height - _sizeFactoryMachine.height;
+	int _positionX = 1000;
+
+	for (int i = 0; i < QUENTITY_ZONE; i++)
+	{
+		_positionX += _sizeFactoryMachine.width + 5;
+		Rect* _rect = new Rect(_positionX, _positionY, _sizeFactoryMachine.width, _sizeFactoryMachine.height);
+		Sprite* _spr = Sprite::create(CNT_PATH_TO_RESOURCES + "Item/BuildFactory/Square.png");
+		_spr->setPosition(_positionX, _positionY);
+		_spr->setScale(GameScene::m_visibleSize.width / _spr->getContentSize().width / 6,
+			GameScene::m_visibleSize.height / _spr->getContentSize().height / 6);
+		_spr->setColor(Color3B::RED);					// gray color for zone for factory machine
+		this->addChild(_spr);
+		m_vecZoneFactoryMachine.push_back(_rect);
+	}
+
+	Size _sizeFactoryWarrior = i_manager.m_managerFactory->GetSizeFactoryWarrior();
+	_positionY *= 2;
+	_positionX = 1000;
+	for (int i = 0; i < QUENTITY_ZONE; i++)
+	{
+		_positionX += _sizeFactoryWarrior.width + 5;
+		Rect* _rect = new Rect(_positionX, _positionY, _sizeFactoryWarrior.width, _sizeFactoryWarrior.height);
+		Sprite* _spr = Sprite::create(CNT_PATH_TO_RESOURCES + "Item/BuildFactory/Square.png");
+		_spr->setPosition(_positionX, _positionY);
+		_spr->setScale(GameScene::m_visibleSize.width / _spr->getContentSize().width / 6,
+			GameScene::m_visibleSize.height / _spr->getContentSize().height / 6);
+		_spr->setColor(Color3B::GREEN);					// green color for zone for factory warrior
+		this->addChild(_spr);
+		m_vecZoneFactoryWarrior.push_back(_rect);
 	}
 }
 

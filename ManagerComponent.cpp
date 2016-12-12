@@ -38,6 +38,7 @@ ManagerComponent::ManagerComponent(GameScene& i_gameScene)
 	m_AIDirection		= new AIDirection();
 
 	m_managerObjectAndFile->AddObjectOnMap(i_gameScene, *this);
+	m_mapLayer->SetZoneForFactory(*this);
 }
 
 void ManagerComponent::Update(GameScene& i_gameScene)
