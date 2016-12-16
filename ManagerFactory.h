@@ -53,6 +53,8 @@ public:
 	void CreateFactoryEnemy		(ManagerComponent& i_manager, int i_typeFactory);
 	void CreateFactoryResources	(ManagerComponent& i_manager, int i_typeFactory);
 
+	void ShowError(ManagerComponent& i_manager, std::string i_message);
+
 private:
 	std::vector<Factory*>	m_vecFactoryMachine;
 	std::vector<Factory*>	m_vecFactoryWarrior;

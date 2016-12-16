@@ -29,7 +29,7 @@ ManagerComponent::ManagerComponent(GameScene& i_gameScene)
 	
 	m_inputComponent = new HeroInputComponent();
 
-	m_messagingSystem	= new MessagingSystem();
+	m_messagingSystem	= new MessagingSystem(*m_mapLayer);
 	m_managerArmy		= new ManagerArmy();
 	m_managerMachine	= new ManagerMachine();
 	m_managerFactory	= new ManagerFactory();
@@ -51,17 +51,22 @@ void ManagerComponent::Update(GameScene& i_gameScene)
 	m_managerArmy->Update	(i_gameScene, *this);
 	m_managerMachine->Update(i_gameScene, *this);
 	m_managerFactory->Update(i_gameScene, *this);
-	m_messagingSystem->Update(*this);
 }
 
 ManagerComponent::~ManagerComponent()
 {
-	delete m_hero;
-	delete m_inputComponent;
 	delete m_mapLayer;
-	delete m_managerMachine;
+	delete m_hero;
+	delete m_houseFamily;
+	delete m_managerArmy;
 	delete m_managerFactory;
+	delete m_managerMachine;
+	delete m_inputComponent;
 	delete m_AIAct;
+	delete m_AIDirection;
+	delete m_managerObjectAndFile;
+	delete m_messagingSystem;
+	delete m_managerFactoryResources;
 
 	CCLOG("DESTRUCTOR managercomponent");
 }

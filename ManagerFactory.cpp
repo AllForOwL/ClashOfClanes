@@ -10,6 +10,7 @@
 #include "EnemyMachineFactory.h"
 #include "ManagerObjectAndFile.h"
 #include "ResourcesFactory.h"
+#include "MessagingSystem.h"
 
 ManagerFactory::ManagerFactory()
 {
@@ -106,6 +107,11 @@ void ManagerFactory::UpdateAllFactory(ManagerComponent& i_manager)
 
 }
 
+void ManagerFactory::ShowError(ManagerComponent& i_manager, std::string i_message)
+{
+	i_manager.m_messagingSystem->ShowMessageError(m_positionBuildFactory, i_message);
+}
+
 void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 {
 	switch (m_stateManagerFactory)
@@ -116,6 +122,10 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 			{
 				CreateFactory(i_manager, CNT_OBJECT_FACTORY_WARRIOR);
 			}
+			else
+			{
+				ShowError(i_manager, "Insufficient funds for build Factory Warrior");
+			}
 			m_stateManagerFactory = ManagerFactory::NOTHING;
 
 			break;
@@ -125,6 +135,10 @@ void ManagerFactory::Update(GameScene& i_gameScene, ManagerComponent& i_manager)
 			if (i_manager.m_hero->CheckProductionFactoryMachine())
 			{
 				CreateFactory(i_manager, CNT_OBJECT_FACTORY_MACHINE);
+			}
+			else
+			{
+				ShowError(i_manager, "Insufficient funds for build Factory Machine");
 			}
 			m_stateManagerFactory = ManagerFactory::NOTHING;
 

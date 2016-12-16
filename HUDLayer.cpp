@@ -5,7 +5,6 @@
 #include "ManagerFactory.h"
 #include "MachineFactory.h"
 #include "WarriorFactory.h"
-#include "MessagingScene.h"
 #include "HeroGraphicComponent.h"
 #include "MessagingSystem.h"
 #include <ctime>
@@ -147,30 +146,6 @@ void HUDLayer::UpdateQuentityCombatant(ManagerComponent& i_manager)
 	}
 }
 
-void HUDLayer::VerifyOpenMessage(ManagerComponent& i_manager)
-{
-	if (m_rectMessage.containsPoint(i_manager.m_inputComponent->GetLocationTouch()))
-	{
-		m_command = Command::OPEN_MESSAGES;
-		ExecuteCommandForManagerFactory(i_manager);
-		i_manager.m_inputComponent->SetZeroLocation();
-	}
-}
-
-void HUDLayer::UpdateQuentityMessage(ManagerComponent& i_manager)
-{
-	int _quentityMessage = i_manager.m_messagingSystem->GetQuentityMessage();
-	if (_quentityMessage)
-	{
-		m_lblQuentityNewMessage->setString(std::to_string(_quentityMessage));
-		m_lblQuentityNewMessage->setVisible(true);
-	}
-	else
-	{
-		m_lblQuentityNewMessage->setVisible(false);
-	}
-}
-
 void HUDLayer::VerifyBuildFactory(ManagerComponent& i_manager)
 {
 	if ((m_locationTouch = i_manager.m_inputComponent->GetLocationTouch()) != Point::ZERO)
@@ -208,8 +183,6 @@ void HUDLayer::VerifyHideContextMenu(ManagerComponent& i_manager)
 void HUDLayer::Update(ManagerComponent& i_manager)
 {
 	UpdateQuentityCombatant	(i_manager);
-	UpdateQuentityMessage	(i_manager);
-	VerifyOpenMessage		(i_manager);
 
 	switch (m_stateContextMenu)
 	{
@@ -308,15 +281,6 @@ bool HUDLayer::DetermineCommandForManagerFactory()
 	return false;
 }
 
-void HUDLayer::OpenMessages()
-{
-	auto _messagingScene = MessagingScene::createScene();
-
-	srand(time(NULL));
-	auto reScene = TransitionFade::create(2.0f, _messagingScene, Color3B(rand() % 255 + 0, rand() % 255 + 0, rand() % 255 + 0));
-	Director::getInstance()->pushScene(_messagingScene);
-}
-
 void HUDLayer::ExecuteCommandForManagerFactory(ManagerComponent& i_manager)
 {
 	switch (m_command)
@@ -361,13 +325,7 @@ void HUDLayer::ExecuteCommandForManagerFactory(ManagerComponent& i_manager)
 			
 			break;
 		}
-		case Command::OPEN_MESSAGES:
-		{
-			OpenMessages();
-
-			break;
-		}
-	default:
+		default:
 		break;
 	}
 }

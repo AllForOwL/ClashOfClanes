@@ -39,7 +39,7 @@ public:
 	AIDirection*			m_AIDirection;
 	ManagerObjectAndFile*	m_managerObjectAndFile;
 	MessagingSystem*		m_messagingSystem;
-	ManagerFactoryResources*m_managerFactoryResources;
+	ManagerFactoryResources* m_managerFactoryResources;
 };
 
 #endif

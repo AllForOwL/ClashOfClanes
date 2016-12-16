@@ -60,8 +60,6 @@ public:
 
 	bool DetermineCommand();
 
-	void AddMessage(ManagerComponent& i_manager);
-
 	bool CheckProductionFactoryGold();
 	bool CheckProductionFactoryOil();
 

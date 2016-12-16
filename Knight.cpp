@@ -390,7 +390,7 @@ Knight::~Knight()
 			Tasks on tomorrow(12:12:2016)
 				+ write permanent map; need!!!
 				+ scroll menu and search zone from resources thay be fill color;
-					- when user click on zone from resources factory begin building:
+					+ when user click on zone from resources factory begin building:
 						- use opacity;
 					- color and him value will be show on barmenu;
 				- delete tasks for all except Hero;

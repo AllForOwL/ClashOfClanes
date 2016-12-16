@@ -1,20 +1,13 @@
 ﻿#include "MessagingSystem.h"
-#include "ManagerComponent.h"
-#include "ManagerFactory.h"
-#include "HeroGraphicComponent.h"
 #include "MapLayer.h"
-#include "GameScene.h"
-#include "constants.h"
 
 USING_NS_CC;
 
-std::vector<std::string>MessagingSystem::m_vecMessages;
-int MessagingSystem::g_typeFactory;
-
-MessagingSystem::MessagingSystem()
+MessagingSystem::MessagingSystem(MapLayer& i_parent)
 {
-	m_stateMessage = StateMessage::NOTHING;
-	g_typeFactory = 0;
+	m_textMessage = Label::create(" ", "Herbana", 20);
+	m_textMessage->setTextColor(Color4B::WHITE);
+	i_parent.addChild(m_textMessage);
 }
 
 MessagingSystem::MessagingSystem(MessagingSystem& i_messageSystem)
@@ -22,70 +15,33 @@ MessagingSystem::MessagingSystem(MessagingSystem& i_messageSystem)
 
 }
 
-int MessagingSystem::GetQuentityMessage() const
+void MessagingSystem::CloseMessage()
 {
-	return m_vecMessages.size();
+	m_textMessage->setVisible(false);
 }
 
-void MessagingSystem::Update(ManagerComponent& i_manager)
+void MessagingSystem::ShowMessageInformation(Point i_positionMessage, std::string i_message)
 {
-	switch (m_stateMessage)
-	{
-		case StateMessage::BUILD_FACTORY_GOLD:
-		{
-			ManagerFactory::StateManagerFactory _newStateFactory = ManagerFactory::StateManagerFactory::ADD_FACTORY_GOLD;
-			i_manager.m_managerFactory->SetState(_newStateFactory);
-			i_manager.m_managerFactory->SetPositionBuildFactory(i_manager.m_hero->GetPositionBuildFactory());
-			m_stateMessage = StateMessage::NOTHING;
-
-			break;												
-		}
-		case StateMessage::BUILD_FACTORY_OIL:
-		{
-			ManagerFactory::StateManagerFactory _newStateFactory = ManagerFactory::StateManagerFactory::ADD_FACTORY_OIL;														
-			i_manager.m_managerFactory->SetState(_newStateFactory);
-			i_manager.m_managerFactory->SetPositionBuildFactory(i_manager.m_hero->GetPositionBuildFactory());
-
-			m_stateMessage = StateMessage::NOTHING;
-
-			break;
-		}
-		case StateMessage::NOTHING:
-		{
-			VerifyGoBuildFactory();
-		
-			break;
-		}
-	default:
-		break;
-	}
+	m_textMessage->setPosition(i_positionMessage);
+	m_textMessage->setString(i_message);
+	m_textMessage->setTextColor(Color4B::BLUE);
 }
 
-void MessagingSystem::VerifyGoBuildFactory()
+void MessagingSystem::ShowMessageWarning(Point i_positionMessage, std::string i_message)
 {
-	if (g_typeFactory == TYPE_GOLD)
-	{
-		m_stateMessage = StateMessage::BUILD_FACTORY_GOLD;
-		g_typeFactory = 0;
-	}
-	else if (g_typeFactory == StateMessage::BUILD_FACTORY_OIL)
-	{
-		m_stateMessage = StateMessage::BUILD_FACTORY_OIL;
-		g_typeFactory = 0;
-	}
+	m_textMessage->setPosition(i_positionMessage);
+	m_textMessage->setString(i_message);
+	m_textMessage->setTextColor(Color4B::YELLOW);
 }
 
-void MessagingSystem::SetState(StateMessage i_state)      
+void MessagingSystem::ShowMessageError(Point i_positionMessage, std::string i_message)
 {
-	m_stateMessage = i_state;
+	m_textMessage->setPosition(i_positionMessage);
+	m_textMessage->setString(i_message);
+	m_textMessage->setTextColor(Color4B::RED);
 }
 
-MessagingSystem::StateMessage MessagingSystem::GetState() const
+MessagingSystem::~MessagingSystem()
 {
-	return m_stateMessage;
-}
 
-void MessagingSystem::AddMesssage(std::string i_message)
-{
-	m_vecMessages.push_back(i_message);
 }

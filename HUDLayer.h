@@ -23,7 +23,6 @@ public:
 		CREATE_FACTORY_WARRIOR,
 		CREATE_FACTORY_ENEMY_WARRIOR,
 		CREATE_FACTORY_ENEMY_MACHINE,
-		OPEN_MESSAGES,
 		NOTHING
 	};
 
@@ -41,12 +40,7 @@ public:
 	void LoadSpritesForMenu(Point i_locationMenu);
 	void LoadSpritesCombatantBar();
 
-	void OpenMessages();
-
 	void UpdateQuentityCombatant(ManagerComponent& i_manager);
-	void UpdateQuentityMessage(ManagerComponent& i_manager);
-
-	void VerifyOpenMessage(ManagerComponent& i_manager);
 
 	bool ShowContextMenu(ManagerComponent& i_manager);
 	void HideContextMenu();

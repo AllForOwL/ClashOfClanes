@@ -6,38 +6,23 @@
 USING_NS_CC;
 
 class ManagerComponent;
+class MapLayer;
 
 class MessagingSystem 
 {
 public:
-
-	enum StateMessage
-	{
-		BUILD_FACTORY_GOLD,
-		BUILD_FACTORY_OIL,
-		NOTHING
-	};
-
-	MessagingSystem();
+	MessagingSystem(MapLayer& i_parent);
 	MessagingSystem(MessagingSystem& i_messageSystem);
+	~MessagingSystem();
 
-	int GetQuentityMessage() const;
+	void ShowMessageInformation(Point i_positionMessage, std::string i_message);
+	void ShowMessageWarning(Point i_positionMessage, std::string i_messge);
+	void ShowMessageError(Point i_positionMessage, std::string i_message);
 
-	void AddMesssage(std::string i_message);
-
-	void Update(ManagerComponent& i_manager);
-
-	void SetState(StateMessage i_state);
-	StateMessage GetState() const;
-
-	void VerifyGoBuildFactory();
-
-	static std::vector<std::string> m_vecMessages;
-	static int g_typeFactory;
+	void CloseMessage();
 
 private:
-	StateMessage m_stateMessage;
-
+	Label*	m_textMessage;
 };
 
 #endif

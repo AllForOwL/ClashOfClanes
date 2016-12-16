@@ -155,7 +155,6 @@ bool HeroGraphicComponent::RunSearchWay(ManagerComponent& i_manager)
 				m_rectHero	= this->getBoundingBox();
 				m_stateHero = StateHero::LISTEN;
 				m_vecWayWalkHero.clear();
-				AddMessage(i_manager);
 			}
 			
 			break;
@@ -216,25 +215,16 @@ Point HeroGraphicComponent::GetPositionBuildFactory() const
 {
 	return m_positionTarget;
 }
-
-void HeroGraphicComponent::AddMessage(ManagerComponent& i_manager)
-{
-	i_manager.m_messagingSystem->AddMesssage(m_textMessage);
-	m_textMessage.clear();
-}
-
 bool HeroGraphicComponent::DetermineCommand()
 {
 	if (m_rectForSprites[INDEX_FIND_GOLD].containsPoint(m_locationTouch))
 	{
 		m_positionTarget	= GetPositionGold();
-		m_textMessage		= "Gold: \t\t\t Need: \n  - 500 bronze warrior \n";
 		return true;
 	}
 	else if (m_rectForSprites[INDEX_FIND_OIL].containsPoint(m_locationTouch))
 	{
 		m_locationTouch = GetPositionOil();
-		m_textMessage	= "Oil: \t\t\t Need: \n		- 400 bronze warrior \n";
 		return true;
 	}
 	return false;
