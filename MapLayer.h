@@ -35,6 +35,13 @@ public:
 	Point GetPositionShelter			();
 	void SetZoneForFactory				(ManagerComponent& i_manager);
 
+	int VerifyBuildFactoryMachine		(Point i_locationTouch);
+	int VerifyBuildFactoryWarrior		(Point i_locationTouch);
+	void BuildFactoryMachine			(int i_numberRect);
+	void BuildFactoryWarrior			(int i_numberRect);
+	void VerifyBuildFactory				(ManagerComponent& i_manager);
+
+
 private:
 	std::vector<std::vector<int>>	m_mapCoordinate;
 	StateMap m_stateMap;
@@ -42,6 +49,9 @@ private:
 
 	std::vector<Rect*>	m_vecZoneFactoryWarrior;
 	std::vector<Rect*>	m_vecZoneFactoryMachine;
+	std::vector<Sprite*>	m_vecSprZoneFactoryWarrior;
+	std::vector<Sprite*>	m_vecSprZoneFactoryMachine;
+
 };
 
 #endif

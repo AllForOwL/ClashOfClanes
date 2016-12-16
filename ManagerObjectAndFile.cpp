@@ -147,7 +147,7 @@ void ManagerObjectAndFile::AddObjectOnMap(GameScene& i_gameScene, ManagerCompone
 void ManagerObjectAndFile::LoadObjectFromFile()
 {
 	std::ifstream _readFromFile;
-	_readFromFile.open(CNT_PATH_TO_RESOURCES + "Map/Map.xml");
+	_readFromFile.open(CNT_PATH_TO_RESOURCES + "Map/MapStatic.xml");
 
 	int _index = 1;
 	char _value;
@@ -189,7 +189,7 @@ void ManagerObjectAndFile::LoadObjectFromFile()
 	_readFromFile.close();
 
 	// clear file from objects;
-	std::ofstream _clearFile(CNT_PATH_TO_RESOURCES + "Map/Map.xml", std::ios::out | std::ios::trunc);
+	std::ofstream _clearFile(CNT_PATH_TO_RESOURCES + "Map/MapStatic.xml", std::ios::out | std::ios::trunc);
 	_clearFile.close();
 }
 
@@ -199,7 +199,7 @@ void ManagerObjectAndFile::WriteObjectInFile(	int i_typeObject,
 											)
 {
 	std::ofstream	_fileForWrite;
-	_fileForWrite.open(CNT_PATH_TO_RESOURCES + "/Map/Map.xml", std::ios_base::app);
+	_fileForWrite.open(CNT_PATH_TO_RESOURCES + "/Map/MapStatic.xml", std::ios_base::app);
 
 	_fileForWrite << "<" << i_typeObject
 		<< " position visible x = " << (int)i_positionVisible.x

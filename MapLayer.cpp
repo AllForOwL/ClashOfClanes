@@ -6,6 +6,7 @@
 #include "ManagerComponent.h"
 #include "ManagerObjectAndFile.h"
 #include "ManagerFactory.h"
+#include "HeroInputComponent.h"
 #include <fstream>
 #include <string>
 #include <ctime>
@@ -71,9 +72,10 @@ void MapLayer::SetZoneForFactory(ManagerComponent& i_manager)
 		_spr->setPosition(_positionX, _positionY);
 		_spr->setScale(GameScene::m_visibleSize.width / _spr->getContentSize().width / 6,
 			GameScene::m_visibleSize.height / _spr->getContentSize().height / 6);
-		_spr->setColor(Color3B::RED);					// gray color for zone for factory machine
+		_spr->setColor(Color3B::RED);					// red color for zone for factory machine
 		this->addChild(_spr);
 		m_vecZoneFactoryMachine.push_back(_rect);
+		m_vecSprZoneFactoryMachine.push_back(_spr);
 	}
 
 	Size _sizeFactoryWarrior = i_manager.m_managerFactory->GetSizeFactoryWarrior();
@@ -90,11 +92,71 @@ void MapLayer::SetZoneForFactory(ManagerComponent& i_manager)
 		_spr->setColor(Color3B::GREEN);					// green color for zone for factory warrior
 		this->addChild(_spr);
 		m_vecZoneFactoryWarrior.push_back(_rect);
+		m_vecSprZoneFactoryWarrior.push_back(_spr);
 	}
+}
+
+void MapLayer::VerifyBuildFactory(ManagerComponent& i_manager)
+{
+	Point _locationTouchForBuildFactory = i_manager.m_inputComponent->GetLocationTouch();
+	Point _locationTouch = _locationTouchForBuildFactory;
+
+	i_manager.m_hero->ConvertToOrigin(_locationTouch);
+	Point _positionBuildFactory;
+	int _numberRectMachine = VerifyBuildFactoryMachine(_locationTouch);
+	int _numberRectWarrior = VerifyBuildFactoryWarrior(_locationTouch);
+	if (_numberRectMachine >= 0 && i_manager.m_hero->CheckProductionFactoryMachine())
+	{
+		i_manager.m_managerFactory->SetPositionBuildFactory(_locationTouchForBuildFactory);
+		m_vecSprZoneFactoryMachine[_numberRectMachine]->setVisible(false);
+		m_vecSprZoneFactoryMachine.erase(m_vecSprZoneFactoryMachine.begin() + _numberRectMachine);
+		m_vecZoneFactoryMachine.erase(m_vecZoneFactoryMachine.begin() + _numberRectMachine);
+	
+		ManagerFactory::StateManagerFactory _stateMachine = ManagerFactory::StateManagerFactory::ADD_FACTORY_MACHINE;
+		i_manager.m_managerFactory->SetState(_stateMachine);
+	}
+	else if (_numberRectWarrior >= 0 && i_manager.m_hero->CheckProductionFactoryWarrior())
+	{
+		i_manager.m_managerFactory->SetPositionBuildFactory(_locationTouchForBuildFactory);
+		m_vecSprZoneFactoryWarrior[_numberRectWarrior]->setVisible(false);
+		m_vecSprZoneFactoryWarrior.erase(m_vecSprZoneFactoryWarrior.begin() + _numberRectWarrior);
+		m_vecZoneFactoryWarrior.erase(m_vecZoneFactoryWarrior.begin() + _numberRectWarrior);
+
+		ManagerFactory::StateManagerFactory _stateWarrior = ManagerFactory::StateManagerFactory::ADD_FACTORY_WARRIOR;
+		i_manager.m_managerFactory->SetState(_stateWarrior);
+	}
+}
+
+int MapLayer::VerifyBuildFactoryMachine(Point i_locationTouch)
+{
+	for (int i = 0; i < m_vecZoneFactoryMachine.size(); i++)
+	{
+		if (m_vecZoneFactoryMachine[i]->containsPoint(i_locationTouch))
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+int MapLayer::VerifyBuildFactoryWarrior(Point i_locationTouch)
+{
+	for (int i = 0; i < m_vecZoneFactoryWarrior.size(); i++)
+	{
+		if (m_vecZoneFactoryWarrior[i]->containsPoint(i_locationTouch))
+		{
+			return i;
+		}
+	}
+
+	return -1;
 }
 
 void MapLayer::Update(ManagerComponent& i_manager)
 {
+	VerifyBuildFactory(i_manager);
+
 	switch (m_stateMap)
 	{
 		case StateMap::MOVE_UP:
